@@ -1,0 +1,2 @@
+include ':ClipMobile'
+include ':libraries:androidutils'

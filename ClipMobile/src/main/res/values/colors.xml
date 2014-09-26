@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actionbar_color">#109f5b</color>
+    <color name="main_color">#13b263</color>
+    <color name="text_color_highlight">#9913b263</color>
+
+    <integer-array name="spinner_colors">
+        <item>@color/spinner_color_1</item>
+        <item>@color/spinner_color_2</item>
+        <item>@color/spinner_color_3</item>
+        <item>@color/spinner_color_4</item>
+        <item>@color/spinner_color_3</item>
+        <item>@color/spinner_color_2</item>
+        <item>@color/spinner_color_1</item>
+    </integer-array>
+
+    <color name="spinner_color_1">#75a319</color>
+    <color name="spinner_color_2">#84ad32</color>
+    <color name="spinner_color_3">#93b74c</color>
+    <color name="spinner_color_4">#a3c166</color>
+
+</resources>

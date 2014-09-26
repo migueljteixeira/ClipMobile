@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ClipMobile</string>
+    <string name="provider_authority">com.migueljteixeira.clipmobile.provider</string>
+
+    <!-- Connection issues -->
+    <string name="connection_failed">A ligação falhou.\nTente novamente mais tarde</string>
+
+    <!-- LoginActivity -->
+    <string name="hint_username">Identificador</string>
+    <string name="hint_password">Password</string>
+    <string name="action_login">Submeter</string>
+    <string name="error_fields_required">Campo Obrigatório</string>
+    <string name="error_fields_incorrect">Autenticação Inválida</string>
+
+</resources>
