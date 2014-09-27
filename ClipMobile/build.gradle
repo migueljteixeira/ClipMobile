@@ -13,9 +13,13 @@ android {
         versionName rootProject.ext.versionName
     }
     buildTypes {
+        debug {
+            runProguard false
+        }
+
         release {
-            runProguard true
-            proguardFiles files('proguard-android.txt'), 'proguard-rules.pro'
+            runProguard false
+            proguardFile 'proguard-rules.pro'
         }
     }
 }

@@ -182,6 +182,14 @@ public class ClipMobileProvider extends ContentProvider {
                 newItemUri = Students.buildStudentUri(String.valueOf(id));
                 break;
             }
+            case STUDENTS_YEARS: {
+                long id = mDbHelper.insertStudentYears(values);
+                if (id < 0) {
+                    break;
+                }
+                newItemUri = StudentsYears.buildStudentYearUri(String.valueOf(id));
+                break;
+            }
             default :
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

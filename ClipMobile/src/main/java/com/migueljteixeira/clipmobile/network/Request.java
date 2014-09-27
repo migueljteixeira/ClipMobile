@@ -19,7 +19,6 @@ public abstract class Request {
 
         try {
             Connection.Response response = Jsoup.connect(INITIAL_REQUEST)
-                    .timeout(40000)
                     .data("identificador", username)
                     .data("senha", password)
                     .method(Connection.Method.POST)
@@ -34,6 +33,7 @@ public abstract class Request {
                     .header("Origin", "https://clip.unl.pt")
                     .header("Referer", "https://clip.unl.pt/utente/eu")
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36")
+                    .timeout(40000)
                     .execute();
 
             // save cookie
@@ -48,22 +48,29 @@ public abstract class Request {
 
     }
 
-    protected static Document request(Context context, String url) throws IOException {
+    protected static Document request(Context context, String url) {
         String cookie = ClipSettings.getCookie(context);
 
-        Document response = Jsoup.connect(url)
-                .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-                .header("Accept-Encoding", "gzip,deflate,sdch")
-                .header("Accept-Language", "en-US,en;q=0.8,pt-PT;q=0.6,pt;q=0.4")
-                .header("Cache-Control", "max-age=0")
-                .header("Connection", "keep-alive")
-                .header("Cookie", COOKIE_NAME + "=" + cookie)
-                .header("Host", "clip.unl.pt")
-                .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36")
-                .timeout(40000)
-                .get();
+        try {
+            Connection.Response response = Jsoup.connect(url)
+                    .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                    .header("Accept-Language", "en-US,en;q=0.8,pt-PT;q=0.6,pt;q=0.4")
+                    .header("Cache-Control", "max-age=0")
+                    .header("Connection", "keep-alive")
+                    .header("Cookie", COOKIE_NAME + "=" + cookie)
+                    .header("Host", "clip.unl.pt")
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36")
+                    .timeout(40000)
+                    .execute();
 
-        return response;
+            return response.parse();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }

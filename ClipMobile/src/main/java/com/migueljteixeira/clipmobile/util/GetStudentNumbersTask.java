@@ -4,19 +4,20 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
-public class GetStudentNumbersTask extends AsyncTask<Long, Void, List<Student>> {
+public class GetStudentNumbersTask extends AsyncTask<Long, Void, User> {
 
     public interface OnTaskFinishedListener {
 
         /**
          * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
          */
-        public void onTaskFinished(List<Student> resultCode);
+        public void onStudentNumbersTaskFinished(User resultCode);
 
     }
 
@@ -29,21 +30,21 @@ public class GetStudentNumbersTask extends AsyncTask<Long, Void, List<Student>> 
     }
 
     @Override
-    protected List<Student> doInBackground(Long... params) {
+    protected User doInBackground(Long... params) {
         String user_id = String.valueOf(params[0]);
 
         // Get students numbers from the database
-        List<Student> students = StudentTools.getStudentsNumbers(mContext, user_id);
+        User user = StudentTools.getStudents(mContext, user_id);
 
-        return students;
+        return user;
     }
 
     @Override
-    protected void onPostExecute(List<Student> result) {
+    protected void onPostExecute(User result) {
         super.onPostExecute(result);
 
         if (mListener != null) {
-            mListener.onTaskFinished(result);
+            mListener.onStudentNumbersTaskFinished(result);
         }
     }
 }

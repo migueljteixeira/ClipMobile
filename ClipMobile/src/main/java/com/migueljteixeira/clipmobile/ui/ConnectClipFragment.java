@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
@@ -26,7 +27,7 @@ public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnT
 
     private ConnectClipTask mTask;
     @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
-    @InjectView(R.id.login_form) FrameLayout mLoginForm;
+    @InjectView(R.id.login_form) LinearLayout mLoginForm;
     @InjectView(R.id.username) EditText mUsername;
     @InjectView(R.id.password) EditText mPassword;
     @InjectView(R.id.log_in_button) Button mLogInButton;

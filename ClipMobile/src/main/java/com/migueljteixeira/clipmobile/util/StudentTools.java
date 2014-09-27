@@ -3,9 +3,12 @@ package com.migueljteixeira.clipmobile.util;
 import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.User;
+import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
@@ -14,10 +17,10 @@ public class StudentTools {
     public static int signIn(Context mContext, String username, String password) {
 
         // Sign in the user, and returns Students available
-        List<Student> students = StudentRequest.signIn(mContext, username, password);
+        User user = StudentRequest.signIn(mContext, username, password);
 
         // Invalid credentials
-        if(students == null)
+        if(! user.hasStudents())
             return Result.ERROR;
 
         // Create new User
@@ -28,16 +31,39 @@ public class StudentTools {
             ClipSettings.setLoggedInUserId(mContext, newUserId);
 
             // Insert Students
-            DBUtils.insertStudentsNumbers(mContext, newUserId, students);
+            DBUtils.insertStudentsNumbers(mContext, newUserId, user);
         }
 
         return Result.SUCCESS;
     }
 
 
-    public static List<Student> getStudentsNumbers(Context mContext, String user_id) {
+    public static User getStudents(Context mContext, String userId) {
 
-        return DBUtils.getStudentsNumbers(mContext, user_id);
+        return DBUtils.getStudents(mContext, userId);
     }
 
+    public static Student getStudentsYears(Context mContext, String studentId, String studentNumberId) {
+
+        Student student = DBUtils.getStudentYears(mContext, studentId);
+
+        System.out.println("has " + student.hasStudentYears());
+
+        if(student.hasStudentYears())
+            return student;
+
+        System.out.println("net " + !AndroidUtils.isNetworkConnected(mContext));
+
+        // Check for connectivity
+        if (! AndroidUtils.isNetworkConnected(mContext))
+            return null;
+
+        // Get student years from the server
+        student = StudentRequest.getStudentsYears(mContext, studentNumberId);
+
+        // Insert Students
+        DBUtils.insertStudentYears(mContext, studentId, student);
+
+        return student;
+    }
 }

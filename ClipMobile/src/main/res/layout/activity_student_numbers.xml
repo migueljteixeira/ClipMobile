@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e7e8e9" >
 
     <!-- Progress Spinner -->
     <FrameLayout
         android:id="@+id/progress_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="@dimen/activity_student_numbers_marginTop"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
         android:visibility="gone">
 
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
@@ -27,16 +30,15 @@
     </FrameLayout>
 
     <!-- Main view -->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/main_view"
-        android:layout_width="match_parent"
-        android:background="#e7e8e9"
         android:orientation="vertical"
-        android:paddingTop="@dimen/activity_student_numbers_marginTop"
-        android:paddingBottom="@dimen/activity_student_numbers_marginBottom"
-        android:paddingLeft="@dimen/activity_student_numbers_marginLeft"
-        android:paddingRight="@dimen/activity_student_numbers_marginRight"
-        android:layout_height="fill_parent">
+        android:layout_marginTop="@dimen/activity_student_numbers_marginTop"
+        android:layout_marginBottom="@dimen/activity_student_numbers_marginBottom"
+        android:layout_marginLeft="@dimen/activity_student_numbers_marginLeft"
+        android:layout_marginRight="@dimen/activity_student_numbers_marginRight"
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
@@ -52,8 +54,9 @@
             android:background="@drawable/card_background"
             android:layout_height="match_parent"
             android:requiresFadingEdge="vertical"
-            android:fadingEdgeLength="15dp" />
+            android:fadingEdgeLength="15dp"
+            tools:listitem="@android:layout/simple_list_item_1" />
 
-    </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

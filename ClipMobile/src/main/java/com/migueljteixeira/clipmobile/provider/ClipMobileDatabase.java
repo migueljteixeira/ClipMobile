@@ -187,6 +187,10 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
         return mStudentsInserter.insert(values);
     }
 
+    public long insertStudentYears(ContentValues values) {
+        return mStudentsYearsInserter.insert(values);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USERS_TABLE);

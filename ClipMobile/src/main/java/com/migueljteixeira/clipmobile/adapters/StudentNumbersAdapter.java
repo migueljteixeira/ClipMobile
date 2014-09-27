@@ -9,21 +9,22 @@ import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.User;
 
 import java.util.List;
 
 public class StudentNumbersAdapter extends ArrayAdapter<Student> {
 
     private final int resource;
-    private final List<Student> list;
+    private final List<Student> students;
     private final Context context;
 
-    public StudentNumbersAdapter(Context context, int resource, List<Student> list) {
-        super(context, resource, list);
+    public StudentNumbersAdapter(Context context, int resource, User list) {
+        super(context, resource, list.getStudents());
 
         this.context = context;
         this.resource = resource;
-        this.list = list;
+        this.students = list.getStudents();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class StudentNumbersAdapter extends ArrayAdapter<Student> {
             convertView = LayoutInflater.from(context).inflate(resource, parent, false);
 
         TextView textView = (TextView) convertView.findViewById(R.id.text);
-        textView.setText(list.get(position).getNumber());
+        textView.setText(students.get(position).getNumber());
 
         return convertView;
     }

@@ -166,7 +166,7 @@ public class ClipMobileContract {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.clipmobile.students_years";
 
-        public static Uri buildStudentUri(String studentYearId) {
+        public static Uri buildStudentYearUri(String studentYearId) {
             return CONTENT_URI.buildUpon().appendPath(studentYearId).build();
         }
 

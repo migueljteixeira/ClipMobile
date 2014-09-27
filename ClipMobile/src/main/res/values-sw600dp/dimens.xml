@@ -1,0 +1,12 @@
+<resources>
+
+    <dimen name="activity_login_marginTop">150dp</dimen>
+    <dimen name="activity_login_marginLeft">100dp</dimen>
+    <dimen name="activity_login_marginRight">100dp</dimen>
+
+    <dimen name="activity_student_numbers_marginTop">150dp</dimen>
+    <dimen name="activity_student_numbers_marginBottom">400dp</dimen>
+    <dimen name="activity_student_numbers_marginLeft">100dp</dimen>
+    <dimen name="activity_student_numbers_marginRight">100dp</dimen>
+
+</resources>

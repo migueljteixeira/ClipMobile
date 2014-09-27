@@ -7,10 +7,9 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.StudentYear;
+import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class DBUtils {
 
@@ -24,6 +23,8 @@ public class DBUtils {
                 ClipMobileContract.Users.CONTENT_URI,
                 new String[] { ClipMobileContract.Users.USERNAME },
                 ClipMobileContract.Users.USERNAME + "=?", new String[] { username }, null);
+
+        user.close();
 
         return user.getCount() > 0;
     }
@@ -42,35 +43,36 @@ public class DBUtils {
      * ////////////////////////////// STUDENTS //////////////////////////////
      */
 
-    public static List<Student> getStudentsNumbers(Context mContext, String user_id) {
+    public static User getStudents(Context mContext, String user_id) {
 
         final Cursor students_cursor = mContext.getContentResolver().query(
                 ClipMobileContract.Students.CONTENT_URI, null,
                 ClipMobileContract.Users.REF_USER_ID + "=?", new String[] { user_id }, null);
 
-        List<Student> students = new LinkedList<Student>();
+        User user = new User();
         while(students_cursor.moveToNext()) {
-            String id = students_cursor.getString(0);
-            String number_id = students_cursor.getString(2);
-            String number = students_cursor.getString(3);
+                String id = students_cursor.getString(0);
+                String number_id = students_cursor.getString(2);
+                String number = students_cursor.getString(3);
 
             Student student = new Student();
             student.setId(id);
-            student.setNumberID(number_id);
+            student.setNumberId(number_id);
             student.setNumber(number);
 
-            students.add(student);
+            user.addStudent(student);
         }
+        students_cursor.close();
 
-        return students;
+        return user;
     }
 
-    public static void insertStudentsNumbers(Context mContext, long userId, List<Student> students) {
+    public static void insertStudentsNumbers(Context mContext, long userId, User user) {
 
-        for(Student student : students) {
+        for(Student student : user.getStudents()) {
             ContentValues values = new ContentValues();
             values.put(ClipMobileContract.Users.REF_USER_ID, userId);
-            values.put(ClipMobileContract.Students.NUMBER_ID, student.getNumberID());
+            values.put(ClipMobileContract.Students.NUMBER_ID, student.getNumberId());
             values.put(ClipMobileContract.Students.NUMBER, student.getNumber());
 
             Uri uri = mContext.getContentResolver().insert(ClipMobileContract.Students.CONTENT_URI, values);
@@ -78,4 +80,47 @@ public class DBUtils {
         }
 
     }
+
+    /**
+     * ////////////////////////////// STUDENTS YEARS //////////////////////////////
+     */
+
+    public static Student getStudentYears(Context mContext, String student_id) {
+
+        final Cursor studentYears_cursor = mContext.getContentResolver().query(
+                ClipMobileContract.StudentsYears.CONTENT_URI, null,
+                ClipMobileContract.Students.REF_STUDENT_ID + "=?", new String[] { student_id }, null);
+
+        Student student = new Student();
+        while(studentYears_cursor.moveToNext()) {
+            String id = studentYears_cursor.getString(0);
+            String year = studentYears_cursor.getString(2);
+
+            StudentYear student_year = new StudentYear();
+            student_year.setId(id);
+            student_year.setYear(year);
+
+            student.addYear(student_year);
+        }
+        studentYears_cursor.close();
+
+        return student;
+    }
+
+    public static void insertStudentYears(Context mContext, String studentId, Student student) {
+
+        for(StudentYear year : student.getYears()) {
+            ContentValues values = new ContentValues();
+            values.put(ClipMobileContract.Students.REF_STUDENT_ID, studentId);
+            values.put(ClipMobileContract.StudentsYears.YEAR, year.getYear());
+
+            Uri uri = mContext.getContentResolver().insert(ClipMobileContract.StudentsYears.CONTENT_URI, values);
+            System.out.println("student year inserted! " + uri.getPath());
+
+            String newId = String.valueOf( ContentUris.parseId(uri) );
+            year.setId(newId);
+        }
+
+    }
+
 }
