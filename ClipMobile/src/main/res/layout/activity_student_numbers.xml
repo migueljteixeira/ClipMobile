@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Progress Spinner -->
+    <FrameLayout
+        android:id="@+id/progress_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="@dimen/activity_student_numbers_marginTop"
+        android:visibility="gone">
+
+        <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminate="true"
+            app:cpb_colors="@array/spinner_colors"
+            app:cpb_rotation_speed="0.8"
+            app:cpb_sweep_speed="0.6"
+            app:cpb_stroke_width="5dp"
+            app:cpb_min_sweep_angle="10"
+            app:cpb_max_sweep_angle="300" />
+    </FrameLayout>
+
+    <!-- Main view -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:background="#e7e8e9"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_student_numbers_marginTop"
+        android:paddingBottom="@dimen/activity_student_numbers_marginBottom"
+        android:paddingLeft="@dimen/activity_student_numbers_marginLeft"
+        android:paddingRight="@dimen/activity_student_numbers_marginRight"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/students_available"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:textSize="@dimen/text_size"
+            android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:background="@drawable/card_background"
+            android:layout_height="match_parent"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdgeLength="15dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

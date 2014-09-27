@@ -3,9 +3,15 @@
     <integer name="activity_login_linearlayout_gravity">1</integer>
     <dimen name="text_size">18sp</dimen>
 
-    <!-- LoginActivity -->
+    <!-- ConnectClip Activity -->
     <dimen name="activity_login_marginTop">100dp</dimen>
     <dimen name="activity_login_marginLeft">30dp</dimen>
     <dimen name="activity_login_marginRight">30dp</dimen>
+
+    <!-- StudentNumbers Activity -->
+    <dimen name="activity_student_numbers_marginTop">100dp</dimen>
+    <dimen name="activity_student_numbers_marginBottom">180dp</dimen>
+    <dimen name="activity_student_numbers_marginLeft">30dp</dimen>
+    <dimen name="activity_student_numbers_marginRight">30dp</dimen>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,7 +22,7 @@ import com.migueljteixeira.clipmobile.util.ConnectClipTask;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnTaskFinishedListener{
+public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnTaskFinishedListener {
 
     private ConnectClipTask mTask;
     @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
@@ -98,20 +99,19 @@ public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnT
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        ButterKnife.reset(this);
+    }
+
     /**
      * Shows the progress spinner and hides the login form.
      */
     private void showProgressSpinner(final boolean show) {
         mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
         mLoginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        ButterKnife.reset(this);
     }
 
     @Override
@@ -132,8 +132,10 @@ public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnT
                 break;
 
             case Result.SUCCESS :
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "nice!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), StudentNumbersActivity.class);
+                startActivity(intent);
+
+                getActivity().finish();
                 break;
         }
 

@@ -1,14 +1,10 @@
 package com.migueljteixeira.clipmobile.util;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Users;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 import java.util.List;
@@ -32,21 +28,16 @@ public class StudentTools {
             ClipSettings.setLoggedInUserId(mContext, newUserId);
 
             // Insert Students
-            DBUtils.insertStudents(mContext, newUserId, students);
+            DBUtils.insertStudentsNumbers(mContext, newUserId, students);
         }
 
         return Result.SUCCESS;
     }
 
 
-    public void getStudentNumbers() {
+    public static List<Student> getStudentsNumbers(Context mContext, String user_id) {
 
-        //query database
-
-        // if not in database
-        //loadFromClip(...);
-
-        //Student student = new Student();
+        return DBUtils.getStudentsNumbers(mContext, user_id);
     }
 
 }

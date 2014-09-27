@@ -12,5 +12,8 @@ public class ClipMobileApplication extends Application {
 
         // Set provider authority
         CONTENT_AUTHORITY = getString(R.string.provider_authority);
+
+        // Initialize tracker
+        Analytics.getTracker(this);
     }
 }

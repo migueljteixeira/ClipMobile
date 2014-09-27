@@ -7,11 +7,15 @@
     <!-- Connection issues -->
     <string name="connection_failed">A ligação falhou.\nTente novamente mais tarde</string>
 
-    <!-- LoginActivity -->
+    <!-- ConnectClip Activity -->
     <string name="hint_username">Identificador</string>
     <string name="hint_password">Password</string>
     <string name="action_login">Submeter</string>
     <string name="error_fields_required">Campo Obrigatório</string>
     <string name="error_fields_incorrect">Autenticação Inválida</string>
+
+    <!-- StudentNumbers Activity -->
+    <string name="students_available">Números de aluno\ndisponíveis</string>
+    <string name="years_available">Anos disponíveis</string>
 
 </resources>

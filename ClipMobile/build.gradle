@@ -14,8 +14,8 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            runProguard true
+            proguardFiles files('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -24,5 +24,6 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.0.0'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'org.jsoup:jsoup:1.7.3'
+    compile 'com.google.android.gms:play-services:5.0.+'
     compile project(':libraries:androidutils')
 }
