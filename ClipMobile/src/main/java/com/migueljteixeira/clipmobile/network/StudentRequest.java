@@ -6,12 +6,8 @@ import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentYear;
 import com.migueljteixeira.clipmobile.entities.User;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StudentRequest extends Request {
 

@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 
-import java.util.List;
-
 public class GetStudentYearsTask extends AsyncTask<String, Void, Student> {
 
     public interface OnTaskFinishedListener {

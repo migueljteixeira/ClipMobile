@@ -4,13 +4,10 @@ import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
-import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import java.util.List;
 
 public class StudentTools {
 

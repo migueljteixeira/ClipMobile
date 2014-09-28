@@ -2,10 +2,8 @@ package com.migueljteixeira.clipmobile.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
-import com.migueljteixeira.clipmobile.enums.Result;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class ConnectClipTask extends AsyncTask<String, Void, Integer> {

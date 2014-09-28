@@ -1,9 +1,13 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,6 +46,8 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -50,6 +56,28 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         ButterKnife.inject(this, view);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu_student_numbers, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings :
+                System.out.println("settings!");
+                break;
+
+            case R.id.logout :
+                System.out.println("logout!");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -138,5 +166,12 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
             System.out.println("year: " + year.getId() + " , " + year.getYear());
         }
 
+        showStudentNumbersDialog(result);
+    }
+
+    private void showStudentNumbersDialog(Student student) {
+        FragmentManager fm = getFragmentManager();
+        StudentYearsDialogFragment dialog = StudentYearsDialogFragment.newInstance(student.getYears());
+        dialog.show(fm, "student_numbers_dialog");
     }
 }

@@ -6,14 +6,15 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearsColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsSemestersColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleDaysColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleClassesColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendarsTypesColumns;
+
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendarsColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendarsTypesColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleClassesColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleDaysColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsSemestersColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearsColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
 

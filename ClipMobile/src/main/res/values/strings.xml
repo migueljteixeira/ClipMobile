@@ -4,6 +4,10 @@
     <string name="app_name">ClipMobile</string>
     <string name="provider_authority">com.migueljteixeira.clipmobile.provider</string>
 
+    <!-- Actionbar -->
+    <string name="menu_settings">Definições</string>
+    <string name="menu_logout">Mudar de Conta</string>
+
     <!-- Connection issues -->
     <string name="connection_failed">A ligação falhou.\nTente novamente mais tarde</string>
 
@@ -17,5 +21,24 @@
     <!-- StudentNumbers Activity -->
     <string name="students_available">Números de aluno\ndisponíveis</string>
     <string name="years_available">Anos disponíveis</string>
+
+    <!-- NavDrawer Activity -->
+    <array name="drawer_array">
+        <item>Horário</item>
+        <item>Calendário</item>
+        <item>Cadeiras</item>
+        <item>Resultados</item>
+    </array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- Schedule Fragment -->
+    <array name="tab_array">
+        <item>Segunda</item>
+        <item>Terça</item>
+        <item>Quarta</item>
+        <item>Quinta</item>
+        <item>Sexta</item>
+    </array>
 
 </resources>

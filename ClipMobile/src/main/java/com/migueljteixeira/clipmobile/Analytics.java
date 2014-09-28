@@ -14,8 +14,9 @@ public class Analytics {
      */
     public static synchronized Tracker getTracker(Context context) {
         if (sTracker == null) {
-            sTracker = GoogleAnalytics.getInstance(context.getApplicationContext())
-                    .newTracker(R.xml.analytics);
+            GoogleAnalytics gAnalytics = GoogleAnalytics.getInstance(context.getApplicationContext());
+            sTracker = gAnalytics.newTracker(R.xml.analytics);
+            sTracker.enableAutoActivityTracking(true);
         }
         return sTracker;
     }

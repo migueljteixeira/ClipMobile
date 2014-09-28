@@ -1,0 +1,28 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- As the main content view, the view below consumes the entire
+             space available using match_parent in both dimensions. -->
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:listSelector="#00000000"
+            android:divider="#dadadb"
+            android:dividerHeight="0.5dp"
+            android:background="#f3f3f4"/>
+    </android.support.v4.widget.DrawerLayout>
+
+</merge>

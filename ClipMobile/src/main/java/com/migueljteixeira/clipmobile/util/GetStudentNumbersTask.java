@@ -3,12 +3,7 @@ package com.migueljteixeira.clipmobile.util;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
-import com.migueljteixeira.clipmobile.enums.NetworkResult;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
-import java.util.List;
 
 public class GetStudentNumbersTask extends AsyncTask<Long, Void, User> {
 

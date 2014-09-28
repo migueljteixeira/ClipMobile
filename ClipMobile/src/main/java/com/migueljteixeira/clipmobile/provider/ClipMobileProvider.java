@@ -8,16 +8,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.migueljteixeira.clipmobile.util.SelectionBuilder;
-import com.migueljteixeira.clipmobile.provider.ClipMobileDatabase.Tables;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Users;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Students;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYears;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsSemesters;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleDays;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleClasses;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendarsTypes;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendars;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsCalendarsTypes;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleClasses;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsScheduleDays;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsSemesters;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYears;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Users;
+import com.migueljteixeira.clipmobile.provider.ClipMobileDatabase.Tables;
+import com.migueljteixeira.clipmobile.util.SelectionBuilder;
 
 public class ClipMobileProvider extends ContentProvider {
 

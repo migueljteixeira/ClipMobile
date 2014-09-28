@@ -2,6 +2,8 @@ package com.migueljteixeira.clipmobile;
 
 import android.app.Application;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 public class ClipMobileApplication extends Application {
 
     public static String CONTENT_AUTHORITY;
@@ -14,6 +16,7 @@ public class ClipMobileApplication extends Application {
         CONTENT_AUTHORITY = getString(R.string.provider_authority);
 
         // Initialize tracker
-        Analytics.getTracker(this);
+        //Analytics.getTracker(this);
     }
+
 }
