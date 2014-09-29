@@ -48,6 +48,10 @@ public class Student extends Entity {
         return years;
     }
 
+    public void setYears(List<StudentYear> years) {
+        this.years = years;
+    }
+
     public void addYear(StudentYear year) {
         years.add(year);
     }

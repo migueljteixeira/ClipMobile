@@ -17,16 +17,24 @@ public class DBUtils {
      * ////////////////////////////// USERS //////////////////////////////
      */
 
-    public static boolean userExists(Context mContext, String username) {
+    public static long getUserId(Context mContext, String username) {
 
-        final Cursor user = mContext.getContentResolver().query(
+        final Cursor user_cursor = mContext.getContentResolver().query(
                 ClipMobileContract.Users.CONTENT_URI,
-                new String[] { ClipMobileContract.Users.USERNAME },
+                new String[] { ClipMobileContract.Users._ID },
                 ClipMobileContract.Users.USERNAME + "=?", new String[] { username }, null);
 
-        user.close();
+        if(user_cursor.getCount() == 0) {
+            user_cursor.close();
 
-        return user.getCount() > 0;
+            return -1;
+        }
+
+        user_cursor.moveToFirst();
+        long userId = user_cursor.getInt(0);
+        user_cursor.close();
+
+        return userId;
     }
 
     public static long createUser(Context mContext, String username) {

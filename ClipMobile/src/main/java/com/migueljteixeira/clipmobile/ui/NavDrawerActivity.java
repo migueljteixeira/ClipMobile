@@ -11,10 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.DrawerAdapter;
-import com.migueljteixeira.clipmobile.util.Utils;
 
 public class NavDrawerActivity extends Activity implements AdapterView.OnItemClickListener {
 
@@ -33,10 +31,6 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
         ScheduleViewPager fragment = (ScheduleViewPager) fm.findFragmentById(R.id.content_frame);
 
         if (fragment == null) {
-            // Report the start of the Activity
-            /*GoogleAnalytics.getInstance(this).reportActivityStart(this);
-            System.out.println("Track activity start: NavDrawerActivity");*/
-
             fragment = new ScheduleViewPager();
             fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
@@ -48,7 +42,8 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
         //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerAdapter(this, R.layout.adapter_list_item_drawer, new String[]{"1","2"}));
+        mDrawerList.setAdapter(new DrawerAdapter(this, R.layout.adapter_list_item_drawer,
+                getResources().getStringArray(R.array.drawer_array) ));
         mDrawerList.setOnItemClickListener(this);
 
         // setup drawer indicator
@@ -98,14 +93,5 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*@Override
-    protected void onStop() {
-        super.onStop();
-
-        // Report the end of the Activity
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        System.out.println("Track activity stop: NavDrawerActivity");
-    }*/
 
 }

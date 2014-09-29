@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/clipmobile_list_selector_holo_light"
+    android:background="@drawable/clipmobile_list_selector_background_transition_holo_light"
     android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:padding="15dp"
-        android:textSize="@dimen/text_size"
-        android:text="asdf"
-        android:layout_marginRight="25dp"
-        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/indicatorImage"
@@ -21,5 +12,16 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:src="@drawable/indicator" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:textSize="@dimen/text_size"
+        android:text="2021 asdf"
+        android:layout_marginRight="25dp"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

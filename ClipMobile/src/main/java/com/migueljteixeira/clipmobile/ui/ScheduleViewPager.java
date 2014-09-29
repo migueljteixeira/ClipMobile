@@ -11,7 +11,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.util.GetStudentScheduleTask;
-import com.migueljteixeira.clipmobile.util.Utils;
 
 public class ScheduleViewPager extends Fragment {
 
@@ -23,22 +22,16 @@ public class ScheduleViewPager extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
-        // Track view
-        /*Utils.trackView(getActivity(), "ScheduleFragment Page initialized");
-        System.out.println("Track View: ScheduleFragment Page initialized");*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.viewpager_student_numbers, container, false);
 
-        // PagerSlidingTabStrip tab names
-        String[] tabNames = getResources().getStringArray(R.array.tab_array);
-
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) view.findViewById(R.id.view_pager);
-        pager.setAdapter(new ScheduleViewPagerAdapter(getFragmentManager(), tabNames));
+        pager.setAdapter(new ScheduleViewPagerAdapter(getFragmentManager(),
+                getResources().getStringArray(R.array.tab_array) ));
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);

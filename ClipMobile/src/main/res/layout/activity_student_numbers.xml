@@ -11,15 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
         android:visibility="gone">
 
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:indeterminate="true"
             app:cpb_colors="@array/spinner_colors"
             app:cpb_rotation_speed="0.8"
@@ -48,13 +48,14 @@
             android:textSize="@dimen/text_size"
             android:layout_height="wrap_content" />
 
-        <ListView
+        <ExpandableListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:background="@drawable/card_background"
             android:layout_height="match_parent"
             android:requiresFadingEdge="vertical"
             android:fadingEdgeLength="15dp"
+            android:groupIndicator="@android:color/transparent"
             tools:listitem="@android:layout/simple_list_item_1" />
 
     </LinearLayout>

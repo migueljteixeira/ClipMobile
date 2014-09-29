@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.migueljteixeira.clipmobile.util.Utils;
-
 public class ScheduleFragment extends Fragment {
 
     private static final String ARG_POSITION = "position";
@@ -36,7 +34,8 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
 
         FrameLayout fl = new FrameLayout(getActivity());
         fl.setLayoutParams(params);

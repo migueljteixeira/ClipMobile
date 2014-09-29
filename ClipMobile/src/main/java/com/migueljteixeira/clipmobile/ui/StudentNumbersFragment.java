@@ -1,24 +1,19 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.StudentNumbersAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.StudentYear;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.GetStudentNumbersTask;
@@ -38,7 +33,7 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
     private List<Student> students;
     @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
     @InjectView(R.id.main_view) LinearLayout mMainView;
-    @InjectView(R.id.list_view) ListView mListView;
+    @InjectView(R.id.list_view) ExpandableListView mListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +41,6 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -56,28 +49,6 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         ButterKnife.inject(this, view);
 
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        inflater.inflate(R.menu.menu_student_numbers, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings :
-                System.out.println("settings!");
-                break;
-
-            case R.id.logout :
-                System.out.println("logout!");
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -91,17 +62,18 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         // The view has been loaded already
         if(mListAdapter != null) {
             mListView.setAdapter(mListAdapter);
-            mListView.setOnItemClickListener(onItemClickListener);
+            mListView.setOnGroupClickListener(onGroupClickListener);
+            mListView.setOnChildClickListener(onChildClickListener);
             return;
         }
 
-        // show Progress Bar
+        // Show progress spinner
         showProgressSpinner(true);
 
         // Get logged in user id
         long user_id = ClipSettings.getLoggedInUserId(getActivity());
 
-        // start AsyncTask
+        // Start AsyncTask
         mTask = new GetStudentNumbersTask(getActivity().getApplicationContext(),
                 StudentNumbersFragment.this);
         mTask.execute(user_id);
@@ -114,19 +86,35 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         ButterKnife.reset(this);
     }
 
-    AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+    ExpandableListView.OnGroupClickListener onGroupClickListener = new ExpandableListView.OnGroupClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // show Progress Bar
-            showProgressSpinnerOnly(true);
+        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
-            Student student = students.get(position);
-            System.out.println("Shit son! " + student.getId() + " , " + student.getNumberId());
+            if(mListView.isGroupExpanded(groupPosition))
+                mListView.collapseGroup(groupPosition);
 
-            mmTask = new GetStudentYearsTask(getActivity().getApplicationContext(),
-                    StudentNumbersFragment.this);
-            mmTask.execute(student.getId(), student.getNumberId());
+            else {
+                // show Progress Bar
+                showProgressSpinnerOnly(true);
 
+                mmTask = new GetStudentYearsTask(getActivity().getApplicationContext(),
+                        StudentNumbersFragment.this);
+                mmTask.execute(students.get(groupPosition), groupPosition);
+            }
+
+            return true;
+        }
+    };
+
+    ExpandableListView.OnChildClickListener onChildClickListener = new ExpandableListView.OnChildClickListener() {
+
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+            Intent intent = new Intent(getActivity(), NavDrawerActivity.class);
+            startActivity(intent);
+
+            return true;
         }
     };
 
@@ -150,28 +138,30 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         students = result.getStudents();
         showProgressSpinner(false);
 
-        mListAdapter = new StudentNumbersAdapter(getActivity(),
-                R.layout.adapter_student_numbers, result);
+        mListAdapter = new StudentNumbersAdapter(getActivity(), this.students);
         mListView.setAdapter(mListAdapter);
-        mListView.setOnItemClickListener(onItemClickListener);
+        mListView.setOnGroupClickListener(onGroupClickListener);
+        mListView.setOnChildClickListener(onChildClickListener);
     }
 
     @Override
-    public void onStudentYearsTaskFinished(Student result) {
+    public void onStudentYearsTaskFinished(Student result, int groupPosition) {
         showProgressSpinnerOnly(false);
 
-        System.out.println("finished! " + result.getYears().size());
+        // Server is unvailable right now
+        if(result == null) return;
 
-        for(StudentYear year :result.getYears()) {
-            System.out.println("year: " + year.getId() + " , " + year.getYear());
-        }
+        // Set new user data and notifyDataSetChanged
+        students.get(groupPosition).setYears(result.getYears());
+        mListAdapter.notifyDataSetChanged();
 
-        showStudentNumbersDialog(result);
+        // Expand group position
+        mListView.expandGroup(groupPosition, true);
     }
 
-    private void showStudentNumbersDialog(Student student) {
+    /*private void showStudentNumbersDialog(Student student) {
         FragmentManager fm = getFragmentManager();
         StudentYearsDialogFragment dialog = StudentYearsDialogFragment.newInstance(student.getYears());
         dialog.show(fm, "student_numbers_dialog");
-    }
+    }*/
 }

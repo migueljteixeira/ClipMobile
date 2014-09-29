@@ -5,13 +5,15 @@ import android.content.Context;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.enums.Result;
+import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class StudentTools {
 
-    public static int signIn(Context mContext, String username, String password) {
+    public static int signIn(Context mContext, String username, String password)
+            throws ServerUnavailableException {
 
         // Sign in the user, and returns Students available
         User user = StudentRequest.signIn(mContext, username, password);
@@ -20,16 +22,18 @@ public class StudentTools {
         if(! user.hasStudents())
             return Result.ERROR;
 
-        // Create new User
-        if(! DBUtils.userExists(mContext, username)) {
-            long newUserId = DBUtils.createUser(mContext, username);
+        long userId = DBUtils.getUserId(mContext, username);
 
-            // User is now logged in
-            ClipSettings.setLoggedInUserId(mContext, newUserId);
+        // If it doesn't exist, create new User
+        if(userId == -1) {
+            userId = DBUtils.createUser(mContext, username);
 
             // Insert Students
-            DBUtils.insertStudentsNumbers(mContext, newUserId, user);
+            DBUtils.insertStudentsNumbers(mContext, userId, user);
         }
+
+        // User is now logged in
+        ClipSettings.setLoggedInUser(mContext, userId, username, password);
 
         return Result.SUCCESS;
     }
@@ -40,7 +44,8 @@ public class StudentTools {
         return DBUtils.getStudents(mContext, userId);
     }
 
-    public static Student getStudentsYears(Context mContext, String studentId, String studentNumberId) {
+    public static Student getStudentsYears(Context mContext, String studentId, String studentNumberId)
+            throws ServerUnavailableException {
 
         Student student = DBUtils.getStudentYears(mContext, studentId);
 

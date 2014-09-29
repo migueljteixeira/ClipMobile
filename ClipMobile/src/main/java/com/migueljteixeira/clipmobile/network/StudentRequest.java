@@ -5,6 +5,7 @@ import android.content.Context;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentYear;
 import com.migueljteixeira.clipmobile.entities.User;
+import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -13,7 +14,8 @@ public class StudentRequest extends Request {
 
     private static final String GET_STUDENTS_YEARS = "https://clip.unl.pt/utente/eu/aluno?aluno=";
 
-    public static User signIn(Context context, String username, String password) {
+    public static User signIn(Context context, String username, String password)
+            throws ServerUnavailableException {
 
         Elements links = initialRequest(context, username, password)
                 .body()
@@ -48,7 +50,8 @@ public class StudentRequest extends Request {
         return user;
     }
 
-    public static Student getStudentsYears(Context mContext, String studentNumberId) {
+    public static Student getStudentsYears(Context mContext, String studentNumberId)
+            throws ServerUnavailableException {
         String url = GET_STUDENTS_YEARS + studentNumberId;
 
         Elements links = request(mContext, url)
