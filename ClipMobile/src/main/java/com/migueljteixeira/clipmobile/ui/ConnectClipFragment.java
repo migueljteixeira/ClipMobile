@@ -1,6 +1,5 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
@@ -23,22 +20,12 @@ import com.migueljteixeira.clipmobile.util.ConnectClipTask;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnTaskFinishedListener {
+public class ConnectClipFragment extends BaseFragment implements ConnectClipTask.OnTaskFinishedListener {
 
     private ConnectClipTask mTask;
-    @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
-    @InjectView(R.id.login_form) LinearLayout mLoginForm;
     @InjectView(R.id.username) EditText mUsername;
     @InjectView(R.id.password) EditText mPassword;
     @InjectView(R.id.log_in_button) Button mLogInButton;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Retain this fragment across configuration changes.
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,21 +88,6 @@ public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnT
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        ButterKnife.reset(this);
-    }
-
-    /**
-     * Shows the progress spinner and hides the login form.
-     */
-    private void showProgressSpinner(final boolean show) {
-        mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
-        mLoginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
-
-    @Override
     public void onTaskFinished(int resultCode) {
         showProgressSpinner(false);
 
@@ -140,6 +112,5 @@ public class ConnectClipFragment extends Fragment implements ConnectClipTask.OnT
                 break;
         }
 
-        System.out.println("done!");
     }
 }

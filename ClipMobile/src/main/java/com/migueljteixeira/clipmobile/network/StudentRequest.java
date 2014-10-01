@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 
 public class StudentRequest extends Request {
 
+    private static final String GET_STUDENTS_NUMBERS = "https://clip.unl.pt/utente/eu";
     private static final String GET_STUDENTS_YEARS = "https://clip.unl.pt/utente/eu/aluno?aluno=";
 
     public static User signIn(Context context, String username, String password)
@@ -50,6 +51,44 @@ public class StudentRequest extends Request {
         return user;
     }
 
+    public static User getStudentsNumbers(Context mContext)
+            throws ServerUnavailableException {
+        String url = GET_STUDENTS_NUMBERS;
+
+        Elements links = request(mContext, url)
+                .body()
+                .select("a[href]");
+
+        User user = new User();
+
+        for (Element link : links) {
+            String linkHref = link.attr("href");
+
+            if (linkHref.matches("/utente/eu/aluno[?][_a-zA-Z0-9=&.]*aluno=[0-9]*")) {
+
+                // Remove all the garbage
+                String[] numbers = linkHref.split("&");
+                numbers = numbers[numbers.length - 1].split("=");
+
+                // Get student number ID and student number
+                String student_numberID = numbers[1];
+                String student_number = link.text();
+
+                Student student = new Student();
+                student.setNumberId(student_numberID);
+                student.setNumber(student_number);
+
+                System.out.println("numberID: " + student_numberID);
+                System.out.println("number: " + student_number);
+
+                user.addStudent(student);
+            }
+        }
+
+        return user;
+    }
+
+
     public static Student getStudentsYears(Context mContext, String studentNumberId)
             throws ServerUnavailableException {
         String url = GET_STUDENTS_YEARS + studentNumberId;
@@ -64,8 +103,8 @@ public class StudentRequest extends Request {
         for(Element link : links) {
             String linkHref = link.attr("href");
 
-            if(linkHref.matches("/utente/eu/aluno/ano_lectivo[?][_a-zA-Z0-9=&.%]*ano_lectivo=[0-9]*")) {
-                String year = linkHref.split("=")[3];
+            if(linkHref.matches("/utente/eu/aluno/ano_lectivo[?][_a-zA-Z0-9=;&.%]*ano_lectivo=[0-9]*")) {
+                String year = link.text();
 
                 StudentYear studentYear = new StudentYear();
                 studentYear.setYear(year);

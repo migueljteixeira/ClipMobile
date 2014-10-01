@@ -24,7 +24,7 @@ public class StudentTools {
 
         long userId = DBUtils.getUserId(mContext, username);
 
-        // If it doesn't exist, create new User
+        // If the user doesn't exist, create a new one
         if(userId == -1) {
             userId = DBUtils.createUser(mContext, username);
 
@@ -39,7 +39,7 @@ public class StudentTools {
     }
 
 
-    public static User getStudents(Context mContext, String userId) {
+    public static User getStudents(Context mContext, long userId) {
 
         return DBUtils.getStudents(mContext, userId);
     }
@@ -68,4 +68,26 @@ public class StudentTools {
 
         return student;
     }
+
+    public static User updateStudentNumbersAndYears(Context mContext, long userId)
+            throws ServerUnavailableException {
+
+        System.out.println("request!");
+
+        // Get (new) studentsNumbers from the server
+        User user = StudentRequest.getStudentsNumbers(mContext);
+
+        System.out.println("deleting!");
+
+        // Delete studentsNumbers and studentsYears
+        DBUtils.deleteStudentsNumbers(mContext, userId);
+
+        System.out.println("inserting!");
+
+        // Insert Students
+        DBUtils.insertStudentsNumbers(mContext, userId, user);
+
+        return user;
+    }
+
 }

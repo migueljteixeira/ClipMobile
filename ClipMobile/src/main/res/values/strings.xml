@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ClipMobile</string>
+    <string name="app_name">Clip Mobile</string>
     <string name="provider_authority">com.migueljteixeira.clipmobile.provider</string>
 
     <!-- Actionbar -->
+    <string name="menu_refresh">Actualizar</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_logout">Mudar de Conta</string>
 

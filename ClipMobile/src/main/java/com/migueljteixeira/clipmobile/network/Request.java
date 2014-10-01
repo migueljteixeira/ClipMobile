@@ -29,7 +29,6 @@ public abstract class Request {
                     .header("Accept-Language", "en-US,en;q=0.8,pt-PT;q=0.6,pt;q=0.4")
                     .header("Cache-Control", "max-age=0")
                     .header("Connection", "keep-alive")
-                    //.header("Content-Length", "39")
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Host", "clip.unl.pt")
                     .header("Origin", "https://clip.unl.pt")
@@ -66,11 +65,12 @@ public abstract class Request {
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36")
                     .timeout(30000);
 
-
             // If the cookie has expired, we need to request a new one
             Connection.Response response;
             if( ClipSettings.isTimeForANewCookie(context) ) {
                 System.out.println("Requesting new cookie!");
+
+                connection.header("Content-Type", "application/x-www-form-urlencoded");
                 connection.data("identificador", ClipSettings.getLoggedInUserName(context));
                 connection.data("senha", ClipSettings.getLoggedInUserPw(context));
 
@@ -90,7 +90,7 @@ public abstract class Request {
                 response = connection.execute();
             }
 
-            System.out.println("response : " + response.parse().body());
+            System.out.println("!!!!!!!!! response : " + response.parse().body());
             return response.parse();
 
         } catch (IOException e) {

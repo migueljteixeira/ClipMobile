@@ -10,7 +10,7 @@
 
     <!-- StudentNumbers Activity -->
     <dimen name="activity_student_numbers_marginTop">100dp</dimen>
-    <dimen name="activity_student_numbers_marginBottom">130dp</dimen>
+    <dimen name="activity_student_numbers_marginBottom">180dp</dimen>
     <dimen name="activity_student_numbers_marginLeft">30dp</dimen>
     <dimen name="activity_student_numbers_marginRight">30dp</dimen>
 

@@ -77,7 +77,7 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
-            + UsersColumns.REF_USER_ID + " TEXT " + References.USER_ID + ","
+            + UsersColumns.REF_USER_ID + " TEXT " + References.USER_ID + " ON DELETE CASCADE,"
 
             + StudentsColumns.NUMBER_ID + " TEXT NOT NULL,"
 
@@ -90,7 +90,7 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
-            + StudentsColumns.REF_STUDENT_ID + " TEXT " + References.STUDENT_ID + ","
+            + StudentsColumns.REF_STUDENT_ID + " TEXT " + References.STUDENT_ID + " ON DELETE CASCADE,"
 
             + StudentsYearsColumns.YEAR + " TEXT NOT NULL"
 
@@ -214,6 +214,11 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
+
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
 
         mUsersInserter = new DatabaseUtils.InsertHelper(db, Tables.USERS);
         mStudentsInserter = new DatabaseUtils.InsertHelper(db, Tables.STUDENTS);

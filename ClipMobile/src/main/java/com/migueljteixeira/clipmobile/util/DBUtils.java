@@ -51,11 +51,11 @@ public class DBUtils {
      * ////////////////////////////// STUDENTS //////////////////////////////
      */
 
-    public static User getStudents(Context mContext, String user_id) {
+    public static User getStudents(Context mContext, long userId) {
 
         final Cursor students_cursor = mContext.getContentResolver().query(
                 ClipMobileContract.Students.CONTENT_URI, null,
-                ClipMobileContract.Users.REF_USER_ID + "=?", new String[] { user_id }, null);
+                ClipMobileContract.Users.REF_USER_ID + "=?", new String[] { String.valueOf(userId) }, null);
 
         User user = new User();
         while(students_cursor.moveToNext()) {
@@ -85,6 +85,9 @@ public class DBUtils {
 
             Uri uri = mContext.getContentResolver().insert(ClipMobileContract.Students.CONTENT_URI, values);
             System.out.println("student inserted! " + uri.getPath());
+
+            String newId = String.valueOf( ContentUris.parseId(uri) );
+            student.setId(newId);
         }
 
     }
@@ -129,6 +132,18 @@ public class DBUtils {
             year.setId(newId);
         }
 
+    }
+
+    /**
+     * ////////////////////////////// UPDATE STUDENT INFO //////////////////////////////
+     */
+
+    public static void deleteStudentsNumbers(Context mContext, long userId) {
+
+        // Delete Student Numbers
+        mContext.getContentResolver().delete(ClipMobileContract.Students.CONTENT_URI,
+                ClipMobileContract.Users.REF_USER_ID + "=?",
+                new String[] { String.valueOf(userId) });
     }
 
 }

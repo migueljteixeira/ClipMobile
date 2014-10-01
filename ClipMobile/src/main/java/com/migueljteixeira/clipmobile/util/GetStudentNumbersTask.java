@@ -4,8 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.migueljteixeira.clipmobile.entities.User;
+import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
-public class GetStudentNumbersTask extends AsyncTask<Long, Void, User> {
+public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
 
     public interface OnTaskFinishedListener {
 
@@ -25,13 +26,11 @@ public class GetStudentNumbersTask extends AsyncTask<Long, Void, User> {
     }
 
     @Override
-    protected User doInBackground(Long... params) {
-        String user_id = String.valueOf(params[0]);
+    protected User doInBackground(Void... params) {
+        long userId = ClipSettings.getLoggedInUserId(mContext);
 
-        // Get students numbers from the database
-        User user = StudentTools.getStudents(mContext, user_id);
-
-        return user;
+        // Get students numbers
+        return StudentTools.getStudents(mContext, userId);
     }
 
     @Override

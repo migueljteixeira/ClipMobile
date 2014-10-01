@@ -35,7 +35,7 @@ public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
             return NetworkResult.OFFLINE;
         }
 
-        // get user data
+        // Get user data
         String username = params[0];
         String password = params[1];
 
@@ -51,7 +51,7 @@ public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
         super.onPostExecute(resultCode);
 
         if(resultCode == NetworkResult.OFFLINE) {
-            // Server is unvailable right now
+            // Server is unavailable right now
             Toast.makeText(mContext, mContext.getString(R.string.connection_failed),
                     Toast.LENGTH_SHORT).show();
         }

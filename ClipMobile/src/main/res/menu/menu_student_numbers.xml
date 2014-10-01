@@ -2,15 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/refresh"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="1"
+        android:title="@string/menu_refresh" />
+
+    <item
         android:id="@+id/settings"
         android:showAsAction="never"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:title="@string/menu_settings" />
 
     <item
         android:id="@+id/logout"
         android:showAsAction="never"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:title="@string/menu_logout" />
 
 </menu>

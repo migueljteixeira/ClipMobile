@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class ClipSettings {
 
@@ -34,24 +34,41 @@ public class ClipSettings {
     }
 
     public static void saveLoginTime(Context context) {
-        edit(context).putLong(LOGIN_TIME, new Date().getTime());
+        edit(context).putLong(LOGIN_TIME, new Date().getTime()).commit();
     }
 
     public static boolean isTimeForANewCookie(Context context) {
         long currentTime = new Date().getTime();
         long loginTime = get(context).getLong(LOGIN_TIME, -1);
-        long elapsedTimeInMinutes = currentTime - loginTime;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(elapsedTimeInMinutes);
+        long elapsedTime = currentTime - loginTime;
 
-        System.out.println("Tempo decorrido: " + calendar.get(Calendar.MINUTE));
+        System.out.println("!!! login: " + loginTime);
+        System.out.println("!!! currentTime: " + currentTime);
+
+        int elapsedTimeInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
+        System.out.println("!!! elapsed time: " + elapsedTimeInMinutes);
 
         // If the elapsedTime > 50min, we need to request a new cookie from the server
-        if(calendar.get(Calendar.MINUTE) > 50)
+        if(elapsedTimeInMinutes > 50)
             return true;
 
         return false;
+    }
+
+    public static int TimeCookie(Context context) {
+        long currentTime = new Date().getTime();
+        long loginTime = get(context).getLong(LOGIN_TIME, -1);
+
+        long elapsedTime = currentTime - loginTime;
+
+        System.out.println("login: " + loginTime);
+        System.out.println("currentTime: " + currentTime);
+
+        int elapsedTimeInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
+        System.out.println("elapsed time: " + elapsedTimeInMinutes);
+
+        return elapsedTimeInMinutes;
     }
 
 

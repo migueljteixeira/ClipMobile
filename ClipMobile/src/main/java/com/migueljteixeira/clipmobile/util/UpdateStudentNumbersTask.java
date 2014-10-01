@@ -5,49 +5,44 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
-public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
+public class UpdateStudentNumbersTask extends AsyncTask<Void, Void, User> {
 
     public interface OnTaskFinishedListener {
 
         /**
          * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
          */
-        public void onStudentYearsTaskFinished(Student resultCode, int groupPosition);
+        public void onUpdateTaskFinished(User result);
 
     }
 
     private Context mContext;
     private OnTaskFinishedListener mListener;
-    private Integer groupPosition;
 
-    public GetStudentYearsTask(Context context, OnTaskFinishedListener listener) {
+    public UpdateStudentNumbersTask(Context context, OnTaskFinishedListener listener) {
         mContext = context;
         mListener = listener;
     }
 
     @Override
-    protected Student doInBackground(Object... params) {
-        Student student = (Student) params[0];
-        groupPosition = (Integer) params[1];
+    protected User doInBackground(Void... params) {
+        long userId = ClipSettings.getLoggedInUserId(mContext);
 
         try {
-            // Get students years
-            return StudentTools.getStudentsYears(mContext, student.getId(), student.getNumberId());
+            // Update students numbers and years
+            return StudentTools.updateStudentNumbersAndYears(mContext, userId);
         } catch (ServerUnavailableException e) {
             return null;
         }
     }
 
     @Override
-    protected void onPostExecute(Student result) {
+    protected void onPostExecute(User result) {
         super.onPostExecute(result);
-
-        Toast.makeText(mContext, "" + ClipSettings.TimeCookie(mContext),
-                Toast.LENGTH_SHORT).show();
 
         if(result == null) {
             // Server is unavailable right now
@@ -56,6 +51,6 @@ public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
         }
 
         if (mListener != null)
-            mListener.onStudentYearsTaskFinished(result, groupPosition);
+            mListener.onUpdateTaskFinished(result);
     }
 }

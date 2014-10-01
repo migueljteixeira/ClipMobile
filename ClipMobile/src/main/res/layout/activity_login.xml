@@ -29,7 +29,7 @@
 
     <!-- Login form -->
     <LinearLayout
-        android:id="@+id/login_form"
+        android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:background="@drawable/card_background"
         android:layout_height="wrap_content"

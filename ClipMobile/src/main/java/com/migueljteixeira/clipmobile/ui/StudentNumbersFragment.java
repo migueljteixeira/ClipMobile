@@ -1,15 +1,15 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.StudentNumbersAdapter;
@@ -18,30 +18,21 @@ import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.GetStudentNumbersTask;
 import com.migueljteixeira.clipmobile.util.GetStudentYearsTask;
+import com.migueljteixeira.clipmobile.util.UpdateStudentNumbersTask;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class StudentNumbersFragment extends Fragment implements GetStudentNumbersTask.OnTaskFinishedListener,
-        GetStudentYearsTask.OnTaskFinishedListener {
+public class StudentNumbersFragment extends BaseFragment implements GetStudentNumbersTask.OnTaskFinishedListener,
+        GetStudentYearsTask.OnTaskFinishedListener, UpdateStudentNumbersTask.OnTaskFinishedListener {
 
-    private GetStudentNumbersTask mTask;
-    private GetStudentYearsTask mmTask;
+    private GetStudentYearsTask mYearsTask;
+    private UpdateStudentNumbersTask mUpdateTask;
     private StudentNumbersAdapter mListAdapter;
     private List<Student> students;
-    @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
-    @InjectView(R.id.main_view) LinearLayout mMainView;
     @InjectView(R.id.list_view) ExpandableListView mListView;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Retain this fragment across configuration changes.
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +47,8 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         super.onActivityCreated(savedInstanceState);
 
         // unfinished task around?
-        if (mmTask != null && mmTask.getStatus() != AsyncTask.Status.FINISHED)
+        if ( ( mYearsTask != null && mYearsTask.getStatus() != AsyncTask.Status.FINISHED ) ||
+                ( mUpdateTask != null && mUpdateTask.getStatus() != AsyncTask.Status.FINISHED ) )
             showProgressSpinnerOnly(true);
 
         // The view has been loaded already
@@ -70,20 +62,46 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         // Show progress spinner
         showProgressSpinner(true);
 
-        // Get logged in user id
-        long user_id = ClipSettings.getLoggedInUserId(getActivity());
-
         // Start AsyncTask
-        mTask = new GetStudentNumbersTask(getActivity().getApplicationContext(),
+        GetStudentNumbersTask mNumbersTask = new GetStudentNumbersTask(getActivity().getApplicationContext(),
                 StudentNumbersFragment.this);
-        mTask.execute(user_id);
+        mNumbersTask.execute();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_student_numbers, menu);
+    }
 
-        ButterKnife.reset(this);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh :
+                System.out.println("refresh!");
+                showProgressSpinnerOnly(true);
+
+                // Start AsyncTask
+                mUpdateTask = new UpdateStudentNumbersTask(getActivity().getApplicationContext(),
+                        StudentNumbersFragment.this);
+                mUpdateTask.execute();
+                break;
+
+            case R.id.settings :
+                System.out.println("settings!");
+                break;
+
+            case R.id.logout :
+                // Clear user personal data
+                ClipSettings.logoutUser(getActivity());
+
+                Intent intent = new Intent(getActivity(), ConnectClipActivity.class);
+                startActivity(intent);
+
+                getActivity().finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     ExpandableListView.OnGroupClickListener onGroupClickListener = new ExpandableListView.OnGroupClickListener() {
@@ -97,9 +115,9 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
                 // show Progress Bar
                 showProgressSpinnerOnly(true);
 
-                mmTask = new GetStudentYearsTask(getActivity().getApplicationContext(),
+                mYearsTask = new GetStudentYearsTask(getActivity().getApplicationContext(),
                         StudentNumbersFragment.this);
-                mmTask.execute(students.get(groupPosition), groupPosition);
+                mYearsTask.execute(students.get(groupPosition), groupPosition);
             }
 
             return true;
@@ -118,20 +136,7 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         }
     };
 
-    /**
-     * Shows the progress spinner and hides the login form.
-     */
-    private void showProgressSpinner(final boolean show) {
-        mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
-        mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-    }
 
-    /**
-     * Shows the progress spinner
-     */
-    private void showProgressSpinnerOnly(final boolean show) {
-        mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
 
     @Override
     public void onStudentNumbersTaskFinished(User result) {
@@ -148,10 +153,10 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
     public void onStudentYearsTaskFinished(Student result, int groupPosition) {
         showProgressSpinnerOnly(false);
 
-        // Server is unvailable right now
+        // Server is unavailable right now
         if(result == null) return;
 
-        // Set new user data and notifyDataSetChanged
+        // Set new data and notifyDataSetChanged
         students.get(groupPosition).setYears(result.getYears());
         mListAdapter.notifyDataSetChanged();
 
@@ -159,9 +164,17 @@ public class StudentNumbersFragment extends Fragment implements GetStudentNumber
         mListView.expandGroup(groupPosition, true);
     }
 
-    /*private void showStudentNumbersDialog(Student student) {
-        FragmentManager fm = getFragmentManager();
-        StudentYearsDialogFragment dialog = StudentYearsDialogFragment.newInstance(student.getYears());
-        dialog.show(fm, "student_numbers_dialog");
-    }*/
+    @Override
+    public void onUpdateTaskFinished(User result) {
+        showProgressSpinnerOnly(false);
+
+        if(result != null) {
+            // Set new data and notifyDataSetChanged
+            students.clear();
+            students.addAll(result.getStudents());
+
+            System.out.println("updated!");
+            mListAdapter.notifyDataSetChanged();
+        }
+    }
 }
