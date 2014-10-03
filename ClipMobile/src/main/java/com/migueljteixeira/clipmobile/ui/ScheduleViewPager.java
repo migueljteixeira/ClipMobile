@@ -22,6 +22,8 @@ public class ScheduleViewPager extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
+
+        System.out.println("SCHEDULEVIEWPAGER ONCREATE");
     }
 
     @Override
@@ -43,10 +45,4 @@ public class ScheduleViewPager extends Fragment {
         return view;
     }
 
-    /**
-     * Shows the progress spinner
-     */
-    /*private void showProgressSpinnerOnly(final boolean show) {
-        mProgressSpinner.setVisibility(show ? View.VISIBLE : View.GONE);
-    }*/
 }

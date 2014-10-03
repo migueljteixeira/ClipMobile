@@ -20,8 +20,8 @@
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
             android:listSelector="@drawable/clipmobile_list_selector_holo_light"
-            android:divider="#dadadb"
-            android:dividerHeight="0.5dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
             android:background="#f3f3f4"/>
     </android.support.v4.widget.DrawerLayout>
 

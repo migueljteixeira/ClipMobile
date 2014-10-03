@@ -8,31 +8,74 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
+import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerTitle;
+import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerDivider;
+import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerItem;
 
-public class DrawerAdapter extends ArrayAdapter<String> {
+public class DrawerAdapter extends ArrayAdapter<Object> {
+    private static final int VIEW_TYPE_TITLE = 0;
+    private static final int VIEW_TYPE_DIVIDER = 1;
+    private static final int VIEW_TYPE_ITEM = 2;
 
-    private Context context;
-    private int resource;
-    private String[] list;
+    private Context mContext;
 
-    public DrawerAdapter(Context context, int resource, String[] list) {
-        super(context, resource, list);
+    public DrawerAdapter(Context context) {
+        super(context, 0);
+        this.mContext = context;
+    }
 
-        this.context = context;
-        this.resource = resource;
-        this.list = list;
+    @Override
+    public int getItemViewType(int position) {
+        if(getItem(position) instanceof DrawerTitle)
+            return VIEW_TYPE_TITLE;
+
+        else if(getItem(position) instanceof DrawerDivider)
+            return VIEW_TYPE_DIVIDER;
+
+        return VIEW_TYPE_ITEM;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 3;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
 
-        if(convertView == null)
-            convertView = LayoutInflater.from(context).inflate(resource, parent, false);
+        if(getItemViewType(position) == VIEW_TYPE_DIVIDER) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_divider, parent, false);
+            convertView.setOnClickListener(null);
+            return convertView;
+        }
 
-        TextView textView = (TextView) convertView.findViewById(R.id.text);
-        textView.setText(list[position]);
+        if(convertView == null) {
+            if(getItemViewType(position) == VIEW_TYPE_TITLE) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_title, parent, false);
+                convertView.setOnClickListener(null);
+            }
+            else if(getItemViewType(position) == VIEW_TYPE_ITEM) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.drawer_item, parent, false);
+            }
+
+            viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        DrawerItem item = (DrawerItem) getItem(position);
+        viewHolder.name.setText(item.mTitle);
 
         return convertView;
+    }
+
+    static class ViewHolder {
+
+        TextView name;
     }
 
 }

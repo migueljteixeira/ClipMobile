@@ -46,6 +46,13 @@ public class StudentRequest extends Request {
 
                 user.addStudent(student);
             }
+
+            else if(linkHref.matches("/utente/eu")) {
+                String[] full_user_name = link.getElementsByTag("span").text().split(" ");
+                String user_name = full_user_name[0] + " " + full_user_name[full_user_name.length - 1];
+
+                user.setName(user_name.toUpperCase());
+            }
         }
 
         return user;

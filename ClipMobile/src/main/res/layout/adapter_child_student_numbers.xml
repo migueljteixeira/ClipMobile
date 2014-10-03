@@ -14,7 +14,7 @@
         android:src="@drawable/indicator" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"

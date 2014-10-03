@@ -33,7 +33,7 @@ public class StudentTools {
         }
 
         // User is now logged in
-        ClipSettings.setLoggedInUser(mContext, userId, username, password);
+        ClipSettings.setLoggedInUser(mContext, userId, user.getName(), username, password);
 
         return Result.SUCCESS;
     }

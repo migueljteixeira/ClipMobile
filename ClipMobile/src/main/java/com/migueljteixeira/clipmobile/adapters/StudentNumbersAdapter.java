@@ -15,10 +15,10 @@ import java.util.List;
 public class StudentNumbersAdapter extends BaseExpandableListAdapter {
 
     private final List<Student> students;
-    private final Context context;
+    private final Context mContext;
 
     public StudentNumbersAdapter(Context context, List<Student> students) {
-        this.context = context;
+        this.mContext = context;
         this.students = students;
     }
 
@@ -59,22 +59,42 @@ public class StudentNumbersAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if(convertView == null)
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_group_student_numbers, parent, false);
+        ViewHolder viewHolder;
 
-        TextView textView = (TextView) convertView.findViewById(R.id.text);
-        textView.setText(students.get(groupPosition).getNumber());
+        if(convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_group_student_numbers, parent, false);
+
+            viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        // Set row name
+        viewHolder.name.setText(students.get(groupPosition).getNumber());
 
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if(convertView == null)
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_child_student_numbers, parent, false);
+        ViewHolder viewHolder;
 
-        TextView textView = (TextView) convertView.findViewById(R.id.text);
-        textView.setText(students.get(groupPosition).getYears().get(childPosition).getYear());
+        if(convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_child_student_numbers, parent, false);
+
+            viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        // Set row name
+        viewHolder.name.setText(students.get(groupPosition).getYears().get(childPosition).getYear());
 
         return convertView;
     }
@@ -82,5 +102,10 @@ public class StudentNumbersAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    static class ViewHolder {
+
+        TextView name;
     }
 }

@@ -24,12 +24,13 @@
     <string name="years_available">Anos disponíveis</string>
 
     <!-- NavDrawer Activity -->
-    <array name="drawer_array">
-        <item>Horário</item>
-        <item>Calendário</item>
-        <item>Cadeiras</item>
-        <item>Resultados</item>
-    </array>
+    <string name="drawer_title_college">FACULDADE</string>
+    <string name="drawer_schedule">Horário</string>
+    <string name="drawer_calendar">Calendário</string>
+    <string name="drawer_classes">Cadeiras</string>
+    <string name="drawer_canteen_menu">Ementa do dia</string>
+
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 

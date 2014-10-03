@@ -52,7 +52,7 @@ public class StudentYearsDialogFragment extends DialogFragment {
         textView.setText(getActivity().getResources().getString(R.string.years_available));
 
         ListView listView = new ListView(getActivity());
-        listView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_item_drawer,
+        listView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.drawer_item,
                 getArguments().getStringArrayList("itemArray")));
         listView.setOnItemClickListener(onItemClickListener);
 

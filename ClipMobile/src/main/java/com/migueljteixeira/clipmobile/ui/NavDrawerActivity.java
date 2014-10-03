@@ -1,11 +1,14 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,12 +16,24 @@ import android.widget.ListView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.DrawerAdapter;
+import com.migueljteixeira.clipmobile.settings.ClipSettings;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NavDrawerActivity extends Activity implements AdapterView.OnItemClickListener {
 
+    public static final int MENU_ITEM_SCHEDULE_POSITION = 2;
+    public static final int MENU_ITEM_CALENDAR_POSITION = 3;
+    public static final int MENU_ITEM_CLASSES_POSITION = 4;
+    public static final int MENU_ITEM_CANTEEN_MENU_POSITION = 7;
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +43,31 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
         setupNavDrawer();
 
         FragmentManager fm = getFragmentManager();
-        ScheduleViewPager fragment = (ScheduleViewPager) fm.findFragmentById(R.id.content_frame);
+        Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
         if (fragment == null) {
             fragment = new ScheduleViewPager();
             fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
-
     }
 
     public void setupNavDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerAdapter(this, R.layout.adapter_list_item_drawer,
-                getResources().getStringArray(R.array.drawer_array) ));
+        // Setup menu adapter
+        DrawerAdapter drawerAdapter = new DrawerAdapter(this);
+        drawerAdapter.add(new DrawerTitle( ClipSettings.getLoggedInUserFullName(this) ));
+        drawerAdapter.add(new DrawerDivider());
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_schedule), 1));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_calendar), 1));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_classes), 1));
+        drawerAdapter.add(new DrawerTitle(getString(R.string.drawer_title_college)));
+        drawerAdapter.add(new DrawerDivider());
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_canteen_menu), 1));
+
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setOnItemClickListener(this);
 
         // setup drawer indicator
@@ -78,8 +102,31 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
+        switch(position) {
+            case MENU_ITEM_SCHEDULE_POSITION:
+                fragment = new ScheduleViewPager();
+                break;
 
+            case MENU_ITEM_CALENDAR_POSITION:
+                fragment = new CalendarFragment();
+                break;
+
+            case MENU_ITEM_CLASSES_POSITION:
+                fragment = new ClassesFragment();
+                break;
+
+            case MENU_ITEM_CANTEEN_MENU_POSITION:
+                fragment = new GradesFragment();
+                break;
+        }
+
+        // Replace fragment and close drawer
+        fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        mDrawerLayout.closeDrawer(Gravity.START);
     }
 
     @Override
@@ -92,6 +139,31 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
         // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class DrawerItem {
+
+        public String mTitle;
+        public int mIconRes;
+
+        public DrawerItem(String title, int iconRes) {
+            mTitle = title;
+            mIconRes = iconRes;
+        }
+    }
+
+    public class DrawerTitle extends DrawerItem {
+
+        public DrawerTitle(String title) {
+            super(title, 0);
+        }
+    }
+
+    public class DrawerDivider extends DrawerItem {
+
+        public DrawerDivider() {
+            super(null, 0);
+        }
     }
 
 }

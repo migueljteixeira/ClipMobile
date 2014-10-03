@@ -10,27 +10,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class ScheduleFragment extends Fragment {
-
-    private static final String ARG_POSITION = "position";
-
-    private int position;
-
-    public static ScheduleFragment newInstance(int position) {
-        ScheduleFragment f = new ScheduleFragment();
-        Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
-        f.setArguments(b);
-        return f;
-    }
+public class GradesFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        position = getArguments().getInt(ARG_POSITION);
-
-        System.out.println("SCHEDULE FRAGMENT ONCREATE! " + position);
     }
 
     @Override
@@ -50,7 +34,7 @@ public class ScheduleFragment extends Fragment {
         v.setLayoutParams(params);
         v.setLayoutParams(params);
         v.setGravity(Gravity.CENTER);
-        v.setText("CARD " + (position + 1));
+        v.setText("CARD 33");
 
         fl.addView(v);
         return fl;

@@ -13,6 +13,7 @@ public class ClipSettings {
     private final static String LOGIN_TIME = "com.migueljteixeira.clipmobile.loggedInTime";
 
     private final static String LOGGED_IN_USER_ID = "com.migueljteixeira.clipmobile.loggedInUserId";
+    private final static String LOGGED_IN_USER_FULLNAME = "com.migueljteixeira.clipmobile.loggedInUserFullName";
     private final static String LOGGED_IN_USER_NAME = "com.migueljteixeira.clipmobile.loggedInUserName";
     private final static String LOGGED_IN_USER_PW = "com.migueljteixeira.clipmobile.loggedInUserPw";
 
@@ -80,6 +81,10 @@ public class ClipSettings {
         return get(context).getLong(LOGGED_IN_USER_ID, -1);
     }
 
+    public static String getLoggedInUserFullName(Context context) {
+        return get(context).getString(LOGGED_IN_USER_FULLNAME, null);
+    }
+
     public static String getLoggedInUserName(Context context) {
         return get(context).getString(LOGGED_IN_USER_NAME, null);
     }
@@ -88,8 +93,10 @@ public class ClipSettings {
         return get(context).getString(LOGGED_IN_USER_PW, null);
     }
 
-    public static void setLoggedInUser(Context context, long id, String username, String password) {
+    public static void setLoggedInUser(Context context, long id, String userFullName,
+                                       String username, String password) {
         edit(context).putLong(LOGGED_IN_USER_ID, id).commit();
+        edit(context).putString(LOGGED_IN_USER_FULLNAME, userFullName).commit();
 
         // Save credentials
         edit(context).putString(LOGGED_IN_USER_NAME, username).commit();
