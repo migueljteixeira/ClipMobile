@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/fragment_student_classes_marginBottom"
+        android:layout_marginLeft="@dimen/fragment_student_classes_marginLeft"
+        android:layout_marginRight="@dimen/fragment_student_classes_marginRight"
+        android:layout_marginTop="@dimen/fragment_student_classes_marginTop"
+        android:background="@drawable/card_background"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:fadingEdgeLength="5dp"
+        android:groupIndicator="@android:color/transparent"
+        android:requiresFadingEdge="vertical"
+        tools:listitem="@android:layout/simple_list_item_1" />
+
+</LinearLayout>

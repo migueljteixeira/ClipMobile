@@ -1,4 +1,4 @@
-package com.migueljteixeira.clipmobile.util;
+package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
+import com.migueljteixeira.clipmobile.util.StudentTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class ConnectClipTask extends AsyncTask<String, Void, Integer> {

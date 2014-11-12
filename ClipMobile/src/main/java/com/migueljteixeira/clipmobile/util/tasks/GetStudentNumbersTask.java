@@ -1,10 +1,11 @@
-package com.migueljteixeira.clipmobile.util;
+package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.migueljteixeira.clipmobile.util.StudentTools;
 
 public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
 
@@ -13,7 +14,7 @@ public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
         /**
          * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
          */
-        public void onStudentNumbersTaskFinished(User resultCode);
+        public void onStudentNumbersTaskFinished(User result);
 
     }
 

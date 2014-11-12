@@ -1,4 +1,4 @@
-package com.migueljteixeira.clipmobile.util;
+package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,6 +8,7 @@ import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.migueljteixeira.clipmobile.util.StudentTools;
 
 public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
 

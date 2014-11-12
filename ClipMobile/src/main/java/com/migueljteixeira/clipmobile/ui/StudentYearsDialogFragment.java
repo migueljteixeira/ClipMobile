@@ -15,18 +15,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.entities.StudentYear;
+import com.migueljteixeira.clipmobile.entities.StudentYearSemester;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentYearsDialogFragment extends DialogFragment {
 
-    public static StudentYearsDialogFragment newInstance(List<StudentYear> studentYears) {
+    public static StudentYearsDialogFragment newInstance(List<StudentYearSemester> studentYears) {
         StudentYearsDialogFragment f = new StudentYearsDialogFragment();
 
         ArrayList<String> list = new ArrayList<String>();
-        for(StudentYear s : studentYears)
+        for(StudentYearSemester s : studentYears)
             list.add(s.getYear());
 
         Bundle args = new Bundle();

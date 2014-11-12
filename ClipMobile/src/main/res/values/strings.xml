@@ -35,12 +35,23 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Schedule Fragment -->
-    <array name="tab_array">
+    <array name="schedule_tab_array">
         <item>Segunda</item>
         <item>Terça</item>
         <item>Quarta</item>
         <item>Quinta</item>
         <item>Sexta</item>
+    </array>
+
+    <string name="schedule_class_start">Início:</string>
+    <string name="schedule_class_end">Fim:</string>
+    <string name="schedule_class_type">Turno:</string>
+    <string name="schedule_class_room">Sala:</string>
+
+    <!-- Classes Fragment -->
+    <array name="classes_tab_array">
+        <item>1º Semestre</item>
+        <item>2º Semestre</item>
     </array>
 
 </resources>

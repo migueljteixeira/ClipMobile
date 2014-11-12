@@ -16,9 +16,9 @@ import com.migueljteixeira.clipmobile.adapters.StudentNumbersAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
-import com.migueljteixeira.clipmobile.util.GetStudentNumbersTask;
-import com.migueljteixeira.clipmobile.util.GetStudentYearsTask;
-import com.migueljteixeira.clipmobile.util.UpdateStudentNumbersTask;
+import com.migueljteixeira.clipmobile.util.tasks.GetStudentNumbersTask;
+import com.migueljteixeira.clipmobile.util.tasks.GetStudentYearsTask;
+import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentNumbersTask;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
         showProgressSpinner(true);
 
         // Start AsyncTask
-        GetStudentNumbersTask mNumbersTask = new GetStudentNumbersTask(getActivity().getApplicationContext(),
+        GetStudentNumbersTask mNumbersTask = new GetStudentNumbersTask(getActivity(),
                 StudentNumbersFragment.this);
         mNumbersTask.execute();
     }
@@ -128,6 +128,18 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+            // Save studentId, year and semester selected
+            String yearSelected = students.get(groupPosition).getYears().get(childPosition).getYear();
+
+            ClipSettings.saveStudentIdSelected(getActivity(), students.get(groupPosition).getId());
+            ClipSettings.saveYearSelected(getActivity(), yearSelected);
+            ClipSettings.saveSemesterSelected(getActivity(), "1");
+
+            // Save student numberID and studentYearSemester ID
+            ClipSettings.saveStudentNumberId(getActivity(), students.get(groupPosition).getNumberId());
+            /*ClipSettings.saveStudentYearSemesterIdSelected(getActivity(), students.get(groupPosition)
+                    .getYears().get(childPosition).getId());*/
 
             Intent intent = new Intent(getActivity(), NavDrawerActivity.class);
             startActivity(intent);

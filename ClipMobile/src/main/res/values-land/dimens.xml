@@ -2,7 +2,6 @@
     <!-- For handsets (smaller than 600dp available width) -->
 
     <integer name="activity_login_linearlayout_gravity">1</integer>
-    <dimen name="text_size">18sp</dimen>
 
     <!-- ConnectClip Activity -->
     <dimen name="activity_login_marginTop">20dp</dimen>
@@ -10,9 +9,15 @@
     <dimen name="activity_login_marginRight">100dp</dimen>
 
     <!-- StudentNumbers Activity -->
-    <dimen name="activity_student_numbers_marginTop">30dp</dimen>
-    <dimen name="activity_student_numbers_marginBottom">50dp</dimen>
+    <dimen name="activity_student_numbers_marginTop">40dp</dimen>
+    <dimen name="activity_student_numbers_marginBottom">40dp</dimen>
     <dimen name="activity_student_numbers_marginLeft">100dp</dimen>
     <dimen name="activity_student_numbers_marginRight">100dp</dimen>
+
+    <!-- StudentClasses Fragment -->
+    <dimen name="fragment_student_classes_marginTop">40dp</dimen>
+    <dimen name="fragment_student_classes_marginBottom">40dp</dimen>
+    <dimen name="fragment_student_classes_marginLeft">100dp</dimen>
+    <dimen name="fragment_student_classes_marginRight">100dp</dimen>
 
 </resources>

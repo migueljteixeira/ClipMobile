@@ -6,7 +6,6 @@ import java.util.List;
 public class User extends Entity {
 
     private List<Student> students;
-    private String name;
 
     public User() {
         students = new LinkedList<Student>();
@@ -22,13 +21,5 @@ public class User extends Entity {
 
     public boolean hasStudents() {
         return !students.isEmpty();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

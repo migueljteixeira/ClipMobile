@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme"/>
+    <style name="Theme" />
 
     <!-- ClipMobile default theme. -->
     <style name="Theme.ClipMobile" parent="android:Theme.Holo.Light">
 
         <!-- Text Styles -->
         <item name="android:textAppearance">@style/TextAppearance</item>
-
-        <!-- Widget styles -->
-        <item name="android:editTextBackground">@drawable/clipmobile_edit_text_holo_light</item>
         <item name="android:textColorHighlight">@color/text_color_highlight</item>
-        <item name="android:textSelectHandleLeft">@drawable/clipmobile_text_select_handle_left</item>
-        <item name="android:textSelectHandleRight">@drawable/clipmobile_text_select_handle_right</item>
+        <item name="android:textSelectHandleLeft">@drawable/clipmobile_text_select_handle_left
+        </item>
+        <item name="android:textSelectHandleRight">@drawable/clipmobile_text_select_handle_right
+        </item>
         <item name="android:textSelectHandle">@drawable/clipmobile_text_select_handle_middle</item>
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewClipMobile</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/clipmobile_btn_check_holo_light</item>
-        <item name="android:listChoiceIndicatorSingle">@drawable/clipmobile_btn_radio_holo_light</item>
+
+        <!-- System widgets -->
         <item name="android:buttonStyle">@style/ButtonClipMobile</item>
         <item name="android:imageButtonStyle">@style/ImageButtonClipMobile</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/clipmobile_list_selector_holo_light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/clipmobile_activated_background_holo_light</item>
-        <item name="android:fastScrollThumbDrawable">@drawable/clipmobile_fastscroll_thumb_holo</item>
-
-        <!-- Action Bar styles -->
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_clipmobile</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Clipmobile</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Clipmobile</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Clipmobile</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav.Clipmobile</item>
+        <item name="android:activatedBackgroundIndicator">
+            @drawable/clipmobile_activated_background_holo_light
+        </item>
+        <item name="android:editTextBackground">@drawable/clipmobile_edit_text_holo_light</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/clipmobile_btn_check_holo_light
+        </item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/clipmobile_btn_radio_holo_light
+        </item>
+        <item name="android:listChoiceBackgroundIndicator">
+            @drawable/clipmobile_list_selector_holo_light
+        </item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Clipmobile</item>
+
+        <!-- Fast scroll thumb -->
+        <item name="android:fastScrollThumbDrawable">@drawable/clipmobile_fastscroll_thumb_holo
+        </item>
+
+        <!-- Action bar -->
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Clipmobile</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Clipmobile</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_clipmobile
+        </item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlowButtonStyle</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_clipmobile</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_clipmobile</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Clipmobile</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_clipmobile
+        </item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Clipmobile
+        </item>
+        <item name="android:itemBackground">@drawable/selectable_popup_background_clipmobile</item>
 
     </style>
 
@@ -41,6 +56,11 @@
     <style name="Theme.Clipmobile.Widget" parent="@android:style/Theme.Holo">
         <item name="android:popupMenuStyle">@style/PopupMenu.Clipmobile</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Clipmobile</item>
+    </style>
+
+    <!-- Overflow button style -->
+    <style name="OverFlowButtonStyle" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_overflow</item>
     </style>
 
 </resources>

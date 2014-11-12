@@ -10,8 +10,6 @@
         <item>@color/spinner_color_2</item>
         <item>@color/spinner_color_3</item>
         <item>@color/spinner_color_4</item>
-        <item>@color/spinner_color_5</item>
-        <item>@color/spinner_color_4</item>
         <item>@color/spinner_color_3</item>
         <item>@color/spinner_color_2</item>
         <item>@color/spinner_color_1</item>
@@ -21,6 +19,5 @@
     <color name="spinner_color_2">#42c182</color>
     <color name="spinner_color_3">#59c991</color>
     <color name="spinner_color_4">#71d0a1</color>
-    <color name="spinner_color_5">#89d8b1</color>
 
 </resources>

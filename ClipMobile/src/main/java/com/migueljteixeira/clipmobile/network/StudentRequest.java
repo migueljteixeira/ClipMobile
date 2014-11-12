@@ -3,7 +3,7 @@ package com.migueljteixeira.clipmobile.network;
 import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.StudentYear;
+import com.migueljteixeira.clipmobile.entities.StudentYearSemester;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 
@@ -47,12 +47,12 @@ public class StudentRequest extends Request {
                 user.addStudent(student);
             }
 
-            else if(linkHref.matches("/utente/eu")) {
+            /*else if(linkHref.matches("/utente/eu")) {
                 String[] full_user_name = link.getElementsByTag("span").text().split(" ");
                 String user_name = full_user_name[0] + " " + full_user_name[full_user_name.length - 1];
 
                 user.setName(user_name.toUpperCase());
-            }
+            }*/
         }
 
         return user;
@@ -113,7 +113,7 @@ public class StudentRequest extends Request {
             if(linkHref.matches("/utente/eu/aluno/ano_lectivo[?][_a-zA-Z0-9=;&.%]*ano_lectivo=[0-9]*")) {
                 String year = link.text();
 
-                StudentYear studentYear = new StudentYear();
+                StudentYearSemester studentYear = new StudentYearSemester();
                 studentYear.setYear(year);
 
                 System.out.println("year: " + year);

@@ -6,7 +6,9 @@ import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
+import com.migueljteixeira.clipmobile.network.StudentClassesRequest;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
+import com.migueljteixeira.clipmobile.network.StudentScheduleRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -33,11 +35,14 @@ public class StudentTools {
         }
 
         // User is now logged in
-        ClipSettings.setLoggedInUser(mContext, userId, user.getName(), username, password);
+        ClipSettings.setLoggedInUser(mContext, userId, username, password);
 
         return Result.SUCCESS;
     }
 
+    /*
+     * ////////////////////////////// STUDENT, STUDENTYEARS, STUDENTNUMBERS  //////////////////////////////
+     */
 
     public static User getStudents(Context mContext, long userId) {
 
@@ -89,5 +94,82 @@ public class StudentTools {
 
         return user;
     }
+
+    /*
+     * ////////////////////////////// STUDENT SCHEDULE  //////////////////////////////
+     */
+
+
+    public static Student getStudentSchedule(Context mContext, String studentId, String year, String yearFormatted,
+                                             String semester, String studentNumberId)
+            throws ServerUnavailableException {
+
+        // First, we get the yearSemesterId
+        String yearSemesterId = DBUtils.getYearSemesterId(mContext, studentId, year, semester);
+
+        Student student = DBUtils.getStudentSchedule(mContext, yearSemesterId);
+
+        System.out.println("has " + (student != null));
+
+        if(student != null)
+            return student;
+
+        System.out.println("net " + !AndroidUtils.isNetworkConnected(mContext));
+
+        // Check for connectivity
+        if (! AndroidUtils.isNetworkConnected(mContext))
+            return null;
+
+        // Get student schedule from the server
+        student = StudentScheduleRequest.getSchedule(mContext, studentNumberId, yearFormatted, semester);
+
+        System.out.println("schedule request done!");
+
+        // Insert schedule on database
+        DBUtils.insertStudentSchedule(mContext, yearSemesterId, student);
+
+        System.out.println("schedule inserted!");
+
+        return student;
+    }
+
+    /*
+     * ////////////////////////////// STUDENT CLASSES  //////////////////////////////
+     */
+
+
+    public static Student getStudentClasses(Context mContext, String studentId, String year, String yearFormatted,
+                                             String semester, String studentNumberId)
+            throws ServerUnavailableException {
+
+        // First, we get the yearSemesterId
+        String yearSemesterId = DBUtils.getYearSemesterId(mContext, studentId, year, semester);
+
+        Student student = DBUtils.getStudentClasses(mContext, yearSemesterId);
+
+        System.out.println("has " + (student != null));
+
+        if(student != null)
+            return student;
+
+        System.out.println("net " + !AndroidUtils.isNetworkConnected(mContext));
+
+        // Check for connectivity
+        if (! AndroidUtils.isNetworkConnected(mContext))
+            return null;
+
+        // Get student classes from the server
+        student = StudentClassesRequest.getClasses(mContext, studentNumberId, yearFormatted);
+
+        System.out.println("classes request done!");
+
+        // Insert classes on database
+        DBUtils.insertStudentClasses(mContext, yearSemesterId, student);
+
+        System.out.println("classes inserted!");
+
+        return student;
+    }
+
 
 }

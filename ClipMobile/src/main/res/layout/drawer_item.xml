@@ -3,11 +3,11 @@
     android:id="@+id/name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    android:background="@drawable/clipmobile_list_selector_holo_light"
     android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:textColor="@android:color/black"
-    android:textSize="@dimen/text_size"
-    android:background="@drawable/clipmobile_list_selector_holo_light"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    android:textSize="@dimen/default_text_size" />

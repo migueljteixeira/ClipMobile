@@ -16,11 +16,12 @@
     </style>
 
     <style name="TextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
         <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/actionbar_title_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
@@ -60,10 +61,14 @@
     </style>
 
 
-
-    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+    <style name="TextAppearance.FontCondensedBold" parent="android:TextAppearance">
         <!-- Custom Attr-->
-        <item name="fontPath">RobotoCondensed-Regular.ttf</item>
+        <item name="fontPath">RobotoCondensed-Bold.ttf</item>
+    </style>
+
+    <style name="TextAppearance.FontBold" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">Roboto-Bold.ttf</item>
     </style>
 
 </resources>

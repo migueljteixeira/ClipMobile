@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
-import com.migueljteixeira.clipmobile.util.ConnectClipTask;
+import com.migueljteixeira.clipmobile.util.tasks.ConnectClipTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

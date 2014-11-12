@@ -8,13 +8,15 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import io.fabric.sdk.android.Fabric;
 
 public class ConnectClipActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
+
 
         // If the user is already logged in, start the StudentNumbersActivity instead
         if( ClipSettings.isUserLoggedIn(this) ) {

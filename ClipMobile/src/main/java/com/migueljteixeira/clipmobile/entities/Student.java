@@ -1,21 +1,27 @@
 package com.migueljteixeira.clipmobile.entities;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Student extends Entity {
 
     private String numberId; // number on URL
     private String number;   // real student number
-    private List<StudentYear> years;
+    private List<StudentYearSemester> years;
+    private Map<Integer, List<StudentScheduleClass>> scheduleClasses;
+    private Map<Integer, List<StudentClass>> studentClasses;
+
     /*private List<StudentScheduleDay> scheduleDays;
     private List<StudentCalendarAppointment> calendarAppointments;
     private List<StudentClasses> classes;
     private List<StudentDocs> docs;*/
 
     public Student(){
-        this.years = new LinkedList<StudentYear>();
-        //this.scheduleDays = new ArrayList<StudentScheduleDay>(8);
+        this.years = new LinkedList<StudentYearSemester>();
+        this.scheduleClasses = new HashMap<Integer, List<StudentScheduleClass>>(5);
+        this.studentClasses = new HashMap<Integer, List<StudentClass>>(2);
     }
 
     /*public Student(long id, String student_number_id, String student_number) {
@@ -44,21 +50,56 @@ public class Student extends Entity {
         this.number = student_number;
     }
 
-    public List<StudentYear> getYears() {
+    public List<StudentYearSemester> getYears() {
         return years;
     }
 
-    public void setYears(List<StudentYear> years) {
+    public void setYears(List<StudentYearSemester> years) {
         this.years = years;
     }
 
-    public void addYear(StudentYear year) {
+    public void addYear(StudentYearSemester year) {
         years.add(year);
     }
 
     public boolean hasStudentYears() {
         return !years.isEmpty();
     }
+
+    public Map<Integer, List<StudentScheduleClass>> getScheduleClasses() {
+        return scheduleClasses;
+    }
+
+    public void addScheduleClass(int day, StudentScheduleClass scheduleClass) {
+        List<StudentScheduleClass> classes = this.scheduleClasses.get(day);
+        if(classes == null)
+            classes = new LinkedList<StudentScheduleClass>();
+
+        classes.add(scheduleClass);
+
+        System.out.println("--!!! dia: " + day + " , " + classes.size());
+
+        this.scheduleClasses.put(day, classes);
+    }
+
+    public Map<Integer, List<StudentClass>> getClasses() {
+        return studentClasses;
+    }
+
+/*    public void setClasses(List<StudentClass> classes) {
+        this.studentClasses = classes;
+    }*/
+
+    public void addStudentClass(int semester, StudentClass scheduleClass) {
+        List<StudentClass> classes = this.studentClasses.get(semester);
+        if(classes == null)
+            classes = new LinkedList<StudentClass>();
+
+        classes.add(scheduleClass);
+
+        this.studentClasses.put(semester, classes);
+    }
+
 
     /*
     public StudentScheduleDay getScheduleDay(int pos) {
