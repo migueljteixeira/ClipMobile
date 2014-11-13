@@ -29,7 +29,7 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_activity_login, container, false);
         ButterKnife.inject(this, view);
 
         return view;

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 dependencies {
-    compile rootProject.ext.libraries.supportv13
+    compile 'com.android.support:support-v13:21.0.0'
 }
 
 android {

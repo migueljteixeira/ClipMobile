@@ -36,7 +36,7 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_student_numbers, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_numbers, container, false);
         ButterKnife.inject(this, view);
 
         return view;

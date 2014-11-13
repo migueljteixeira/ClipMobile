@@ -3,7 +3,7 @@
 
     <color name="actionbar_color">#109f5b</color>
     <color name="main_color">#13b263</color>
-    <color name="text_color_highlight">#9913b263</color>
+    <color name="main_color_dark">#0f8e4f</color>
 
     <integer-array name="spinner_colors">
         <item>@color/spinner_color_1</item>

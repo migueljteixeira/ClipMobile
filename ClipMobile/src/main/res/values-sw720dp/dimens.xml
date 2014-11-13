@@ -1,20 +1,14 @@
 <resources>
 
     <!-- ConnectClip Activity -->
-    <dimen name="activity_login_marginTop">250dp</dimen>
-    <dimen name="activity_login_marginLeft">180dp</dimen>
-    <dimen name="activity_login_marginRight">180dp</dimen>
+    <dimen name="fragment_login_card_width">500dp</dimen>
 
     <!-- StudentNumbers Activity -->
-    <dimen name="activity_student_numbers_marginTop">200dp</dimen>
-    <dimen name="activity_student_numbers_marginBottom">650dp</dimen>
-    <dimen name="activity_student_numbers_marginLeft">180dp</dimen>
-    <dimen name="activity_student_numbers_marginRight">180dp</dimen>
+    <dimen name="fragment_student_numbers_card_width">350dp</dimen>
+    <dimen name="fragment_student_numbers_card_height">250dp</dimen>
 
-    <!-- StudentClasses Fragment -->
-    <dimen name="fragment_student_classes_marginTop">200dp</dimen>
-    <dimen name="fragment_student_classes_marginBottom">650dp</dimen>
-    <dimen name="fragment_student_classes_marginLeft">180dp</dimen>
-    <dimen name="fragment_student_classes_marginRight">180dp</dimen>
+    <!-- StudentClasses Activity -->
+    <dimen name="fragment_student_classes_card_width">350dp</dimen>
+    <dimen name="fragment_student_classes_card_height">250dp</dimen>
 
 </resources>
