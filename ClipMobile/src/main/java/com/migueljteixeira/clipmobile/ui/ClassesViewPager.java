@@ -1,7 +1,7 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import com.astuetz.PagerSlidingTabStrip;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ClassesViewPagerAdapter;
-import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentScheduleTask;

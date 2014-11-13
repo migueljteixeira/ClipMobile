@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClassesColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDaysColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemesterColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesColumns;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
 

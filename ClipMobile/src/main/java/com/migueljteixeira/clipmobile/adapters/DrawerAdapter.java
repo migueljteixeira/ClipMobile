@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerTitle;
 import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerDivider;
 import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerItem;
+import com.migueljteixeira.clipmobile.ui.NavDrawerActivity.DrawerTitle;
 
 public class DrawerAdapter extends ArrayAdapter<Object> {
     private static final int VIEW_TYPE_TITLE = 0;

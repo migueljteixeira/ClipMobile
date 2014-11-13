@@ -1,6 +1,5 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;

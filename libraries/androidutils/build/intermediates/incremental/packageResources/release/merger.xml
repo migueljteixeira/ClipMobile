@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="2" >
-
-    <dataSet config="main" >
-        <source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\res" />
-        <source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build\generated\res\rs\release" />
-        <source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build\generated\res\generated\release" />
-    </dataSet>
-    <dataSet config="release" >
-        <source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build-types\release\res" />
-    </dataSet>
-
-</merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\res"/><source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build\generated\res\rs\release"/><source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build\generated\res\generated\release"/></dataSet><dataSet config="release"><source path="C:\Users\miguel\Documents\workspace\Clipmobile_newOne\libraries\androidutils\build-types\release\res"/></dataSet><mergedItems/></merger>

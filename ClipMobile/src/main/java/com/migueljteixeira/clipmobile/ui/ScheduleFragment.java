@@ -1,17 +1,12 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.util.SparseArray;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ScheduleListViewAdapter;

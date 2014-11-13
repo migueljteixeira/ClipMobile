@@ -1,12 +1,12 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -21,7 +21,7 @@ import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class NavDrawerActivity extends Activity implements AdapterView.OnItemClickListener {
+public class NavDrawerActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
 
     public static final int MENU_ITEM_SCHEDULE_POSITION = 2;
     public static final int MENU_ITEM_CALENDAR_POSITION = 3;
@@ -43,7 +43,7 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
 
         setupNavDrawer();
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
         if (fragment == null) {
@@ -134,7 +134,7 @@ public class NavDrawerActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
 
         switch(position) {

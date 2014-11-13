@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.StudentTools;

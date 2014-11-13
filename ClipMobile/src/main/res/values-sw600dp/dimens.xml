@@ -13,7 +13,7 @@
 
     <!-- StudentClasses Fragment -->
     <dimen name="fragment_student_classes_marginTop">150dp</dimen>
-    <dimen name="fragment_student_classes_marginBottom">400dp</dimen>
+    <dimen name="fragment_student_classes_marginBottom">300dp</dimen>
     <dimen name="fragment_student_classes_marginLeft">100dp</dimen>
     <dimen name="fragment_student_classes_marginRight">100dp</dimen>
 

@@ -1,16 +1,16 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
-public class StudentNumbersActivity extends Activity {
+public class StudentNumbersActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         StudentNumbersFragment fragment = (StudentNumbersFragment) fm.findFragmentById(android.R.id.content);
 
         if (fragment == null) {

@@ -4,21 +4,10 @@ import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
-import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class StudentClassesRequest extends Request {
 

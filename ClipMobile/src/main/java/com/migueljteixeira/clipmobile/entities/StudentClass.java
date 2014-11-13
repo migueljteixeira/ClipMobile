@@ -1,10 +1,5 @@
 package com.migueljteixeira.clipmobile.entities;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 public class StudentClass extends Entity {
 
     private String name, teacher_name, teacher_email, number;

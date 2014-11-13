@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.SparseArray;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
@@ -337,8 +336,13 @@ public class DBUtils {
 
         // For two semesters
         for (int semester = 1; semester <= 2; semester++) {
+            List<StudentClass> studentClass = classes.get(semester);
 
-            for(StudentClass cl : classes.get(semester)) {
+            // we don't have classes in this semester, yet
+            if(studentClass == null)
+                continue;
+
+            for(StudentClass cl : studentClass) {
                 ContentValues values = new ContentValues();
                 values.put(ClipMobileContract.StudentsYearSemester.REF_STUDENTS_YEAR_SEMESTER_ID, yearSemesterId);
                 values.put(ClipMobileContract.StudentClasses.NAME, cl.getName());

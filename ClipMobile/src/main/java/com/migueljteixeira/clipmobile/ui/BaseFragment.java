@@ -1,7 +1,7 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;

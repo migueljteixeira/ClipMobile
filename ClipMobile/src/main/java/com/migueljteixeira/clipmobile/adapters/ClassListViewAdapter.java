@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.ui.ClassesFragment;
-import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 public class ClassListViewAdapter extends ArrayAdapter<Object> {
     private Context mContext;

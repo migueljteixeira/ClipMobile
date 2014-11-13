@@ -1,1 +1,5 @@
-<manifest package="com.uwetrottmann.androidutils" />
+<manifest package="com.uwetrottmann.androidutils" >
+
+    <application />
+
+</manifest>

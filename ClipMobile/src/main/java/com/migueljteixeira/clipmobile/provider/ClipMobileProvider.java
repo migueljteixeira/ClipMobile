@@ -8,12 +8,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Students;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClasses;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDays;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClasses;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Students;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemester;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Users;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClasses;
 import com.migueljteixeira.clipmobile.provider.ClipMobileDatabase.Tables;
 import com.migueljteixeira.clipmobile.util.SelectionBuilder;
 

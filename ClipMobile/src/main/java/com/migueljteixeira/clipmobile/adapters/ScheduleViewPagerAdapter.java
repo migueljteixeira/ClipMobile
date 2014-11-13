@@ -1,9 +1,8 @@
 package com.migueljteixeira.clipmobile.adapters;
 
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
@@ -11,7 +10,7 @@ import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 import java.util.List;
 
-public class ScheduleViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
 
     private final String[] tabNames;
     private Student student;

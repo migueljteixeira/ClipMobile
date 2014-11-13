@@ -1,16 +1,17 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+
 import io.fabric.sdk.android.Fabric;
 
-public class ConnectClipActivity extends Activity {
+public class ConnectClipActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class ConnectClipActivity extends Activity {
             finish();
         }
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         ConnectClipFragment fragment = (ConnectClipFragment) fm.findFragmentById(android.R.id.content);
 
         if (fragment == null) {

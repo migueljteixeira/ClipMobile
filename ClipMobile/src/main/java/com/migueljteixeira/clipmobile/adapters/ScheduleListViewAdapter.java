@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.ui.NavDrawerActivity;
 import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 public class ScheduleListViewAdapter extends ArrayAdapter<Object> {
