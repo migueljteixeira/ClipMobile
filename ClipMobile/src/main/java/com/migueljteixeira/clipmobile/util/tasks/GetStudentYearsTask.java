@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
-import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
 public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
@@ -46,9 +45,6 @@ public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
     @Override
     protected void onPostExecute(Student result) {
         super.onPostExecute(result);
-
-        Toast.makeText(mContext, "" + ClipSettings.TimeCookie(mContext),
-                Toast.LENGTH_SHORT).show();
 
         if(result == null) {
             // Server is unavailable right now

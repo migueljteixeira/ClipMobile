@@ -63,22 +63,6 @@ public class ClipSettings {
         return false;
     }
 
-    public static int TimeCookie(Context context) {
-        long currentTime = new Date().getTime();
-        long loginTime = get(context).getLong(LOGIN_TIME, -1);
-
-        long elapsedTime = currentTime - loginTime;
-
-        System.out.println("login: " + loginTime);
-        System.out.println("currentTime: " + currentTime);
-
-        int elapsedTimeInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
-        System.out.println("elapsed time: " + elapsedTimeInMinutes);
-
-        return elapsedTimeInMinutes;
-    }
-
-
     public static boolean isUserLoggedIn(Context context) {
         return get(context).getLong(LOGGED_IN_USER_ID, -1) != -1;
     }

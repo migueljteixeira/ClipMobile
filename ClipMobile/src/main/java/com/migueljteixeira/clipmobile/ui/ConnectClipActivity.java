@@ -1,11 +1,9 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.R;
@@ -13,14 +11,12 @@ import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 import io.fabric.sdk.android.Fabric;
 
-public class ConnectClipActivity extends ActionBarActivity {
+public class ConnectClipActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlepane);
-
-        setupActionBar();
+        super.onCreate(savedInstanceState);
 
         Fabric.with(this, new Crashlytics());
 
@@ -33,21 +29,11 @@ public class ConnectClipActivity extends ActionBarActivity {
         }
 
         FragmentManager fm = getSupportFragmentManager();
-        ConnectClipFragment fragment = (ConnectClipFragment) fm.findFragmentById(R.id.content_frame);
-
+        Fragment fragment = fm.findFragmentById(R.id.content_frame);
         if (fragment == null) {
             fragment = new ConnectClipFragment();
             fm.beginTransaction().add(R.id.content_frame, fragment).commit();
         }
-    }
-
-    private void setupActionBar() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setTitleTextAppearance(this, R.style.Toolbar);
-        //toolbar.setLogo(R.drawable.ic_launcher);
-
-        setSupportActionBar(mToolbar);
     }
 
 }

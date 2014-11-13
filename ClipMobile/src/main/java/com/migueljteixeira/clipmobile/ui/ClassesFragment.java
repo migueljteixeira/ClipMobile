@@ -14,13 +14,12 @@ import com.migueljteixeira.clipmobile.entities.StudentClass;
 
 import java.util.List;
 
+@SuppressLint("ValidFragment")
 public class ClassesFragment extends Fragment {
 
     private List<StudentClass> classes;
 
     public ClassesFragment() {}
-
-    @SuppressLint("ValidFragment")
     public ClassesFragment(List<StudentClass> classes) {
         this.classes = classes;
     }

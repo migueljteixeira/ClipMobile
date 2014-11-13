@@ -14,25 +14,15 @@ import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 
 import java.util.List;
 
+@SuppressLint("ValidFragment")
 public class ScheduleFragment extends Fragment {
 
     private List<StudentScheduleClass> classes;
 
     public ScheduleFragment() {}
-
-    @SuppressLint("ValidFragment")
     public ScheduleFragment(List<StudentScheduleClass> classes) {
         this.classes = classes;
     }
-
-    /*public static ScheduleFragment newInstance(int position) {
-        ScheduleFragment f = new ScheduleFragment();
-        Bundle b = new Bundle();
-        b.putSparseParcelableArray("1", new SparseArray<List<StudentScheduleClass>>(5));
-        b.putInt(ARG_POSITION, position);
-        f.setArguments(b);
-        return f;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Toolbar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/toolbar_title_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>

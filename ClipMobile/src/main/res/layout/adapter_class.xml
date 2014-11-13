@@ -20,7 +20,6 @@
         android:paddingBottom="15dp"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
-        android:text="2021 asdf"
         android:textSize="@dimen/default_text_size" />
 
 </RelativeLayout>

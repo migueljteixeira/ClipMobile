@@ -84,11 +84,12 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
                 mUpdateTask = new UpdateStudentNumbersTask(getActivity().getApplicationContext(),
                         StudentNumbersFragment.this);
                 mUpdateTask.execute();
-                break;
+
+               return true;
 
             case R.id.settings :
                 System.out.println("settings!");
-                break;
+                return true;
 
             case R.id.logout :
                 // Clear user personal data
@@ -98,10 +99,13 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
                 startActivity(intent);
 
                 getActivity().finish();
-                break;
+
+                return true;
+
+            default :
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     ExpandableListView.OnGroupClickListener onGroupClickListener = new ExpandableListView.OnGroupClickListener() {

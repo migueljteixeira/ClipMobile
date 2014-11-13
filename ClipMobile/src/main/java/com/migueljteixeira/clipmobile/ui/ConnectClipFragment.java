@@ -91,8 +91,6 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
     public void onTaskFinished(int resultCode) {
         showProgressSpinner(false);
 
-        System.out.println("-> " + resultCode);
-
         switch(resultCode) {
             case NetworkResult.OFFLINE :
                 Toast.makeText(getActivity().getApplicationContext(),

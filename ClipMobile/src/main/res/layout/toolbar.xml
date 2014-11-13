@@ -4,5 +4,5 @@
     android:id="@+id/toolbar"
     android:layout_height="@dimen/toolbar_height"
     android:minHeight="@dimen/toolbar_height"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:background="?attr/colorPrimary" />
