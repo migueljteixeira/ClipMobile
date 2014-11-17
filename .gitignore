@@ -1,6 +1,6 @@
 # Specific files to exclude
-crashlytics.properties
 com_crashlytics_export_strings.xml
+gradle.properties
 
 # Any keystores
 *.keystore
@@ -51,7 +51,6 @@ $RECYCLE.BIN/
 .gradle/
 build/
 out/
-*.gradle
 
 #Maven
 target
