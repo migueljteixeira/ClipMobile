@@ -8,9 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentCalendar;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClasses;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDays;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClasses;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesDocs;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Students;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemester;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.Users;
@@ -21,21 +23,21 @@ public class ClipMobileProvider extends ContentProvider {
 
     private static UriMatcher sUriMatcher;
 
-    private static final int USERS = 100;
+    private static final int USERS = 1;
 
-    private static final int STUDENTS = 200;
+    private static final int STUDENTS = 2;
 
-    private static final int STUDENTS_YEAR_SEMESTER = 300;
+    private static final int STUDENTS_YEAR_SEMESTER = 3;
 
-    private static final int SCHEDULE_DAYS = 500;
+    private static final int SCHEDULE_DAYS = 4;
 
-    private static final int SCHEDULE_CLASSES = 600;
+    private static final int SCHEDULE_CLASSES = 5;
 
-    private static final int STUDENT_CLASSES = 700;
+    private static final int STUDENT_CLASSES = 6;
 
-    /*private static final int STUDENTS_CALENDARS_TYPES = 700;
+    private static final int STUDENT_CLASSES_DOCS = 7;
 
-    private static final int STUDENTS_CALENDARS = 800;*/
+    private static final int STUDENT_CALENDAR = 8;
 
 
     /**
@@ -64,11 +66,11 @@ public class ClipMobileProvider extends ContentProvider {
         // Student Classes
         matcher.addURI(authority, ClipMobileContract.PATH_STUDENT_CLASSES, STUDENT_CLASSES);
 
-        // Students Calendars Types
-        /*matcher.addURI(authority, ClipMobileContract.PATH_STUDENTS_CALENDARS_TYPES, STUDENTS_CALENDARS_TYPES);
+        // Student Classes Docs
+        matcher.addURI(authority, ClipMobileContract.PATH_STUDENT_CLASSES_DOCS, STUDENT_CLASSES_DOCS);
 
-        // Students Calendars
-        matcher.addURI(authority, ClipMobileContract.PATH_STUDENTS_CALENDARS, STUDENTS_CALENDARS);*/
+        // Student Calendar
+        matcher.addURI(authority, ClipMobileContract.PATH_STUDENT_CALENDAR, STUDENT_CALENDAR);
 
         return matcher;
     }
@@ -124,10 +126,10 @@ public class ClipMobileProvider extends ContentProvider {
                 return ScheduleClasses.CONTENT_TYPE;
             case STUDENT_CLASSES :
                 return StudentClasses.CONTENT_TYPE;
-            /*case CALENDARS_TYPES :
-                return StudentsCalendarsTypes.CONTENT_TYPE;
-            case STUDENTS_CALENDARS :
-                return StudentsCalendars.CONTENT_TYPE;*/
+            case STUDENT_CLASSES_DOCS :
+                return StudentClassesDocs.CONTENT_TYPE;
+            case STUDENT_CALENDAR :
+                return StudentCalendar.CONTENT_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -210,6 +212,22 @@ public class ClipMobileProvider extends ContentProvider {
                     break;
                 }
                 newItemUri = StudentClasses.buildUri(String.valueOf(id));
+                break;
+            }
+            case STUDENT_CLASSES_DOCS: {
+                long id = mDbHelper.insertStudentClassesDocs(values);
+                if (id < 0) {
+                    break;
+                }
+                newItemUri = StudentClassesDocs.buildUri(String.valueOf(id));
+                break;
+            }
+            case STUDENT_CALENDAR: {
+                long id = mDbHelper.insertStudentCalendar(values);
+                if (id < 0) {
+                    break;
+                }
+                newItemUri = StudentCalendar.buildUri(String.valueOf(id));
                 break;
             }
 
@@ -304,10 +322,10 @@ public class ClipMobileProvider extends ContentProvider {
                 return builder.table(Tables.SCHEDULE_CLASSES);
             case STUDENT_CLASSES :
                 return builder.table(Tables.STUDENT_CLASSES);
-            /*case STUDENTS_CALENDARS_TYPES :
-                return builder.table(Tables.STUDENTS_CALENDARS_TYPES);
-            case STUDENTS_CALENDARS :
-                return builder.table(Tables.STUDENTS_CALENDARS);*/
+            case STUDENT_CLASSES_DOCS :
+                return builder.table(Tables.STUDENT_CLASSES_DOCS);
+            case STUDENT_CALENDAR :
+                return builder.table(Tables.STUDENT_CALENDAR);
 
             default :
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

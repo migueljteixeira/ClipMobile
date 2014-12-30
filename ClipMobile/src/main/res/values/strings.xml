@@ -8,6 +8,8 @@
     <string name="menu_refresh">Actualizar</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_logout">Mudar de Conta</string>
+    <string name="menu_semester_1">1º Semestre</string>
+    <string name="menu_semester_2">2º Semestre</string>
 
     <!-- Connection issues -->
     <string name="connection_failed">A ligação falhou.\nTente novamente mais tarde</string>
@@ -48,10 +50,38 @@
     <string name="schedule_class_type">Turno:</string>
     <string name="schedule_class_room">Sala:</string>
 
-    <!-- Classes Fragment -->
-    <array name="classes_tab_array">
+    <!-- Classes/Calendar Fragment -->
+    <string name="categories_available">Categorias disponíveis</string>
+    <array name="classes_docs_array">
+        <item>Acetatos</item>
+        <item>Problemas</item>
+        <item>Protocolos</item>
+        <item>Seminários</item>
+        <item>Exames</item>
+        <item>Testes</item>
+        <item>Textos de Apoio</item>
+        <item>Outros</item>
+    </array>
+
+    <array name="classes_docs_type_array">
+        <item>0ac</item>
+        <item>1e</item>
+        <item>2tr</item>
+        <item>3sm</item>
+        <item>ex</item>
+        <item>t</item>
+        <item>ta</item>
+        <item>xot</item>
+    </array>
+
+    <array name="semester_tab_array">
         <item>1º Semestre</item>
         <item>2º Semestre</item>
+    </array>
+
+    <array name="exams_tests_tab_array">
+        <item>Testes</item>
+        <item>Exames</item>
     </array>
 
 </resources>

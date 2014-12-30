@@ -2,6 +2,9 @@ package com.migueljteixeira.clipmobile.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,6 +12,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentScheduleTask;
 
 public class ScheduleViewPager extends BaseViewPager implements GetStudentScheduleTask.OnTaskFinishedListener {

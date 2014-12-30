@@ -10,8 +10,11 @@ public class Student extends Entity {
     private String numberId; // number on URL
     private String number;   // real student number
     private List<StudentYearSemester> years;
-    private Map<Integer, List<StudentScheduleClass>> scheduleClasses;
-    private Map<Integer, List<StudentClass>> studentClasses;
+    private Map<Integer, List<StudentScheduleClass>> scheduleClasses; // <semester, scheduleClasses>
+    private Map<Integer, List<StudentClass>> studentClasses; // <semester, classes>
+    private Map<Boolean, List<StudentCalendar>> studentCalendar; // <isExam, calendar>
+    private List<StudentClassDoc> studentClassesDocs;
+
 
     /*private List<StudentScheduleDay> scheduleDays;
     private List<StudentCalendarAppointment> calendarAppointments;
@@ -22,6 +25,8 @@ public class Student extends Entity {
         this.years = new LinkedList<StudentYearSemester>();
         this.scheduleClasses = new HashMap<Integer, List<StudentScheduleClass>>(5);
         this.studentClasses = new HashMap<Integer, List<StudentClass>>(2);
+        this.studentCalendar = new HashMap<Boolean, List<StudentCalendar>>(2);
+        this.studentClassesDocs = new LinkedList<StudentClassDoc>();
     }
 
     /*public Student(long id, String student_number_id, String student_number) {
@@ -100,6 +105,31 @@ public class Student extends Entity {
         this.studentClasses.put(semester, classes);
     }
 
+    public List<StudentClassDoc> getClassesDocs() {
+        return studentClassesDocs;
+    }
+
+    /*public void setClassesDocs(List<StudentClassDoc> classDoc) {
+        this.studentClassesDocs = classDoc;
+    }*/
+
+    public void addClassDoc(StudentClassDoc classDoc) {
+        studentClassesDocs.add(classDoc);
+    }
+
+    public Map<Boolean, List<StudentCalendar>> getStudentCalendar() {
+        return this.studentCalendar;
+    }
+
+    public void addStudentCalendarAppointment(boolean isExam, StudentCalendar calendarAppointment) {
+        List<StudentCalendar> calendar = this.studentCalendar.get(isExam);
+        if(calendar == null)
+            calendar = new LinkedList<StudentCalendar>();
+
+        calendar.add(calendarAppointment);
+
+        this.studentCalendar.put(isExam, calendar);
+    }
 
     /*
     public StudentScheduleDay getScheduleDay(int pos) {

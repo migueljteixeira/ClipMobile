@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +28,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     public static final int MENU_ITEM_CANTEEN_MENU_POSITION = 7;
 
     private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -62,7 +65,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         drawerAdapter.add(new DrawerDivider());
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_canteen_menu), 1));
 
-        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setItemChecked(MENU_ITEM_SCHEDULE_POSITION, true);
         mDrawerList.setOnItemClickListener(this);
@@ -79,9 +82,31 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_student_page, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(this));
+
+        if(semester == 1)
+            menu.findItem(R.id.semester1)
+                    .setChecked(true);
+        else
+            menu.findItem(R.id.semester2)
+                    .setChecked(true);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // check if we should toggle the navigation drawer
+        // Check if we should toggle the navigation drawer
         if (item != null && item.getItemId() == android.R.id.home) {
             if (mDrawerLayout.isDrawerVisible(GravityCompat.START))
                 mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -89,6 +114,20 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 mDrawerLayout.openDrawer(GravityCompat.START);
 
             return true;
+        }
+        else if(!item.isChecked() && (item.getItemId() == R.id.semester1 || item.getItemId() == R.id.semester2)) {
+            // Check item
+            item.setChecked(true);
+
+            if(item.getItemId() == R.id.semester1)
+                ClipSettings.saveSemesterSelected(this, "1");
+            else
+                ClipSettings.saveSemesterSelected(this, "2");
+
+            // Refresh current view
+            mDrawerList.performItemClick(mDrawerList.getChildAt(mDrawerList.getCheckedItemPosition()),
+                    mDrawerList.getCheckedItemPosition(),
+                    mDrawerList.getAdapter().getItemId(mDrawerList.getCheckedItemPosition()));
         }
 
         return super.onOptionsItemSelected(item);
@@ -130,11 +169,11 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 break;
 
             case MENU_ITEM_CALENDAR_POSITION:
-                fragment = new CalendarFragment();
+                fragment = new CalendarViewPager();
                 break;
 
             case MENU_ITEM_CLASSES_POSITION:
-                fragment = new ClassesViewPager();
+                fragment = new ClassesFragment();
                 break;
 
             case MENU_ITEM_CANTEEN_MENU_POSITION:

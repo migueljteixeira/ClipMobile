@@ -35,6 +35,13 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
     @InjectView(R.id.list_view) ExpandableListView mListView;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_numbers, container, false);
         ButterKnife.inject(this, view);
@@ -135,6 +142,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
             // Save studentId, year and semester selected
             String yearSelected = students.get(groupPosition).getYears().get(childPosition).getYear();
+
+            System.out.println("YEAR SELECTED " + yearSelected);
 
             ClipSettings.saveStudentIdSelected(getActivity(), students.get(groupPosition).getId());
             ClipSettings.saveYearSelected(getActivity(), yearSelected);

@@ -10,9 +10,11 @@ import android.provider.BaseColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClassesColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDaysColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesDocsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemesterColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentCalendarColumns;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
 
@@ -26,38 +28,37 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
     private DatabaseUtils.InsertHelper mScheduleDaysInserter;
     private DatabaseUtils.InsertHelper mScheduleClassesInserter;
     private DatabaseUtils.InsertHelper mStudentClassesInserter;
-
-    //private DatabaseUtils.InsertHelper mStudentsCalendarsTypesInserter;
-    //private DatabaseUtils.InsertHelper mStudentsCalendarsInserter;
-
+    private DatabaseUtils.InsertHelper mStudentClassesDocsInserter;
+    private DatabaseUtils.InsertHelper mStudentCalendarInserter;
 
     public interface Tables {
 
         String USERS = "users";
-
         String STUDENTS = "students";
-
         String STUDENTS_YEAR_SEMESTER = "students_year_semester";
-
         String SCHEDULE_DAYS = "schedule_days";
-
         String SCHEDULE_CLASSES = "schedule_classes";
-
         String STUDENT_CLASSES = "student_classes";
-
-        /*String STUDENTS_CALENDARS_TYPES = "students_calendars_types";
-
-        String STUDENTS_CALENDARS = "students_calendars";*/
+        String STUDENT_CLASSES_DOCS = "student_classes_docs";
+        String STUDENT_CALENDAR = "student_calendar";
     }
 
     interface References {
 
-        String USER_ID = "REFERENCES " + Tables.USERS + "(" + BaseColumns._ID + ")";
-        String STUDENT_ID = "REFERENCES " + Tables.STUDENTS + "(" + BaseColumns._ID + ")";
-        String STUDENTS_YEAR_SEMESTER_ID = "REFERENCES " + Tables.STUDENTS_YEAR_SEMESTER + "(" + BaseColumns._ID + ")";
+        String USER_ID = "REFERENCES " + Tables.USERS +
+                "(" + BaseColumns._ID + ")";
 
-        String STUDENT_SCHEDULE_DAY_ID = "REFERENCES " + Tables.SCHEDULE_DAYS + "(" + BaseColumns._ID + ")";
-        //String STUDENT_CALENDAR_TYPE_ID = "REFERENCES " + Tables.STUDENTS_CALENDARS_TYPES + "(" + BaseColumns._ID + ")";*/
+        String STUDENT_ID = "REFERENCES " + Tables.STUDENTS +
+                "(" + BaseColumns._ID + ")";
+
+        String STUDENTS_YEAR_SEMESTER_ID = "REFERENCES " + Tables.STUDENTS_YEAR_SEMESTER +
+                "(" + BaseColumns._ID + ")";
+
+        String STUDENT_SCHEDULE_DAY_ID = "REFERENCES " + Tables.SCHEDULE_DAYS +
+                "(" + BaseColumns._ID + ")";
+
+        String STUDENT_CLASSES_ID = "REFERENCES " + Tables.STUDENT_CLASSES +
+                "(" + BaseColumns._ID + ")";
     }
 
     private static final String CREATE_USERS_TABLE = "CREATE TABLE " + Tables.USERS
@@ -147,40 +148,47 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
 
             + ");";
 
-    /*private static final String CREATE_STUDENTS_CALENDARS_TYPES_TABLE = "CREATE TABLE " + Tables.STUDENTS_CALENDARS_TYPES
+    private static final String CREATE_STUDENT_CLASSES_DOCS_TABLE = "CREATE TABLE " + Tables.STUDENT_CLASSES_DOCS
             + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
-            + StudentsSemestersColumns.REF_STUDENT_SEMESTER_ID + " TEXT " + References.STUDENT_SEMESTER_ID + ","
+            + StudentClassesColumns.REF_STUDENT_CLASSES_ID + " TEXT " +
+                References.STUDENT_CLASSES_ID + " ON DELETE CASCADE,"
 
-            + StudentsCalendarsTypesColumns.NAME + " TEXT NOT NULL"
+            + StudentClassesDocsColumns.NAME + " TEXT NOT NULL,"
+
+            + StudentClassesDocsColumns.URL + " TEXT NOT NULL,"
+
+            + StudentClassesDocsColumns.DATE + " TEXT NOT NULL,"
+
+            + StudentClassesDocsColumns.SIZE + " TEXT NOT NULL,"
+
+            + StudentClassesDocsColumns.TYPE + " TEXT NOT NULL"
 
             + ");";
 
-    private static final String CREATE_STUDENTS_CALENDARS_TABLE = "CREATE TABLE " + Tables.STUDENTS_CALENDARS
+    private static final String CREATE_STUDENT_CALENDAR_TABLE = "CREATE TABLE " + Tables.STUDENT_CALENDAR
             + " ("
 
             + BaseColumns._ID + " INTEGER PRIMARY KEY,"
 
-            + StudentsCalendarsTypesColumns.REF_STUDENT_CALENDAR_TYPE_ID + " TEXT " + References.STUDENT_CALENDAR_TYPE_ID + ","
+            + StudentsYearSemesterColumns.REF_STUDENTS_YEAR_SEMESTER_ID + " TEXT " +
+                References.STUDENTS_YEAR_SEMESTER_ID + " ON DELETE CASCADE,"
 
-            + StudentsCalendarsColumns.NAME + " TEXT NOT NULL,"
+            + StudentCalendarColumns.IS_EXAM + " INTEGER,"
 
-            + StudentsCalendarsColumns.DATE + " TEXT NOT NULL,"
+            + StudentCalendarColumns.NAME + " TEXT NOT NULL,"
 
-            + StudentsCalendarsColumns.HOUR + " TEXT NOT NULL,"
+            + StudentCalendarColumns.DATE + " TEXT NOT NULL,"
 
-            + StudentsCalendarsColumns.ROOMS + " TEXT,"
+            + StudentCalendarColumns.HOUR + " TEXT NOT NULL,"
 
-            + StudentsCalendarsColumns.NUMBER + " TEXT NOT NULL"
+            + StudentCalendarColumns.ROOMS + " TEXT,"
 
-            + ");";*/
+            + StudentCalendarColumns.NUMBER + " TEXT"
 
-
-
-
-
+            + ");";
 
 
 
@@ -212,25 +220,24 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
         return mStudentClassesInserter.insert(values);
     }
 
+    public long insertStudentClassesDocs(ContentValues values) {
+        return mStudentClassesDocsInserter.insert(values);
+    }
+
+    public long insertStudentCalendar(ContentValues values) {
+        return mStudentCalendarInserter.insert(values);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USERS_TABLE);
-
         db.execSQL(CREATE_STUDENTS_TABLE);
-
         db.execSQL(CREATE_STUDENTS_YEAR_SEMESTER_TABLE);
-
         db.execSQL(CREATE_SCHEDULE_DAYS_TABLE);
-
         db.execSQL(CREATE_SCHEDULE_CLASSES_TABLE);
-
         db.execSQL(CREATE_STUDENT_CLASSES_TABLE);
-
-        /*db.execSQL(CREATE_STUDENTS_SCHEDULE_CLASSES_TABLE);
-
-        db.execSQL(CREATE_STUDENTS_CALENDARS_TYPES_TABLE);
-
-        db.execSQL(CREATE_STUDENTS_CALENDARS_TABLE);*/
+        db.execSQL(CREATE_STUDENT_CLASSES_DOCS_TABLE);
+        db.execSQL(CREATE_STUDENT_CALENDAR_TABLE);
     }
 
     @Override
@@ -248,6 +255,8 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
         mScheduleDaysInserter = new DatabaseUtils.InsertHelper(db, Tables.SCHEDULE_DAYS);
         mScheduleClassesInserter = new DatabaseUtils.InsertHelper(db, Tables.SCHEDULE_CLASSES);
         mStudentClassesInserter = new DatabaseUtils.InsertHelper(db, Tables.STUDENT_CLASSES);
+        mStudentClassesDocsInserter = new DatabaseUtils.InsertHelper(db, Tables.STUDENT_CLASSES_DOCS);
+        mStudentCalendarInserter = new DatabaseUtils.InsertHelper(db, Tables.STUDENT_CALENDAR);
     }
 
     @Override
@@ -259,6 +268,8 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_DAYS);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_CLASSES);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES_DOCS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CALENDAR);
 
         onCreate(db);
     }

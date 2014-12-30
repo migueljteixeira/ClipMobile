@@ -7,7 +7,9 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
+import com.migueljteixeira.clipmobile.entities.StudentClassDoc;
 import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 import com.migueljteixeira.clipmobile.entities.StudentYearSemester;
 import com.migueljteixeira.clipmobile.entities.User;
@@ -312,11 +314,13 @@ public class DBUtils {
 
         Student student = new Student();
         while(studentClasses_cursor.moveToNext()) {
+            String classId = studentClasses_cursor.getString(0);
             String className = studentClasses_cursor.getString(2);
             String classNumber = studentClasses_cursor.getString(3);
             int classSemester = studentClasses_cursor.getInt(4);
 
             StudentClass studentClass = new StudentClass();
+            studentClass.setId(classId);
             studentClass.setName(className);
             studentClass.setNumber(classNumber);
             studentClass.setSemester(classSemester);
@@ -351,10 +355,148 @@ public class DBUtils {
 
                 Uri uri = mContext.getContentResolver().insert(ClipMobileContract.StudentClasses.CONTENT_URI, values);
                 System.out.println("class inserted! " + uri.getPath());
+
+                // Set class Id
+                String classId = String.valueOf(ContentUris.parseId(uri));
+                cl.setId(classId);
             }
 
         }
 
+    }
+
+    /*
+     * ////////////////////////////// STUDENT CLASSES DOCS //////////////////////////////
+     */
+
+    public static Student getStudentClassesDocs(Context mContext, String studentClassId, String docType) {
+
+        // Get the student classes docs
+        final Cursor studentClassesDocs_cursor = mContext.getContentResolver().query(
+                ClipMobileContract.StudentClassesDocs.CONTENT_URI, null,
+                ClipMobileContract.StudentClasses.REF_STUDENT_CLASSES_ID + "=? AND " +
+                        ClipMobileContract.StudentClassesDocs.TYPE + "=?",
+                new String[] { studentClassId, docType }, null);
+
+        if(studentClassesDocs_cursor.getCount() == 0) {
+            studentClassesDocs_cursor.close();
+
+            return null;
+        }
+
+        Student student = new Student();
+        while(studentClassesDocs_cursor.moveToNext()) {
+            String docName = studentClassesDocs_cursor.getString(2);
+            String docUrl = studentClassesDocs_cursor.getString(3);
+            String docDate = studentClassesDocs_cursor.getString(4);
+            String docSize = studentClassesDocs_cursor.getString(5);
+
+            StudentClassDoc studentClassDoc = new StudentClassDoc();
+            studentClassDoc.setName(docName);
+            studentClassDoc.setUrl(docUrl);
+            studentClassDoc.setDate(docDate);
+            studentClassDoc.setSize(docSize);
+            studentClassDoc.setType(docType);
+
+            student.addClassDoc(studentClassDoc);
+        }
+        studentClassesDocs_cursor.close();
+
+        return student;
+    }
+
+    public static void insertStudentClassesDocs(Context mContext, String studentClassId, Student student) {
+        List<StudentClassDoc> classDocs = student.getClassesDocs();
+
+        System.out.println("studentClassId !!!-> " + studentClassId);
+        System.out.println("classes docs size -> " + classDocs.size());
+
+        for(StudentClassDoc cl : classDocs) {
+            ContentValues values = new ContentValues();
+            values.put(ClipMobileContract.StudentClasses.REF_STUDENT_CLASSES_ID, studentClassId);
+            values.put(ClipMobileContract.StudentClassesDocs.NAME, cl.getName());
+            values.put(ClipMobileContract.StudentClassesDocs.URL, cl.getUrl());
+            values.put(ClipMobileContract.StudentClassesDocs.DATE, cl.getDate());
+            values.put(ClipMobileContract.StudentClassesDocs.SIZE, cl.getSize());
+            values.put(ClipMobileContract.StudentClassesDocs.TYPE, cl.getType());
+
+            Uri uri = mContext.getContentResolver().insert(ClipMobileContract.StudentClassesDocs.CONTENT_URI, values);
+            System.out.println("class doc inserted! " + uri.getPath());
+        }
+
+    }
+
+    /*
+     * ////////////////////////////// STUDENT CALENDAR  //////////////////////////////
+     */
+
+    public static Student getStudentCalendar(Context mContext, String yearSemesterId) {
+
+        // Get student calendar
+        final Cursor studentCalendar_cursor = mContext.getContentResolver().query(
+                ClipMobileContract.StudentCalendar.CONTENT_URI, null,
+                ClipMobileContract.StudentsYearSemester.REF_STUDENTS_YEAR_SEMESTER_ID + "=?",
+                new String[] { yearSemesterId }, null);
+
+        if(studentCalendar_cursor.getCount() == 0) {
+            studentCalendar_cursor.close();
+
+            return null;
+        }
+
+        Student student = new Student();
+        while(studentCalendar_cursor.moveToNext()) {
+            int calendarAppointmentIsExam = studentCalendar_cursor.getInt(2);
+            String calendarAppointmentName = studentCalendar_cursor.getString(3);
+            String calendarAppointmentDate = studentCalendar_cursor.getString(4);
+            String calendarAppointmentHour = studentCalendar_cursor.getString(5);
+            String calendarAppointmentRooms = studentCalendar_cursor.getString(6);
+            String calendarAppointmentNumber = studentCalendar_cursor.getString(7);
+
+            System.out.println("REQUEST NAME:: " + calendarAppointmentName);
+
+            StudentCalendar calendarAppointement = new StudentCalendar();
+            calendarAppointement.setName(calendarAppointmentName);
+            calendarAppointement.setDate(calendarAppointmentDate);
+            calendarAppointement.setHour(calendarAppointmentHour);
+            calendarAppointement.setRooms(calendarAppointmentRooms);
+            calendarAppointement.setNumber(calendarAppointmentNumber);
+
+            student.addStudentCalendarAppointment((calendarAppointmentIsExam == 1), calendarAppointement);
+        }
+        studentCalendar_cursor.close();
+
+        return student;
+    }
+
+    public static void insertStudentCalendar(Context mContext, String yearSemesterId, Student student) {
+        Map<Boolean, List<StudentCalendar>> studentCalendar = student.getStudentCalendar();
+
+        System.out.println("yearSemesterId !!!-> " + yearSemesterId);
+        System.out.println("calendar size -> " + studentCalendar.size());
+
+        // For two types (exam and test)
+        for (int type = 0; type <= 1; type++) {
+            List<StudentCalendar> calendar = studentCalendar.get(type==1);
+
+            // we don't have any calendar of this type, yet
+            if (calendar == null)
+                continue;
+
+            for (StudentCalendar calendarAppointment : calendar) {
+                ContentValues values = new ContentValues();
+                values.put(ClipMobileContract.StudentsYearSemester.REF_STUDENTS_YEAR_SEMESTER_ID, yearSemesterId);
+                values.put(ClipMobileContract.StudentCalendar.IS_EXAM, type==1);
+                values.put(ClipMobileContract.StudentCalendar.NAME, calendarAppointment.getName());
+                values.put(ClipMobileContract.StudentCalendar.DATE, calendarAppointment.getDate());
+                values.put(ClipMobileContract.StudentCalendar.HOUR, calendarAppointment.getHour());
+                values.put(ClipMobileContract.StudentCalendar.ROOMS, calendarAppointment.getRooms());
+                values.put(ClipMobileContract.StudentCalendar.NUMBER, calendarAppointment.getNumber());
+
+                Uri uri = mContext.getContentResolver().insert(ClipMobileContract.StudentCalendar.CONTENT_URI, values);
+                System.out.println("calendar appointment inserted! " + uri.getPath());
+            }
+        }
     }
 
 

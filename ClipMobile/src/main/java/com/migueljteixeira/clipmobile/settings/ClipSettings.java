@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +23,9 @@ public class ClipSettings {
 
     private final static String STUDENT_NUMBERID_SELECTED = "com.migueljteixeira.clipmobile.studentNumberIdSelected";
     private final static String STUDENT_YEARSEMESTER_ID_SELECTED = "com.migueljteixeira.clipmobile.studentYearSemesterIdSelected";
+
+    private final static String STUDENT_CLASS_ID_SELECTED = "com.migueljteixeira.clipmobile.studentClassIdSelected";
+    private final static String STUDENT_CLASS_SELECTED = "com.migueljteixeira.clipmobile.studentClassSelected";
 
     private static SharedPreferences get(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -143,5 +147,53 @@ public class ClipSettings {
 
     public static void saveStudentIdSelected(Context context, String studentId) {
         edit(context).putString(STUDENT_ID_SELECTED, studentId).commit();
+    }
+
+    public static Date getSemesterStartDate(Context context) {
+        int year = Integer.parseInt(ClipSettings.getYearSelectedFormatted(context));
+        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(context));
+
+        Calendar calendar = Calendar.getInstance();
+        if(semester == 1) {
+            calendar.set(Calendar.YEAR, year - 1);
+            calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+        } else {
+            calendar.set(Calendar.MONTH, Calendar.MARCH);
+            calendar.set(Calendar.YEAR, year);
+        }
+
+        return calendar.getTime();
+    }
+
+    public static Date getSemesterEndDate(Context context) {
+        int year = Integer.parseInt(ClipSettings.getYearSelectedFormatted(context));
+        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(context));
+
+        Calendar calendar = Calendar.getInstance();
+        if(semester == 1) {
+            calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+            calendar.set(Calendar.YEAR, year);
+        } else {
+            calendar.set(Calendar.MONTH, Calendar.JULY);
+            calendar.set(Calendar.YEAR, year);
+        }
+
+        return calendar.getTime();
+    }
+
+    public static String getStudentClassIdSelected(Context context) {
+        return get(context).getString(STUDENT_CLASS_ID_SELECTED, null);
+    }
+
+    public static void saveStudentClassIdSelected(Context context, String classId) {
+        edit(context).putString(STUDENT_CLASS_ID_SELECTED, classId).commit();
+    }
+
+    public static String getStudentClassSelected(Context context) {
+        return get(context).getString(STUDENT_CLASS_SELECTED, null);
+    }
+
+    public static void saveStudentClassSelected(Context context, String classNumber) {
+        edit(context).putString(STUDENT_CLASS_SELECTED, classNumber).commit();
     }
 }

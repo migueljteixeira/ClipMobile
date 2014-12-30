@@ -5,17 +5,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.StudentClass;
-import com.migueljteixeira.clipmobile.ui.ClassesFragment;
+import com.migueljteixeira.clipmobile.entities.StudentCalendar;
+import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
+import com.migueljteixeira.clipmobile.ui.CalendarFragment;
+import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 import java.util.List;
+import java.util.Map;
 
-public class ClassesViewPagerAdapter extends FragmentPagerAdapter {
+public class CalendarViewPagerAdapter extends FragmentPagerAdapter {
 
     private final String[] tabNames;
     private Student student;
 
-    public ClassesViewPagerAdapter(FragmentManager fm, String[] tabNames, Student student) {
+    public CalendarViewPagerAdapter(FragmentManager fm, String[] tabNames, Student student) {
         super(fm);
         this.tabNames = tabNames;
         this.student = student;
@@ -29,12 +32,9 @@ public class ClassesViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        int semester = position + 1;
-        List<StudentClass> classes = student.getClasses().get(semester);
+        List<StudentCalendar> calendar = student.getStudentCalendar().get(position == 1);
 
-        System.out.println("SEMESTER " + " , " + semester + " c " + classes);
-
-        return new ClassesFragment(classes);
+        return new CalendarFragment(calendar);
     }
 
     @Override

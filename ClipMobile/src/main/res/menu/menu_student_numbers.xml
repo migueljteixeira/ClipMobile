@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:com.migueljteixeira.clipmobile="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/refresh"
         android:icon="@drawable/ic_menu_refresh"
+        android:id="@+id/refresh"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_refresh" />
+        com.migueljteixeira.clipmobile:showAsAction="ifRoom"
+        android:title="@string/menu_refresh"/>
 
     <item
         android:id="@+id/settings"
         android:orderInCategory="2"
-        android:showAsAction="never"
+        com.migueljteixeira.clipmobile:showAsAction="never"
         android:title="@string/menu_settings" />
 
     <item
         android:id="@+id/logout"
         android:orderInCategory="3"
-        android:showAsAction="never"
+        com.migueljteixeira.clipmobile:showAsAction="never"
         android:title="@string/menu_logout" />
 
 </menu>

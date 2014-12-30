@@ -7,18 +7,19 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.adapters.ClassesViewPagerAdapter;
+import com.migueljteixeira.clipmobile.adapters.CalendarViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
 
-public class ClassesViewPager extends BaseViewPager implements GetStudentClassesTask.OnTaskFinishedListener {
+public class CalendarViewPager extends BaseViewPager  implements GetStudentCalendarTask.OnTaskFinishedListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
 
         // Start AsyncTask
-        GetStudentClassesTask mTask = new GetStudentClassesTask(getActivity(), ClassesViewPager.this);
+        GetStudentCalendarTask mTask = new GetStudentCalendarTask(getActivity(), CalendarViewPager.this);
         mTask.execute();
 
         return view;
@@ -32,8 +33,8 @@ public class ClassesViewPager extends BaseViewPager implements GetStudentClasses
         if(result == null) return;
 
         // Initialize the ViewPager and set an adapter
-        mViewPager.setAdapter(new ClassesViewPagerAdapter(getChildFragmentManager(),
-                getResources().getStringArray(R.array.classes_tab_array), result));
+        mViewPager.setAdapter(new CalendarViewPagerAdapter(getChildFragmentManager(),
+                getResources().getStringArray(R.array.exams_tests_tab_array), result));
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
 
         // Bind the tabs to the ViewPager

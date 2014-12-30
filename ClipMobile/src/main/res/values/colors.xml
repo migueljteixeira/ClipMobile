@@ -5,6 +5,8 @@
     <color name="main_color">#13b263</color>
     <color name="main_color_dark">#0f8e4f</color>
 
+    <color name="main_background_color">#f3f3f4</color>
+
     <integer-array name="spinner_colors">
         <item>@color/spinner_color_1</item>
         <item>@color/spinner_color_2</item>

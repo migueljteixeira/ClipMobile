@@ -1,50 +1,86 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ClassListViewAdapter;
+import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
+import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
 
 import java.util.List;
+import java.util.Map;
+
+import butterknife.ButterKnife;
 
 @SuppressLint("ValidFragment")
-public class ClassesFragment extends Fragment {
+public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
 
-    private List<StudentClass> classes;
-
-    public ClassesFragment() {}
-    public ClassesFragment(List<StudentClass> classes) {
-        this.classes = classes;
-    }
+    private ListView listView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.list_view);
+        ButterKnife.inject(this, view);
 
-        ClassListViewAdapter adapter = new ClassListViewAdapter(getActivity());
+        listView = (ListView) view.findViewById(R.id.list_view);
 
-        if (classes != null) {
-            for (StudentClass c : classes)
-                adapter.add(new ListViewItem(c.getName(), c.getNumber()));
-        }
+        // Show progress spinner
+        showProgressSpinner(true);
 
-        listView.setAdapter(adapter);
+        // Start AsyncTask
+        GetStudentClassesTask mTask = new GetStudentClassesTask(getActivity(), ClassesFragment.this);
+        mTask.execute();
 
         return view;
     }
 
+    @Override
+    public void onTaskFinished(Student result) {
+        showProgressSpinner(false);
+
+        final ClassListViewAdapter adapter = new ClassListViewAdapter(getActivity());
+
+        if (result.getClasses() != null) {
+            int semester = Integer.parseInt(ClipSettings.getSemesterSelected(getActivity()));
+            List<StudentClass> classes = result.getClasses().get(semester);
+
+            for (StudentClass c : classes)
+                adapter.add(new ListViewItem(c.getId(), c.getName(), c.getNumber()));
+        }
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListViewItem item = (ListViewItem) adapter.getItem(position);
+
+                // Save class selected and internal classId
+                ClipSettings.saveStudentClassSelected(getActivity(), item.number);
+                ClipSettings.saveStudentClassIdSelected(getActivity(), item.id);
+
+                Intent intent = new Intent(getActivity(), ClassesDocsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
     public class ListViewItem {
 
-        public String name, number;
+        public String id, name, number;
 
-        public ListViewItem(String name, String number) {
+        public ListViewItem(String id, String name, String number) {
+            this.id = id;
             this.name = name;
             this.number = number;
         }

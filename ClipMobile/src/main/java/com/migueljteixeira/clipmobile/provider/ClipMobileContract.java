@@ -86,38 +86,44 @@ public class ClipMobileContract {
         String SEMESTER = "student_classes_semester";
     }
 
-//
-//    interface StudentsCalendarsTypesColumns {
-//
-//        /**
-//         * This column is NOT in this table, it is for reference purposes only.
-//         */
-//        String REF_STUDENT_CALENDAR_TYPE_ID = "students_calendars_type_id";
-//
-//        String NAME = "students_calendars_type_name";
-//    }
-//
-//    interface StudentsCalendarsColumns {
-//
-//        /**
-//         * This column is NOT in this table, it is for reference purposes only.
-//         */
-//        String REF_STUDENT_CALENDAR_ID = "students_calendars_id";
-//
-//        String NAME = "students_calendars_name";
-//
-//        String DATE = "students_calendars_date";
-//
-//        String HOUR = "students_calendars_hour";
-//
-//        String ROOMS = "students_calendars_rooms";
-//
-//        String NUMBER = "students_calendars_number";
-//    }
+    interface StudentClassesDocsColumns {
+
+        /**
+         * This column is NOT in this table, it is for reference purposes only.
+         */
+        String REF_STUDENT_CLASSES_DOCS_ID = "student_classes_docs_id";
+
+        String NAME = "student_classes_docs_name";
+
+        String URL = "student_classes_docs_url";
+
+        String DATE = "student_classes_docs_date";
+
+        String SIZE = "student_classes_docs_size";
+
+        String TYPE = "student_classes_docs_type";
+    }
 
 
+    interface StudentCalendarColumns {
 
+        /**
+         * This column is NOT in this table, it is for reference purposes only.
+         */
+        String REF_STUDENT_CALENDAR_ID = "student_calendar_id";
 
+        String IS_EXAM = "student_calendar_is_exam";
+
+        String NAME = "student_calendar_name";
+
+        String DATE = "student_calendar_date";
+
+        String HOUR = "student_calendar_hour";
+
+        String ROOMS = "student_calendar_rooms";
+
+        String NUMBER = "student_calendar_number";
+    }
 
 
 
@@ -136,9 +142,9 @@ public class ClipMobileContract {
 
     public static final String PATH_STUDENT_CLASSES = "student_classes";
 
-    /*public static final String PATH_STUDENTS_CALENDARS_TYPES = "students_calendars_types";
+    public static final String PATH_STUDENT_CLASSES_DOCS = "student_classes_docs";
 
-    public static final String PATH_STUDENTS_CALENDARS = "students_calendars";*/
+    public static final String PATH_STUDENT_CALENDAR = "student_calendar";
 
 
     public static class Users implements UsersColumns, BaseColumns {
@@ -219,30 +225,30 @@ public class ClipMobileContract {
 
     }
 
-    /*public static class StudentsCalendarsTypes implements StudentsCalendarsTypesColumns, BaseColumns {
+    public static class StudentClassesDocs implements StudentClassesDocsColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_STUDENTS_CALENDARS_TYPES)
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_STUDENT_CLASSES_DOCS)
                 .build();
 
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.clipmobile.students_calendars_types";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.clipmobile.student_classes_docs";
 
-        public static Uri buildStudentUri(String studentCalendarTypeId) {
-            return CONTENT_URI.buildUpon().appendPath(studentCalendarTypeId).build();
+        public static Uri buildUri(String studentClassDocId) {
+            return CONTENT_URI.buildUpon().appendPath(studentClassDocId).build();
         }
 
     }
 
-    public static class StudentsCalendars implements StudentsCalendarsColumns, BaseColumns {
+    public static class StudentCalendar implements StudentCalendarColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_STUDENTS_CALENDARS)
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_STUDENT_CALENDAR)
                 .build();
 
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.clipmobile.students_calendars";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.clipmobile.student_calendar";
 
-        public static Uri buildStudentUri(String studentCalendarId) {
+        public static Uri buildUri(String studentCalendarId) {
             return CONTENT_URI.buildUpon().appendPath(studentCalendarId).build();
         }
 
-    }*/
+    }
 
 }

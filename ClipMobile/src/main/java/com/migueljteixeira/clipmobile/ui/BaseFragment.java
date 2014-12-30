@@ -22,8 +22,6 @@ public class BaseFragment extends Fragment {
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-
-        setHasOptionsMenu(true);
     }
 
     /**
