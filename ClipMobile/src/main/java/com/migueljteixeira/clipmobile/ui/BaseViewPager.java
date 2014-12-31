@@ -1,5 +1,6 @@
 package com.migueljteixeira.clipmobile.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -50,6 +51,12 @@ public class BaseViewPager extends Fragment {
         super.onDestroyView();
 
         ButterKnife.reset(this);
+
+    }
+
+    protected void cancelTasks(AsyncTask mTask) {
+        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED)
+            mTask.cancel(true);
     }
 
 }

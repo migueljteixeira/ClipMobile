@@ -1,5 +1,6 @@
 package com.migueljteixeira.clipmobile.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,16 +15,19 @@ import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentScheduleTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class ScheduleViewPager extends BaseViewPager implements GetStudentScheduleTask.OnTaskFinishedListener {
+
+    private GetStudentScheduleTask mTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
 
         // Start AsyncTask
-        GetStudentScheduleTask mTask = new GetStudentScheduleTask(getActivity(), ScheduleViewPager.this);
-        mTask.execute();
+        mTask = new GetStudentScheduleTask(getActivity(), ScheduleViewPager.this);
+        AndroidUtils.executeOnPool(mTask);
 
         return view;
     }
@@ -48,4 +52,10 @@ public class ScheduleViewPager extends BaseViewPager implements GetStudentSchedu
         tabs.setViewPager(mViewPager);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mTask);
+    }
 }

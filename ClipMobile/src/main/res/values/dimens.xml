@@ -15,11 +15,11 @@
 
     <!-- StudentNumbers Activity -->
     <dimen name="fragment_student_numbers_card_width">300dp</dimen>
-    <dimen name="fragment_student_numbers_card_height">300dp</dimen>
+    <dimen name="fragment_student_numbers_card_height">450dp</dimen>
 
     <!-- StudentClasses Activity -->
     <dimen name="fragment_student_classes_card_width">300dp</dimen>
-    <dimen name="fragment_student_classes_card_height">300dp</dimen>
+    <dimen name="fragment_student_classes_card_height">450dp</dimen>
 
     <!-- StudentCalendar Activity -->
     <dimen name="fragment_student_calendar_card_width">300dp</dimen>

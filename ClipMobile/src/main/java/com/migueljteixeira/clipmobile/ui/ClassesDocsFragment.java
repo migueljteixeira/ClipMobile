@@ -19,6 +19,7 @@ import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesDocsTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentYearsTask;
 import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentNumbersTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
     private StudentClassesDocsAdapter mListAdapter;
     private List<StudentClassDoc> classDocs;
     @InjectView(R.id.list_view) ExpandableListView mListView;
+
+    private GetStudentClassesDocsTask mDocsTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,8 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
                 // show Progress Bar
                 showProgressSpinnerOnly(true);
 
-                GetStudentClassesDocsTask mDocsTask = new GetStudentClassesDocsTask(getActivity(), ClassesDocsFragment.this);
-                mDocsTask.execute(groupPosition);
+                mDocsTask = new GetStudentClassesDocsTask(getActivity(), ClassesDocsFragment.this);
+                AndroidUtils.executeOnPool(mDocsTask, groupPosition);
             }
 
             return true;
@@ -132,4 +135,11 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
             return true;
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mDocsTask);
+    }
 }

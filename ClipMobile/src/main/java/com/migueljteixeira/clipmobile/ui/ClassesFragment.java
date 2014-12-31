@@ -17,6 +17,7 @@ import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
 public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
 
     private ListView listView;
+    private GetStudentClassesTask mTask;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);
@@ -38,8 +40,8 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
         showProgressSpinner(true);
 
         // Start AsyncTask
-        GetStudentClassesTask mTask = new GetStudentClassesTask(getActivity(), ClassesFragment.this);
-        mTask.execute();
+        mTask = new GetStudentClassesTask(getActivity(), ClassesFragment.this);
+        AndroidUtils.executeOnPool(mTask);
 
         return view;
     }
@@ -48,10 +50,10 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
     public void onTaskFinished(Student result) {
         showProgressSpinner(false);
 
+        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(getActivity()));
         final ClassListViewAdapter adapter = new ClassListViewAdapter(getActivity());
 
-        if (result.getClasses() != null) {
-            int semester = Integer.parseInt(ClipSettings.getSemesterSelected(getActivity()));
+        if (result.getClasses() != null && result.getClasses().get(semester) != null) {
             List<StudentClass> classes = result.getClasses().get(semester);
 
             for (StudentClass c : classes)
@@ -73,6 +75,13 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mTask);
     }
 
     public class ListViewItem {

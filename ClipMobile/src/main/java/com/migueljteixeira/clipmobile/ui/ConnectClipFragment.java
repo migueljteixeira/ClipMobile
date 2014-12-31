@@ -16,6 +16,7 @@ import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.util.tasks.ConnectClipTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -80,7 +81,7 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
                 // start AsyncTask
                 mTask = new ConnectClipTask(getActivity().getApplicationContext(),
                         ConnectClipFragment.this);
-                mTask.execute(username, password);
+                AndroidUtils.executeOnPool(mTask, username, password);
             }
 
             }
@@ -110,5 +111,12 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
                 break;
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mTask);
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 
 @SuppressLint("ValidFragment")
 public class ScheduleFragment extends Fragment {
-
     private List<StudentScheduleClass> classes;
 
     public ScheduleFragment() {}
@@ -31,7 +30,9 @@ public class ScheduleFragment extends Fragment {
 
         ScheduleListViewAdapter adapter = new ScheduleListViewAdapter(getActivity());
 
-        if (classes != null) {
+        if (classes == null)
+            adapter.add(new ListViewItemEmpty());
+        else {
             for (StudentScheduleClass c : classes) {
                 adapter.add(new ListViewItem(c.getName(), c.getType(), c.getHourStart(),
                         c.getHourEnd(), c.getRoom()));
@@ -41,6 +42,11 @@ public class ScheduleFragment extends Fragment {
         listView.setAdapter(adapter);
 
         return view;
+    }
+
+    public class ListViewItemEmpty {
+
+        public ListViewItemEmpty() {}
     }
 
     public class ListViewItem {

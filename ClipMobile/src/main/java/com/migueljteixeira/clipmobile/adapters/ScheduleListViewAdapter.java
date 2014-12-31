@@ -11,6 +11,9 @@ import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 public class ScheduleListViewAdapter extends ArrayAdapter<Object> {
+    private static final int VIEW_TYPE_ITEM = 0;
+    private static final int VIEW_TYPE_ITEM_EMPTY = 1;
+
     private Context mContext;
 
     public ScheduleListViewAdapter(Context context) {
@@ -19,8 +22,27 @@ public class ScheduleListViewAdapter extends ArrayAdapter<Object> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if(getItem(position) instanceof ScheduleFragment.ListViewItem)
+            return VIEW_TYPE_ITEM;
+
+        return VIEW_TYPE_ITEM_EMPTY;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
+
+        if(getItemViewType(position) == VIEW_TYPE_ITEM_EMPTY) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_schedule_empty, parent, false);
+            convertView.setOnClickListener(null);
+            return convertView;
+        }
 
         if(convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_schedule, parent, false);

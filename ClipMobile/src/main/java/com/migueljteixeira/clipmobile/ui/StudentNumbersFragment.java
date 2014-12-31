@@ -19,6 +19,7 @@ import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentNumbersTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentYearsTask;
 import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentNumbersTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
@@ -28,11 +29,13 @@ import butterknife.InjectView;
 public class StudentNumbersFragment extends BaseFragment implements GetStudentNumbersTask.OnTaskFinishedListener,
         GetStudentYearsTask.OnTaskFinishedListener, UpdateStudentNumbersTask.OnTaskFinishedListener {
 
-    private GetStudentYearsTask mYearsTask;
-    private UpdateStudentNumbersTask mUpdateTask;
     private StudentNumbersAdapter mListAdapter;
     private List<Student> students;
     @InjectView(R.id.list_view) ExpandableListView mListView;
+
+    private GetStudentYearsTask mYearsTask;
+    private UpdateStudentNumbersTask mUpdateTask;
+    private GetStudentNumbersTask mNumbersTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,9 +73,9 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
         showProgressSpinner(true);
 
         // Start AsyncTask
-        GetStudentNumbersTask mNumbersTask = new GetStudentNumbersTask(getActivity(),
+        mNumbersTask = new GetStudentNumbersTask(getActivity(),
                 StudentNumbersFragment.this);
-        mNumbersTask.execute();
+        AndroidUtils.executeOnPool(mNumbersTask);
     }
 
     @Override
@@ -90,7 +93,7 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
                 // Start AsyncTask
                 mUpdateTask = new UpdateStudentNumbersTask(getActivity().getApplicationContext(),
                         StudentNumbersFragment.this);
-                mUpdateTask.execute();
+                AndroidUtils.executeOnPool(mUpdateTask);
 
                return true;
 
@@ -128,7 +131,7 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
                 mYearsTask = new GetStudentYearsTask(getActivity().getApplicationContext(),
                         StudentNumbersFragment.this);
-                mYearsTask.execute(students.get(groupPosition), groupPosition);
+                AndroidUtils.executeOnPool(mYearsTask, students.get(groupPosition), groupPosition);
             }
 
             return true;
@@ -201,5 +204,14 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
             System.out.println("updated!");
             mListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mYearsTask);
+        cancelTasks(mUpdateTask);
+        cancelTasks(mNumbersTask);
     }
 }

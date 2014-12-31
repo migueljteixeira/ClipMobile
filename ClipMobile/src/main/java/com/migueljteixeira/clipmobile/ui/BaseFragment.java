@@ -1,5 +1,6 @@
 package com.migueljteixeira.clipmobile.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -44,6 +45,11 @@ public class BaseFragment extends Fragment {
         super.onDestroyView();
 
         ButterKnife.reset(this);
+    }
+
+    protected void cancelTasks(AsyncTask mTask) {
+        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED)
+            mTask.cancel(true);
     }
 
 }

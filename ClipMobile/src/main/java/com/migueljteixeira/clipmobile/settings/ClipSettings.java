@@ -149,6 +149,22 @@ public class ClipSettings {
         edit(context).putString(STUDENT_ID_SELECTED, studentId).commit();
     }
 
+    public static String getStudentClassIdSelected(Context context) {
+        return get(context).getString(STUDENT_CLASS_ID_SELECTED, null);
+    }
+
+    public static void saveStudentClassIdSelected(Context context, String classId) {
+        edit(context).putString(STUDENT_CLASS_ID_SELECTED, classId).commit();
+    }
+
+    public static String getStudentClassSelected(Context context) {
+        return get(context).getString(STUDENT_CLASS_SELECTED, null);
+    }
+
+    public static void saveStudentClassSelected(Context context, String classNumber) {
+        edit(context).putString(STUDENT_CLASS_SELECTED, classNumber).commit();
+    }
+
     public static Date getSemesterStartDate(Context context) {
         int year = Integer.parseInt(ClipSettings.getYearSelectedFormatted(context));
         int semester = Integer.parseInt(ClipSettings.getSemesterSelected(context));
@@ -179,21 +195,5 @@ public class ClipSettings {
         }
 
         return calendar.getTime();
-    }
-
-    public static String getStudentClassIdSelected(Context context) {
-        return get(context).getString(STUDENT_CLASS_ID_SELECTED, null);
-    }
-
-    public static void saveStudentClassIdSelected(Context context, String classId) {
-        edit(context).putString(STUDENT_CLASS_ID_SELECTED, classId).commit();
-    }
-
-    public static String getStudentClassSelected(Context context) {
-        return get(context).getString(STUDENT_CLASS_SELECTED, null);
-    }
-
-    public static void saveStudentClassSelected(Context context, String classNumber) {
-        edit(context).putString(STUDENT_CLASS_SELECTED, classNumber).commit();
     }
 }

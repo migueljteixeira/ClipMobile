@@ -3,22 +3,30 @@
     xmlns:com.migueljteixeira.clipmobile="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/ic_menu_refresh"
         android:id="@+id/refresh"
+        android:icon="@drawable/ic_menu_refresh"
         android:orderInCategory="1"
-        com.migueljteixeira.clipmobile:showAsAction="ifRoom"
-        android:title="@string/menu_refresh"/>
+        android:title="@string/menu_refresh"
+        com.migueljteixeira.clipmobile:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/settings"
-        android:orderInCategory="2"
-        com.migueljteixeira.clipmobile:showAsAction="never"
-        android:title="@string/menu_settings" />
+        android:icon="@drawable/ic_action_overflow"
+        android:orderInCategory="1"
+        android:title="@string/menu_overflow"
+        com.migueljteixeira.clipmobile:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:orderInCategory="2"
+                android:title="@string/menu_settings"
+                com.migueljteixeira.clipmobile:showAsAction="never" />
 
-    <item
-        android:id="@+id/logout"
-        android:orderInCategory="3"
-        com.migueljteixeira.clipmobile:showAsAction="never"
-        android:title="@string/menu_logout" />
+            <item
+                android:id="@+id/logout"
+                android:orderInCategory="3"
+                android:title="@string/menu_logout"
+                com.migueljteixeira.clipmobile:showAsAction="never" />
+        </menu>
+    </item>
 
 </menu>

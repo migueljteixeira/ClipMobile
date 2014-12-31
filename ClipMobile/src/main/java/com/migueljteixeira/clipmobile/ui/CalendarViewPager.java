@@ -11,16 +11,19 @@ import com.migueljteixeira.clipmobile.adapters.CalendarViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class CalendarViewPager extends BaseViewPager  implements GetStudentCalendarTask.OnTaskFinishedListener {
+
+    private GetStudentCalendarTask mTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
 
         // Start AsyncTask
-        GetStudentCalendarTask mTask = new GetStudentCalendarTask(getActivity(), CalendarViewPager.this);
-        mTask.execute();
+        mTask = new GetStudentCalendarTask(getActivity(), CalendarViewPager.this);
+        AndroidUtils.executeOnPool(mTask);
 
         return view;
     }
@@ -43,5 +46,12 @@ public class CalendarViewPager extends BaseViewPager  implements GetStudentCalen
         tabs.setIndicatorColorResource(R.color.actionbar_color);
         tabs.setTabBackground(R.drawable.clipmobile_list_selector_holo_light);
         tabs.setViewPager(mViewPager);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mTask);
     }
 }
