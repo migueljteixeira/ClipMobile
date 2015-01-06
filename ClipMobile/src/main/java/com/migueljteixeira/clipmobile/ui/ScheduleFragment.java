@@ -1,6 +1,5 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,17 +9,19 @@ import android.widget.ListView;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ScheduleListViewAdapter;
+import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 
 import java.util.List;
 
-@SuppressLint("ValidFragment")
 public class ScheduleFragment extends Fragment {
     private List<StudentScheduleClass> classes;
 
-    public ScheduleFragment() {}
-    public ScheduleFragment(List<StudentScheduleClass> classes) {
-        this.classes = classes;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        classes = getArguments().getParcelableArrayList(ScheduleViewPagerAdapter.SCHEDULE_CLASSES_TAG);
     }
 
     @Override
@@ -33,10 +34,9 @@ public class ScheduleFragment extends Fragment {
         if (classes == null)
             adapter.add(new ListViewItemEmpty());
         else {
-            for (StudentScheduleClass c : classes) {
+            for (StudentScheduleClass c : classes)
                 adapter.add(new ListViewItem(c.getName(), c.getType(), c.getHourStart(),
                         c.getHourEnd(), c.getRoom()));
-            }
         }
 
         listView.setAdapter(adapter);

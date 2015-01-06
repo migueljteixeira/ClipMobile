@@ -15,12 +15,6 @@ public class Student extends Entity {
     private Map<Boolean, List<StudentCalendar>> studentCalendar; // <isExam, calendar>
     private List<StudentClassDoc> studentClassesDocs;
 
-
-    /*private List<StudentScheduleDay> scheduleDays;
-    private List<StudentCalendarAppointment> calendarAppointments;
-    private List<StudentClasses> classes;
-    private List<StudentDocs> docs;*/
-
     public Student(){
         this.years = new LinkedList<StudentYearSemester>();
         this.scheduleClasses = new HashMap<Integer, List<StudentScheduleClass>>(5);
@@ -28,16 +22,6 @@ public class Student extends Entity {
         this.studentCalendar = new HashMap<Boolean, List<StudentCalendar>>(2);
         this.studentClassesDocs = new LinkedList<StudentClassDoc>();
     }
-
-    /*public Student(long id, String student_number_id, String student_number) {
-        this.id = id;
-        this.numberID = student_number_id;
-        this.number = student_number;
-        this.scheduleDays = new ArrayList<StudentScheduleDay>(8);
-
-        for(int i = 0; i<8; i++)
-            scheduleDays.add(null);
-    }*/
 
     public String getNumberId() {
         return numberId;
@@ -91,10 +75,6 @@ public class Student extends Entity {
         return studentClasses;
     }
 
-/*    public void setClasses(List<StudentClass> classes) {
-        this.studentClasses = classes;
-    }*/
-
     public void addStudentClass(int semester, StudentClass scheduleClass) {
         List<StudentClass> classes = this.studentClasses.get(semester);
         if(classes == null)
@@ -108,10 +88,6 @@ public class Student extends Entity {
     public List<StudentClassDoc> getClassesDocs() {
         return studentClassesDocs;
     }
-
-    /*public void setClassesDocs(List<StudentClassDoc> classDoc) {
-        this.studentClassesDocs = classDoc;
-    }*/
 
     public void addClassDoc(StudentClassDoc classDoc) {
         studentClassesDocs.add(classDoc);
@@ -130,41 +106,4 @@ public class Student extends Entity {
 
         this.studentCalendar.put(isExam, calendar);
     }
-
-    /*
-    public StudentScheduleDay getScheduleDay(int pos) {
-        return scheduleDays.get(pos);
-    }
-
-    public void addScheduleDay(int dayPos, StudentScheduleDay day) {
-        scheduleDays.set(dayPos, day);
-    }
-
-    public List<StudentScheduleDay> getScheduleDays() {
-        return scheduleDays;
-    }
-
-    public List<StudentCalendarAppointment> getCalendarAppointments() {
-        return calendarAppointments;
-    }
-
-    public void setCalendarAppointments(List<StudentCalendarAppointment> calendarAppointments) {
-        this.calendarAppointments = calendarAppointments;
-    }
-
-    public List<StudentClasses> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(List<StudentClasses> classes) {
-        this.classes = classes;
-    }
-
-    public List<StudentDocs> getDocs() {
-        return docs;
-    }
-
-    public void setDocs(List<StudentDocs> docs) {
-        this.docs = docs;
-    }*/
 }

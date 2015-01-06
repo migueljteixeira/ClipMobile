@@ -11,10 +11,15 @@
         android:layout_height="match_parent">
 
         <com.astuetz.PagerSlidingTabStrip
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="48dip"
-            android:textSize="@dimen/tabs_text_size" />
+            android:layout_height="48dp"
+            android:textSize="@dimen/tabs_text_size"
+            android:background="@color/main_color"
+            android:textColor="@android:color/white"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsShouldExpand="true"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"

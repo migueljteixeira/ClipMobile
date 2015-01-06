@@ -1,7 +1,5 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,15 +18,18 @@ import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 
-@SuppressLint("ValidFragment")
 public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
 
     private ListView listView;
     private GetStudentClassesTask mTask;
+    private NavDrawerActivity activity;
+
+    public void init(NavDrawerActivity activity) {
+        this.activity = activity;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);
@@ -48,9 +49,15 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
 
     @Override
     public void onTaskFinished(Student result) {
+        if(!isAdded())
+            return;
+
         showProgressSpinner(false);
 
-        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(getActivity()));
+        // Server is unavailable right now
+        if(result == null) return;
+
+        int semester = ClipSettings.getSemesterSelected(getActivity());
         final ClassListViewAdapter adapter = new ClassListViewAdapter(getActivity());
 
         if (result.getClasses() != null && result.getClasses().get(semester) != null) {
@@ -70,8 +77,12 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
                 ClipSettings.saveStudentClassSelected(getActivity(), item.number);
                 ClipSettings.saveStudentClassIdSelected(getActivity(), item.id);
 
-                Intent intent = new Intent(getActivity(), ClassesDocsActivity.class);
-                startActivity(intent);
+                FragmentManager fm = activity.getSupportFragmentManager();
+                Fragment fragment = new ClassesDocsFragment();
+
+                // Replace fragment and close drawer
+                fm.beginTransaction().replace(R.id.content_frame, fragment,
+                        ClassesDocsFragment.FRAGMENT_TAG).commit();
             }
         });
 

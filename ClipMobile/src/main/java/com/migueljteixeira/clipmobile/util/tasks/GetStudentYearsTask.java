@@ -14,7 +14,7 @@ public class GetStudentYearsTask extends AsyncTask<Object, Void, Student> {
     public interface OnTaskFinishedListener {
 
         /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
+         * Returns one of {@link com.migueljteixeira.clipmobile.entities.Student}.
          */
         public void onStudentYearsTaskFinished(Student resultCode, int groupPosition);
 

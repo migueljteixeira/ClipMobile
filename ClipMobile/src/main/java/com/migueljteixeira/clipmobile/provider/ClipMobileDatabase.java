@@ -9,12 +9,12 @@ import android.provider.BaseColumns;
 
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClassesColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDaysColumns;
+import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentCalendarColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClassesDocsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemesterColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
-import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentCalendarColumns;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
 

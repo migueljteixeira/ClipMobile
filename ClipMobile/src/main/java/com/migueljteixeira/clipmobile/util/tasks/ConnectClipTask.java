@@ -6,9 +6,9 @@ import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.enums.NetworkResult;
+import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.util.StudentTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
 
@@ -17,7 +17,7 @@ public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
         /**
          * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
          */
-        public void onTaskFinished(int resultCode);
+        public void onTaskFinished(int result);
 
     }
 
@@ -31,11 +31,6 @@ public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        // check for connectivity
-        if (!AndroidUtils.isNetworkConnected(mContext)) {
-            return NetworkResult.OFFLINE;
-        }
-
         // Get user data
         String username = params[0];
         String password = params[1];
@@ -48,17 +43,22 @@ public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
     }
 
     @Override
-    protected void onPostExecute(Integer resultCode) {
-        super.onPostExecute(resultCode);
+    protected void onPostExecute(Integer result) {
+        super.onPostExecute(result);
 
-        if(resultCode == NetworkResult.OFFLINE) {
-            // Server is unavailable right now
-            Toast.makeText(mContext, mContext.getString(R.string.connection_failed),
-                    Toast.LENGTH_SHORT).show();
+        switch(result) {
+            case NetworkResult.OFFLINE:
+                Toast.makeText(mContext,
+                        mContext.getString(R.string.connection_failed), Toast.LENGTH_SHORT).show();
+                break;
+
+            case Result.ERROR:
+                Toast.makeText(mContext,
+                        mContext.getString(R.string.error_fields_incorrect), Toast.LENGTH_SHORT).show();
+                break;
         }
 
-        if (mListener != null) {
-            mListener.onTaskFinished(resultCode);
-        }
+        if (mListener != null)
+            mListener.onTaskFinished(result);
     }
 }

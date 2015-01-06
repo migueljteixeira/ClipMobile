@@ -160,11 +160,17 @@ public class DBUtils {
                 new String[] { String.valueOf(userId) });
     }
 
+    public static void deleteStudentsInfo(Context mContext) {
+
+        // Delete Students Info
+        mContext.getContentResolver().delete(ClipMobileContract.StudentsYearSemester.CONTENT_URI, null, null);
+    }
+
     /*
      * ////////////////////////////// STUDENT SCHEDULE  //////////////////////////////
      */
 
-    public static String getYearSemesterId(Context mContext, String studentId, String year, String semester) {
+    public static String getYearSemesterId(Context mContext, String studentId, String year, int semester) {
 
         // First, we get the yearSemester ID
         final Cursor studentYearSemester_cursor = mContext.getContentResolver().query(
@@ -173,7 +179,7 @@ public class DBUtils {
                 ClipMobileContract.Students.REF_STUDENTS_ID + "=? AND " +
                         ClipMobileContract.StudentsYearSemester.YEAR + "=? AND " +
                         ClipMobileContract.StudentsYearSemester.SEMESTER + "=?",
-                new String[] { studentId, year, semester }, null);
+                new String[] { studentId, year, String.valueOf(semester) }, null);
 
         if(studentYearSemester_cursor.getCount() == 0) {
             studentYearSemester_cursor.close();

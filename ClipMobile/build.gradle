@@ -25,7 +25,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
 
-        versionCode = 12
+        versionCode = 14
         versionName = '1.0'
 
         manifestPlaceholders = [ crashlyticsApiKey: "${rootProject.property("CRASHLYTICS_KEY")}".toString() ]
@@ -36,7 +36,7 @@ android {
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFile 'proguard-rules.pro'
         }
     }
@@ -53,7 +53,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup:android-times-square:1.1.1@aar'
     compile 'org.jsoup:jsoup:1.7.3'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.6'
     compile 'uk.co.chrisjenx:calligraphy:1.1.+'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {

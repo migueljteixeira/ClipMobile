@@ -7,17 +7,12 @@ import android.os.Build;
 import android.os.Environment;
 
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.StudentClassDoc;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class StudentClassesDocsRequest extends Request {
 
@@ -28,7 +23,7 @@ public class StudentClassesDocsRequest extends Request {
     private static final String STUDENT_CLASS_DOCS_5 = "&tipo_de_documento_de_unidade=";
 
     public static Student getClassesDocs(Context mContext, String studentNumberId,
-                                       String year, String semester, String course,
+                                       String year, int semester, String course,
                                        String docType) throws ServerUnavailableException {
 
         String url = STUDENT_CLASS_DOCS_1 + year +

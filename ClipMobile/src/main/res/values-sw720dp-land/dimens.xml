@@ -4,11 +4,11 @@
     <dimen name="fragment_login_card_width">500dp</dimen>
 
     <!-- StudentNumbers Activity -->
-    <dimen name="fragment_student_numbers_card_width">350dp</dimen>
-    <dimen name="fragment_student_numbers_card_height">250dp</dimen>
+    <dimen name="fragment_student_numbers_card_width">500dp</dimen>
+    <dimen name="fragment_student_numbers_card_height">450dp</dimen>
 
     <!-- StudentClasses Activity -->
-    <dimen name="fragment_student_classes_card_width">350dp</dimen>
-    <dimen name="fragment_student_classes_card_height">250dp</dimen>
+    <dimen name="fragment_student_classes_card_width">500dp</dimen>
+    <dimen name="fragment_student_classes_card_height">450dp</dimen>
 
 </resources>

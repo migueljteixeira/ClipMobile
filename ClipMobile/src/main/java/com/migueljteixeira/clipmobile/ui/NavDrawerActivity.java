@@ -1,6 +1,7 @@
 package com.migueljteixeira.clipmobile.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,22 +14,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.DrawerAdapter;
+import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.migueljteixeira.clipmobile.ui.dialogs.AboutDialogFragment;
+import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentPageTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class NavDrawerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class NavDrawerActivity extends BaseActivity implements AdapterView.OnItemClickListener,
+        UpdateStudentPageTask.OnTaskFinishedListener {
 
-    public static final int MENU_ITEM_SCHEDULE_POSITION = 2;
-    public static final int MENU_ITEM_CALENDAR_POSITION = 3;
-    public static final int MENU_ITEM_CLASSES_POSITION = 4;
-    public static final int MENU_ITEM_CANTEEN_MENU_POSITION = 7;
+    private static final String CURRENT_ACTIVITY_TITLE_TAG = "activity_title";
+    private static final int MENU_ITEM_SCHEDULE_POSITION = 2;
+    private static final int MENU_ITEM_CALENDAR_POSITION = 3;
+    private static final int MENU_ITEM_CLASSES_POSITION = 4;
+    private static final int MENU_ITEM_INFO_CONTACTS_POSITION = 7;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private UpdateStudentPageTask mUpdateTask;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,6 +51,15 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         setupNavDrawer();
 
+        // Set toolbar title
+        if(savedInstanceState == null)
+            setTitle(R.string.drawer_schedule);
+        else {
+            String title = savedInstanceState.getString(CURRENT_ACTIVITY_TITLE_TAG);
+            if (title != null)
+                setTitle(title);
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
         if (fragment == null) {
@@ -50,9 +68,15 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(CURRENT_ACTIVITY_TITLE_TAG, getTitle().toString());
+    }
+
     public void setupNavDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerLayout.setFocusableInTouchMode(false);
 
         // Setup menu adapter
         DrawerAdapter drawerAdapter = new DrawerAdapter(this);
@@ -61,16 +85,17 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_schedule), 1));
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_calendar), 1));
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_classes), 1));
-        drawerAdapter.add(new DrawerTitle(getString(R.string.drawer_title_college)));
+        drawerAdapter.add(new DrawerTitle(getString(R.string.drawer_info_title)));
         drawerAdapter.add(new DrawerDivider());
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_canteen_menu), 1));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_contacts), 1));
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerList.setItemChecked(MENU_ITEM_SCHEDULE_POSITION, true);
         mDrawerList.setOnItemClickListener(this);
 
-        // If the device is smaller than 7', hide the drawer
+        // If the device is smaller than 7',
+        // hide the drawer and set the icon
         if(! getResources().getBoolean(R.bool.drawer_opened)) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,14 +116,12 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(this));
+        int semester = ClipSettings.getSemesterSelected(this);
 
         if(semester == 1)
-            menu.findItem(R.id.semester1)
-                    .setChecked(true);
+            menu.findItem(R.id.semester1).setChecked(true);
         else
-            menu.findItem(R.id.semester2)
-                    .setChecked(true);
+            menu.findItem(R.id.semester2).setChecked(true);
 
         return true;
     }
@@ -107,22 +130,52 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // Check if we should toggle the navigation drawer
-        if (item != null && item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             if (mDrawerLayout.isDrawerVisible(GravityCompat.START))
                 mDrawerLayout.closeDrawer(GravityCompat.START);
             else
                 mDrawerLayout.openDrawer(GravityCompat.START);
-
-            return true;
         }
+
+        else if(item.getItemId() == R.id.refresh) {
+            System.out.println("refresh!");
+
+            // Refreshing
+            Toast.makeText(this, getString(R.string.refreshing),
+                    Toast.LENGTH_LONG).show();
+
+            // Start AsyncTask
+            mUpdateTask = new UpdateStudentPageTask(this, NavDrawerActivity.this);
+            AndroidUtils.executeOnPool(mUpdateTask);
+        }
+
+        else if(item.getItemId() == R.id.logout) {
+            // Clear user personal data
+            ClipSettings.logoutUser(this);
+
+            Intent intent = new Intent(this, ConnectClipActivity.class);
+            startActivity(intent);
+
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+            finish();
+        }
+
+        else if(item.getItemId() == R.id.about) {
+            System.out.println("about!");
+
+            // Create an instance of the dialog fragment and show it
+            AboutDialogFragment dialog = new AboutDialogFragment();
+            dialog.show(getSupportFragmentManager(), "AboutDialogFragment");
+        }
+
         else if(!item.isChecked() && (item.getItemId() == R.id.semester1 || item.getItemId() == R.id.semester2)) {
             // Check item
             item.setChecked(true);
 
             if(item.getItemId() == R.id.semester1)
-                ClipSettings.saveSemesterSelected(this, "1");
+                ClipSettings.saveSemesterSelected(this, 1);
             else
-                ClipSettings.saveSemesterSelected(this, "2");
+                ClipSettings.saveSemesterSelected(this, 2);
 
             // Refresh current view
             mDrawerList.performItemClick(mDrawerList.getChildAt(mDrawerList.getCheckedItemPosition()),
@@ -130,7 +183,10 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                     mDrawerList.getAdapter().getItemId(mDrawerList.getCheckedItemPosition()));
         }
 
-        return super.onOptionsItemSelected(item);
+        else
+            return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     @Override
@@ -152,9 +208,25 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     public void onBackPressed() {
         if(getResources().getBoolean(R.bool.drawer_opened) ||
-                !mDrawerLayout.isDrawerOpen(GravityCompat.START))
+                !mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentByTag(ClassesDocsFragment.FRAGMENT_TAG);
+            if(fragment != null) {
+                // Refresh current view
+                mDrawerList.performItemClick(mDrawerList.getChildAt(mDrawerList.getCheckedItemPosition()),
+                        mDrawerList.getCheckedItemPosition(),
+                        mDrawerList.getAdapter().getItemId(mDrawerList.getCheckedItemPosition()));
+
+                return;
+            }
+
+            Intent intent = new Intent(this, StudentNumbersActivity.class);
+            startActivity(intent);
+
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
             finish();
-        else
+        } else
             mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
@@ -165,19 +237,24 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         switch(position) {
             case MENU_ITEM_SCHEDULE_POSITION:
+                setTitle(R.string.drawer_schedule);
                 fragment = new ScheduleViewPager();
                 break;
 
             case MENU_ITEM_CALENDAR_POSITION:
+                setTitle(R.string.drawer_calendar);
                 fragment = new CalendarViewPager();
                 break;
 
             case MENU_ITEM_CLASSES_POSITION:
+                setTitle(R.string.drawer_classes);
                 fragment = new ClassesFragment();
+                ((ClassesFragment) fragment).init(this);
                 break;
 
-            case MENU_ITEM_CANTEEN_MENU_POSITION:
-                fragment = new GradesFragment();
+            case MENU_ITEM_INFO_CONTACTS_POSITION:
+                setTitle(R.string.drawer_info_contacts);
+                fragment = new InfoContactsFragment();
                 break;
         }
 
@@ -187,6 +264,24 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         // If the device is bigger than 7', don't close the drawer
         if(! getResources().getBoolean(R.bool.drawer_opened))
             mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    @Override
+    public void onUpdateTaskFinished(Student result) {
+        if(isFinishing())
+            return;
+
+        // Refresh current view
+        mDrawerList.performItemClick(mDrawerList.getChildAt(mDrawerList.getCheckedItemPosition()),
+                mDrawerList.getCheckedItemPosition(),
+                mDrawerList.getAdapter().getItemId(mDrawerList.getCheckedItemPosition()));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelTasks(mUpdateTask);
     }
 
     public class DrawerItem {

@@ -10,22 +10,21 @@ import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
-public class GetStudentClassesTask extends AsyncTask<Void, Void, Student> {
-
+public class UpdateStudentPageTask extends AsyncTask<Void, Void, Student> {
 
     public interface OnTaskFinishedListener {
 
         /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.entities.Student}.
+         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
          */
-        public void onTaskFinished(Student result);
+        public void onUpdateTaskFinished(Student result);
 
     }
 
     private Context mContext;
     private OnTaskFinishedListener mListener;
 
-    public GetStudentClassesTask(Context context, OnTaskFinishedListener listener) {
+    public UpdateStudentPageTask(Context context, OnTaskFinishedListener listener) {
         mContext = context;
         mListener = listener;
     }
@@ -33,14 +32,11 @@ public class GetStudentClassesTask extends AsyncTask<Void, Void, Student> {
     @Override
     protected Student doInBackground(Void... params) {
         String studentId = ClipSettings.getStudentIdSelected(mContext);
-        String year = ClipSettings.getYearSelected(mContext);
-        String yearFormatted = ClipSettings.getYearSelectedFormatted(mContext);
-        int semester = ClipSettings.getSemesterSelected(mContext);
         String studentNumberId = ClipSettings.getStudentNumberidSelected(mContext);
 
-        // Get student classes
         try {
-            return StudentTools.getStudentClasses(mContext, studentId, year, yearFormatted, semester, studentNumberId);
+            // Update students info
+            return StudentTools.updateStudentPage(mContext, studentId, studentNumberId);
         } catch (ServerUnavailableException e) {
             return null;
         }
@@ -57,6 +53,6 @@ public class GetStudentClassesTask extends AsyncTask<Void, Void, Student> {
         }
 
         if (mListener != null)
-            mListener.onTaskFinished(result);
+            mListener.onUpdateTaskFinished(result);
     }
 }

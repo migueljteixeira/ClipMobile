@@ -1,8 +1,6 @@
 <resources>
-    <!-- For handsets (smaller than 600dp available width) -->
 
-    <integer name="activity_login_linearlayout_gravity">1</integer>
-
+    <!-- Toolbar -->
     <dimen name="toolbar_height">48dp</dimen>
 
     <!-- ConnectClip Activity -->

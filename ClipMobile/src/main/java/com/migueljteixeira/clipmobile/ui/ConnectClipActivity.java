@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.migueljteixeira.clipmobile.BuildConfig;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
@@ -18,11 +19,12 @@ public class ConnectClipActivity extends BaseActivity {
         setContentView(R.layout.activity_singlepane);
         super.onCreate(savedInstanceState);
 
+        // Crash system reporting
         Fabric.with(this, new Crashlytics());
 
-        // If the user is already logged in, start the StudentNumbersActivity instead
+        // If the user has already login, start the StudentNumbersActivity instead
         if( ClipSettings.isUserLoggedIn(this) ) {
-            Intent intent = new Intent(getApplicationContext(), StudentNumbersActivity.class);
+            Intent intent = new Intent(this, StudentNumbersActivity.class);
             startActivity(intent);
 
             finish();

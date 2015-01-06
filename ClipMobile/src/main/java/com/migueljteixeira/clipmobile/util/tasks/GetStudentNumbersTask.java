@@ -12,7 +12,7 @@ public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
     public interface OnTaskFinishedListener {
 
         /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
+         * Returns a {@link com.migueljteixeira.clipmobile.entities.User}.
          */
         public void onStudentNumbersTaskFinished(User result);
 
@@ -38,8 +38,7 @@ public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
     protected void onPostExecute(User result) {
         super.onPostExecute(result);
 
-        if (mListener != null) {
+        if (mListener != null)
             mListener.onStudentNumbersTaskFinished(result);
-        }
     }
 }

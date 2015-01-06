@@ -1,5 +1,7 @@
 package com.migueljteixeira.clipmobile.adapters;
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,9 +10,12 @@ import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
+    public static final String SCHEDULE_CLASSES_TAG = "schedule_classes_tag";
 
     private final String[] tabNames;
     private Student student;
@@ -29,12 +34,12 @@ public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        int day = position + 2;
-        List<StudentScheduleClass> classes = student.getScheduleClasses().get(day);
+        List<StudentScheduleClass> classes = student.getScheduleClasses().get(position + 2);
 
-        System.out.println("DAY " + " , " + day + " c " + classes);
+        Fragment fragment = new ScheduleFragment();
+        fragment.setArguments(getBundle(classes));
 
-        return new ScheduleFragment(classes);
+        return fragment;
     }
 
     @Override
@@ -42,4 +47,17 @@ public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
         return tabNames.length;
     }
 
+    private Bundle getBundle(List<StudentScheduleClass> classes) {
+        Bundle bundle = new Bundle();
+
+        if(classes != null) {
+            // LinkedList to ArrayList 'conversion'
+            ArrayList<StudentScheduleClass> list = new ArrayList<StudentScheduleClass>();
+            list.addAll(classes);
+
+            bundle.putParcelableArrayList(SCHEDULE_CLASSES_TAG, new ArrayList<Parcelable>(list));
+        }
+
+        return bundle;
+    }
 }

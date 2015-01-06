@@ -117,12 +117,12 @@ public class ClipSettings {
         edit(context).putString(YEAR_SELECTED, yearSelected).commit();
     }
 
-    public static String getSemesterSelected(Context context) {
-        return get(context).getString(SEMESTER_SELECTED, null);
+    public static int getSemesterSelected(Context context) {
+        return get(context).getInt(SEMESTER_SELECTED, 1);
     }
 
-    public static void saveSemesterSelected(Context context, String semesterSelected) {
-        edit(context).putString(SEMESTER_SELECTED, semesterSelected).commit();
+    public static void saveSemesterSelected(Context context, int semesterSelected) {
+        edit(context).putInt(SEMESTER_SELECTED, semesterSelected).commit();
     }
 
     public static String getStudentNumberidSelected(Context context) {
@@ -165,9 +165,19 @@ public class ClipSettings {
         edit(context).putString(STUDENT_CLASS_SELECTED, classNumber).commit();
     }
 
+    public static int getCurrentSemester() {
+        Calendar calendar = Calendar.getInstance();
+
+        int month = calendar.get(Calendar.MONTH);
+        if(month >= 2 && month <= 7) //  March <= month <= September
+            return 2;
+
+        return 1;
+    }
+
     public static Date getSemesterStartDate(Context context) {
         int year = Integer.parseInt(ClipSettings.getYearSelectedFormatted(context));
-        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(context));
+        int semester = ClipSettings.getSemesterSelected(context);
 
         Calendar calendar = Calendar.getInstance();
         if(semester == 1) {
@@ -183,14 +193,14 @@ public class ClipSettings {
 
     public static Date getSemesterEndDate(Context context) {
         int year = Integer.parseInt(ClipSettings.getYearSelectedFormatted(context));
-        int semester = Integer.parseInt(ClipSettings.getSemesterSelected(context));
+        int semester = ClipSettings.getSemesterSelected(context);
 
         Calendar calendar = Calendar.getInstance();
         if(semester == 1) {
-            calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+            calendar.set(Calendar.MONTH, Calendar.APRIL);
             calendar.set(Calendar.YEAR, year);
         } else {
-            calendar.set(Calendar.MONTH, Calendar.JULY);
+            calendar.set(Calendar.MONTH, Calendar.OCTOBER);
             calendar.set(Calendar.YEAR, year);
         }
 

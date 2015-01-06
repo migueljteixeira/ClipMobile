@@ -1,11 +1,7 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,7 +9,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.ScheduleViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentScheduleTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -34,21 +29,21 @@ public class ScheduleViewPager extends BaseViewPager implements GetStudentSchedu
 
     @Override
     public void onTaskFinished(Student result) {
+        if(!isAdded())
+            return;
+
         showProgressSpinnerOnly(false);
 
         // Server is unavailable right now
         if(result == null) return;
 
-        // Initialize the ViewPager and set an adapter
+        // Initialize the ViewPager and set the adapter
         mViewPager.setAdapter(new ScheduleViewPagerAdapter(getChildFragmentManager(),
                 getResources().getStringArray(R.array.schedule_tab_array), result));
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        tabs.setShouldExpand(true);
-        tabs.setIndicatorColorResource(R.color.actionbar_color);
-        tabs.setTabBackground(R.drawable.clipmobile_list_selector_holo_light);
         tabs.setViewPager(mViewPager);
     }
 

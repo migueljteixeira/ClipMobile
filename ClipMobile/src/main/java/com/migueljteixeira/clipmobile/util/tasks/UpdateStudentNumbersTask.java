@@ -15,7 +15,7 @@ public class UpdateStudentNumbersTask extends AsyncTask<Void, Void, User> {
     public interface OnTaskFinishedListener {
 
         /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
+         * Returns one of {@link com.migueljteixeira.clipmobile.entities.User}.
          */
         public void onUpdateTaskFinished(User result);
 

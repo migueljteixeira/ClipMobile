@@ -16,7 +16,7 @@ public class GetStudentScheduleTask extends AsyncTask<Void, Void, Student> {
     public interface OnTaskFinishedListener {
 
         /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
+         * Returns a {@link com.migueljteixeira.clipmobile.entities.Student}.
          */
         public void onTaskFinished(Student result);
 
@@ -35,7 +35,7 @@ public class GetStudentScheduleTask extends AsyncTask<Void, Void, Student> {
         String studentId = ClipSettings.getStudentIdSelected(mContext);
         String year = ClipSettings.getYearSelected(mContext);
         String yearFormatted = ClipSettings.getYearSelectedFormatted(mContext);
-        String semester = ClipSettings.getSemesterSelected(mContext);
+        int semester = ClipSettings.getSemesterSelected(mContext);
 
         //String yearSemesterId = ClipSettings.getStudentYearSemesterIdSelected(mContext);
         String studentNumberId = ClipSettings.getStudentNumberidSelected(mContext);
@@ -64,8 +64,7 @@ public class GetStudentScheduleTask extends AsyncTask<Void, Void, Student> {
                     Toast.LENGTH_SHORT).show();
         }
 
-        if (mListener != null) {
+        if (mListener != null)
             mListener.onTaskFinished(result);
-        }
     }
 }

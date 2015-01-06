@@ -23,7 +23,7 @@ public class StudentScheduleRequest extends Request {
     private static final String STUDENT_SCHEDULE_2 = "&institui%E7%E3o=97747&aluno=";
     private static final String STUDENT_SCHEDULE_3 = "&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";
 
-    public static Student getSchedule(Context mContext, String studentNumberId, String year, String semester)
+    public static Student getSchedule(Context mContext, String studentNumberId, String year, int semester)
             throws ServerUnavailableException {
 
         String url = STUDENT_SCHEDULE_1 + year + STUDENT_SCHEDULE_2 +

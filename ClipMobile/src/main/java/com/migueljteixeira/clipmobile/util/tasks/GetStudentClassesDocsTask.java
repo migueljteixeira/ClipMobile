@@ -37,7 +37,7 @@ public class GetStudentClassesDocsTask extends AsyncTask<Integer, Void, Student>
 
         //String studentId = ClipSettings.getStudentIdSelected(mContext);
         String yearFormatted = ClipSettings.getYearSelectedFormatted(mContext);
-        String semester = ClipSettings.getSemesterSelected(mContext);
+        int semester = ClipSettings.getSemesterSelected(mContext);
         String studentNumberId = ClipSettings.getStudentNumberidSelected(mContext);
         String studentClassIdSelected = ClipSettings.getStudentClassIdSelected(mContext);
         String studentClassSelected = ClipSettings.getStudentClassSelected(mContext);

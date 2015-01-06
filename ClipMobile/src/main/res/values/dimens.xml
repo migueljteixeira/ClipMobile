@@ -1,14 +1,13 @@
 <resources>
 
-    <integer name="activity_login_linearlayout_gravity">1</integer>
-
-    <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="toolbar_title_size">21sp</dimen>
-
+    <!-- Text Size -->
     <dimen name="default_text_size">18sp</dimen>
     <dimen name="tabs_text_size">14sp</dimen>
-    <!--<dimen name="actionbar_title_text_size">21sp</dimen>-->
     <dimen name="drawer_title_text_size">17sp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_title_size">21sp</dimen>
 
     <!-- ConnectClip Activity -->
     <dimen name="fragment_login_card_width">300dp</dimen>
@@ -20,9 +19,5 @@
     <!-- StudentClasses Activity -->
     <dimen name="fragment_student_classes_card_width">300dp</dimen>
     <dimen name="fragment_student_classes_card_height">450dp</dimen>
-
-    <!-- StudentCalendar Activity -->
-    <dimen name="fragment_student_calendar_card_width">300dp</dimen>
-    <dimen name="fragment_student_calendar_card_height">300dp</dimen>
 
 </resources>

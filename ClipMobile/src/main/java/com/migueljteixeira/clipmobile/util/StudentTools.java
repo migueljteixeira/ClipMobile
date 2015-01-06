@@ -3,8 +3,8 @@ package com.migueljteixeira.clipmobile.util;
 import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
-import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.User;
+import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.network.StudentCalendarRequest;
@@ -15,13 +15,14 @@ import com.migueljteixeira.clipmobile.network.StudentScheduleRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import java.util.List;
-import java.util.Map;
-
 public class StudentTools {
 
     public static int signIn(Context mContext, String username, String password)
             throws ServerUnavailableException {
+
+        // Check for connectivity
+        if (! AndroidUtils.isNetworkConnected(mContext))
+            return NetworkResult.OFFLINE;
 
         // Sign in the user, and returns Students available
         User user = StudentRequest.signIn(mContext, username, password);
@@ -101,13 +102,34 @@ public class StudentTools {
         return user;
     }
 
+    public static Student updateStudentPage(Context mContext, String studentId, String studentNumberId)
+            throws ServerUnavailableException {
+
+        System.out.println("request!");
+
+        // Get (new) student info from the server
+        Student student = StudentRequest.getStudentsYears(mContext, studentNumberId);
+
+        System.out.println("deleting!");
+
+        // Delete students info
+        DBUtils.deleteStudentsInfo(mContext);
+
+        System.out.println("inserting!");
+
+        // Insert students info
+        DBUtils.insertStudentYears(mContext, studentId, student);
+
+        return student;
+    }
+
     /*
      * ////////////////////////////// STUDENT SCHEDULE  //////////////////////////////
      */
 
 
     public static Student getStudentSchedule(Context mContext, String studentId, String year, String yearFormatted,
-                                             String semester, String studentNumberId)
+                                             int semester, String studentNumberId)
             throws ServerUnavailableException {
 
         // First, we get the yearSemesterId
@@ -145,7 +167,7 @@ public class StudentTools {
 
 
     public static Student getStudentClasses(Context mContext, String studentId, String year, String yearFormatted,
-                                             String semester, String studentNumberId)
+                                             int semester, String studentNumberId)
             throws ServerUnavailableException {
 
         // First, we get the yearSemesterId
@@ -178,7 +200,7 @@ public class StudentTools {
     }
 
     public static Student getStudentClassesDocs(Context mContext, String studentClassId, String yearFormatted,
-                                            String semester, String studentNumberId, String studentClassSelected,
+                                            int semester, String studentNumberId, String studentClassSelected,
                                             String docType)
             throws ServerUnavailableException {
 
@@ -214,7 +236,7 @@ public class StudentTools {
      */
 
     public static Student getStudentCalendar(Context mContext, String studentId, String year, String yearFormatted,
-                                             String semester, String studentNumberId)
+                                             int semester, String studentNumberId)
             throws ServerUnavailableException {
 
         // First, we get the yearSemesterId

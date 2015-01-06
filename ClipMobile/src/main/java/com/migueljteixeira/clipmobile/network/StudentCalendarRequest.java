@@ -10,7 +10,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class StudentCalendarRequest extends Request {
@@ -24,7 +23,7 @@ public class StudentCalendarRequest extends Request {
     private static final String STUDENT_CALENDAR_TEST_3 = "&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";
 
     public static void getExamCalendar(Context mContext, Student student, String studentNumberId,
-                                          String year, String semester)
+                                          String year, int semester)
             throws ServerUnavailableException {
 
         String url = STUDENT_CALENDAR_EXAM_1 + year + STUDENT_CALENDAR_EXAM_2 + studentNumberId +
@@ -52,7 +51,7 @@ public class StudentCalendarRequest extends Request {
     }
 
     public static void getTestCalendar(Context mContext, Student student, String studentNumberId,
-                                          String year, String semester)
+                                          String year, int semester)
             throws ServerUnavailableException {
 
         String url = STUDENT_CALENDAR_TEST_1 + studentNumberId + STUDENT_CALENDAR_TEST_2 + year +

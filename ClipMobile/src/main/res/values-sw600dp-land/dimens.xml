@@ -5,10 +5,10 @@
 
     <!-- StudentNumbers Activity -->
     <dimen name="fragment_student_numbers_card_width">400dp</dimen>
-    <dimen name="fragment_student_numbers_card_height">300dp</dimen>
+    <dimen name="fragment_student_numbers_card_height">400dp</dimen>
 
     <!-- StudentClasses Activity -->
     <dimen name="fragment_student_classes_card_width">400dp</dimen>
-    <dimen name="fragment_student_classes_card_height">300dp</dimen>
+    <dimen name="fragment_student_classes_card_height">400dp</dimen>
 
 </resources>

@@ -10,7 +10,6 @@ import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.CalendarViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
-import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class CalendarViewPager extends BaseViewPager  implements GetStudentCalendarTask.OnTaskFinishedListener {
@@ -30,6 +29,9 @@ public class CalendarViewPager extends BaseViewPager  implements GetStudentCalen
 
     @Override
     public void onTaskFinished(Student result) {
+        if(!isAdded())
+            return;
+
         showProgressSpinnerOnly(false);
 
         // Server is unavailable right now
@@ -42,9 +44,6 @@ public class CalendarViewPager extends BaseViewPager  implements GetStudentCalen
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        tabs.setShouldExpand(true);
-        tabs.setIndicatorColorResource(R.color.actionbar_color);
-        tabs.setTabBackground(R.drawable.clipmobile_list_selector_holo_light);
         tabs.setViewPager(mViewPager);
     }
 

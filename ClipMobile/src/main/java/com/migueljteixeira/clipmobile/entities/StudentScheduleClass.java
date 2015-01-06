@@ -1,6 +1,9 @@
 package com.migueljteixeira.clipmobile.entities;
 
-public class StudentScheduleClass extends Entity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class StudentScheduleClass extends Entity implements Parcelable {
 
     private String name;
     private String name_min;
@@ -28,5 +31,42 @@ public class StudentScheduleClass extends Entity {
 
     public String getRoom() { return room; }
     public void setRoom(String room) {this.room = room; }
+
+    protected StudentScheduleClass(Parcel in) {
+        name = in.readString();
+        name_min = in.readString();
+        type = in.readString();
+        hour_start = in.readString();
+        hour_end = in.readString();
+        room = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(name_min);
+        dest.writeString(type);
+        dest.writeString(hour_start);
+        dest.writeString(hour_end);
+        dest.writeString(room);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<StudentScheduleClass> CREATOR = new Parcelable.Creator<StudentScheduleClass>() {
+        @Override
+        public StudentScheduleClass createFromParcel(Parcel in) {
+            return new StudentScheduleClass(in);
+        }
+
+        @Override
+        public StudentScheduleClass[] newArray(int size) {
+            return new StudentScheduleClass[size];
+        }
+    };
 
 }

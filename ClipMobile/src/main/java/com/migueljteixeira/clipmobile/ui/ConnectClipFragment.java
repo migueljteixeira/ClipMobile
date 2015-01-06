@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.util.tasks.ConnectClipTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -23,10 +21,11 @@ import butterknife.InjectView;
 
 public class ConnectClipFragment extends BaseFragment implements ConnectClipTask.OnTaskFinishedListener {
 
-    private ConnectClipTask mTask;
     @InjectView(R.id.username) EditText mUsername;
     @InjectView(R.id.password) EditText mPassword;
     @InjectView(R.id.log_in_button) Button mLogInButton;
+
+    private ConnectClipTask mTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,75 +39,65 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // unfinished task around?
+        // Unfinished task around?
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED)
             showProgressSpinner(true);
 
-        // log in button
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            View mFocusView = null;
+                View mFocusView = null;
 
-            // get username and password
-            Editable editableUsername = mUsername.getText();
-            String username = editableUsername != null ?
-                    editableUsername.toString().trim() : null;
-            Editable editablePassword = mPassword.getText();
-            String password = editablePassword != null ?
-                    editablePassword.toString().trim() : null;
+                // Get username and password text
+                Editable editableUsername = mUsername.getText();
+                String username = editableUsername != null ?
+                        editableUsername.toString().trim() : null;
+                Editable editablePassword = mPassword.getText();
+                String password = editablePassword != null ?
+                        editablePassword.toString().trim() : null;
 
-            // check if the username field isn't empty
-            if (TextUtils.isEmpty(username)) {
-                mUsername.setError(getString(R.string.error_fields_required));
-                mFocusView = mUsername;
-            }
+                // Check if the username field is not empty
+                if (TextUtils.isEmpty(username)) {
+                    mUsername.setError(getString(R.string.error_fields_required));
+                    mFocusView = mUsername;
+                }
 
-            // check if we the password field isn't empty
-            if (TextUtils.isEmpty(password)) {
-                mPassword.setError(getString(R.string.error_fields_required));
-                mFocusView = mPassword;
-            }
+                // Check if the password field is not empty
+                else if (TextUtils.isEmpty(password)) {
+                    mPassword.setError(getString(R.string.error_fields_required));
+                    mFocusView = mPassword;
+                }
 
-            if(mFocusView != null) {
-                // Focus the last form field with an error.
-                mFocusView.requestFocus();
-            }
-            else {
-                // show Progress Bar
-                showProgressSpinner(true);
+                if(mFocusView != null) {
+                    // Focus the first form field with an error.
+                    mFocusView.requestFocus();
+                }
+                else {
+                    showProgressSpinner(true);
 
-                // start AsyncTask
-                mTask = new ConnectClipTask(getActivity().getApplicationContext(),
-                        ConnectClipFragment.this);
-                AndroidUtils.executeOnPool(mTask, username, password);
-            }
+                    // Start AsyncTask
+                    mTask = new ConnectClipTask(getActivity(), ConnectClipFragment.this);
+                    AndroidUtils.executeOnPool(mTask, username, password);
+                }
 
             }
         });
     }
 
     @Override
-    public void onTaskFinished(int resultCode) {
+    public void onTaskFinished(int result) {
+        if(!isAdded())
+            return;
+
         showProgressSpinner(false);
 
-        switch(resultCode) {
-            case NetworkResult.OFFLINE :
-                Toast.makeText(getActivity().getApplicationContext(),
-                        getString(R.string.connection_failed), Toast.LENGTH_SHORT).show();
-                break;
+        // If there was no errors, lets go to StudentNumbersActivity
+        if(result == Result.SUCCESS) {
+            Intent intent = new Intent(getActivity(), StudentNumbersActivity.class);
+            startActivity(intent);
 
-            case Result.ERROR :
-                Toast.makeText(getActivity().getApplicationContext(),
-                        getString(R.string.error_fields_incorrect), Toast.LENGTH_SHORT).show();
-                break;
-
-            case Result.SUCCESS :
-                Intent intent = new Intent(getActivity(), StudentNumbersActivity.class);
-                startActivity(intent);
-
-                getActivity().finish();
-                break;
+            getActivity().overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+            getActivity().finish();
         }
 
     }

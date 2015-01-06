@@ -1,9 +1,6 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.app.DownloadManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +12,7 @@ import com.migueljteixeira.clipmobile.adapters.StudentClassesDocsAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentClassDoc;
 import com.migueljteixeira.clipmobile.network.StudentClassesDocsRequest;
-import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesDocsTask;
-import com.migueljteixeira.clipmobile.util.tasks.GetStudentYearsTask;
-import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentNumbersTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.LinkedList;
@@ -28,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class ClassesDocsFragment extends BaseFragment implements GetStudentClassesDocsTask.OnTaskFinishedListener {
+    public static final String FRAGMENT_TAG = "Classes_docs_tag";
 
     private int lastExpandedGroupPosition;
     private StudentClassesDocsAdapter mListAdapter;
@@ -63,11 +58,10 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
         mListView.setOnChildClickListener(onChildClickListener);
 
         // unfinished task around?
-        /*if ( ( mYearsTask != null && mYearsTask.getStatus() != AsyncTask.Status.FINISHED ) ||
-                ( mUpdateTask != null && mUpdateTask.getStatus() != AsyncTask.Status.FINISHED ) )
+        if ( mDocsTask != null && mDocsTask.getStatus() != AsyncTask.Status.FINISHED )
             showProgressSpinnerOnly(true);
 
-        // The view has been loaded already
+        /*// The view has been loaded already
         if(mListAdapter != null) {
             mListView.setAdapter(mListAdapter);
             mListView.setOnGroupClickListener(onGroupClickListener);
@@ -96,11 +90,14 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
 
     @Override
     public void onTaskFinished(Student result, int groupPosition) {
+        if(!isAdded())
+            return;
+
         showProgressSpinnerOnly(false);
 
-        List<StudentClassDoc> docs = result.getClassesDocs();
+        /*List<StudentClassDoc> docs = result.getClassesDocs();
         for(StudentClassDoc d : docs)
-                System.out.println("-> " + d.getName() + " , " + d.getSize());
+                System.out.println("-> " + d.getName() + " , " + d.getSize());*/
 
         // Server is unavailable right now
         if(result == null || result.getClassesDocs().size() == 0) return;

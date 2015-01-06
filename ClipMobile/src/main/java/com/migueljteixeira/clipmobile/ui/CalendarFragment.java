@@ -1,26 +1,18 @@
 package com.migueljteixeira.clipmobile.ui;
 
-import android.annotation.SuppressLint;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
-import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.adapters.CalendarViewPagerAdapter;
 import com.migueljteixeira.clipmobile.entities.StudentCalendar;
-import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
-import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
-import com.migueljteixeira.clipmobile.util.tasks.GetStudentClassesTask;
+import com.migueljteixeira.clipmobile.ui.dialogs.CalendarDialogFragment;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.ParseException;
@@ -30,15 +22,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-@SuppressLint("ValidFragment")
 public class CalendarFragment extends Fragment implements CalendarPickerView.OnDateSelectedListener {
 
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");;
     private List<StudentCalendar> calendar;
 
-    public CalendarFragment() {}
-    public CalendarFragment(List<StudentCalendar> calendar) {
-        this.calendar = calendar;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        calendar = getArguments().getParcelableArrayList(CalendarViewPagerAdapter.CALENDAR_TAG);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

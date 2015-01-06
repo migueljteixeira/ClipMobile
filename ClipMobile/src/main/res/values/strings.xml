@@ -3,18 +3,19 @@
 
     <string name="app_name">Clip Mobile</string>
     <string name="provider_authority">com.migueljteixeira.clipmobile.provider</string>
+    <string name="refreshing">A actualizar&#8230;</string>
 
     <!-- Actionbar -->
     <string name="menu_overflow">Mais opções</string>
     <string name="menu_refresh">Actualizar</string>
-    <string name="menu_settings">Definições</string>
+    <string name="menu_about">Sobre</string>
     <string name="menu_logout">Mudar de Conta</string>
     <string name="menu_select_semester">Seleccionar semestre</string>
     <string name="menu_semester_1">1º Semestre</string>
     <string name="menu_semester_2">2º Semestre</string>
 
     <!-- Connection issues -->
-    <string name="connection_failed">A ligação falhou.\nTente novamente mais tarde</string>
+    <string name="connection_failed">A ligação falhou\nTente novamente mais tarde</string>
 
     <!-- ConnectClip Activity -->
     <string name="hint_username">Identificador</string>
@@ -28,11 +29,12 @@
     <string name="years_available">Anos disponíveis</string>
 
     <!-- NavDrawer Activity -->
-    <string name="drawer_title_college">FACULDADE</string>
     <string name="drawer_schedule">Horário</string>
     <string name="drawer_calendar">Calendário</string>
     <string name="drawer_classes">Cadeiras</string>
-    <string name="drawer_canteen_menu">Ementa do dia</string>
+    <string name="drawer_info_title">FACULDADE</string>
+
+    <string name="drawer_info_contacts">Contactos</string>
 
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -86,5 +88,62 @@
         <item>Testes</item>
         <item>Exames</item>
     </array>
+
+    <!-- Info Contacts Fragment -->
+    <string name="info_contacts_phone">Telefone:</string>
+    <string name="info_contacts_schedule">Horário:</string>
+
+    <string name="info_contacts_internal_title">Contactos Internos</string>
+    <string name="info_contacts_external_title">Contactos Externos</string>
+
+    <array name="info_contacts_internal">
+        <item>Duplix</item>
+        <item>212 952 971</item>
+        <item>09:00 - 19:00</item>
+
+        <item>Papelaria Solução</item>
+        <item>927 532 763</item>
+        <item>08:30 - 00:00</item>
+
+        <item>Livraria Escolar Editora</item>
+        <item>212 946 367</item>
+        <item>09:00 - 19:00</item>
+
+        <item>Caixa Geral de Depósitos</item>
+        <item>212 946 200</item>
+        <item>08:30 - 15:00</item>
+
+        <item>Agência de Viagens Abreu</item>
+        <item>213 596 170</item>
+        <item>-</item>
+    </array>
+
+    <array name="info_contacts_external">
+        <item>Polícia de Segurança Pública</item>
+        <item>212 746 558</item>
+
+        <item>Guarda Nacional Republicana</item>
+        <item>212 942 639</item>
+
+        <item>Hospital Garcia de Orta</item>
+        <item>212 727 100</item>
+
+        <item>Bombeiros Voluntários da Trafaria</item>
+        <item>212 950 093</item>
+
+        <item>Auto Estrela Almadense (Táxis)</item>
+        <item>212 509 660 / 964 991 580 / 939 483 484 / 917 064 142</item>
+
+        <item>Ratalma (Táxis)</item>
+        <item>212 947 070 / 967 373 400 / 917 253 636</item>
+    </array>
+
+    <!-- About dialog Fragment -->
+    <string name="about_developer_title">Developer</string>
+    <string name="about_developer_name">Miguel Teixeira</string>
+    <string name="about_logo_designer_title">Logo Designer</string>
+    <string name="about_logo_designer_name">João Coxixo</string>
+    <string name="about_advisor_title">Advisor</string>
+    <string name="about_advisor_name">Ricardo Carrapiço</string>
 
 </resources>
