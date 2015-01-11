@@ -16,6 +16,9 @@
         which is used to tint widgets -->
         <item name="colorAccent">@color/main_color</item>
 
+        <!-- toolbar shadow -->
+        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
+
         <!-- You can also set colorControlNormal, colorControlActivated
         colorControlHighlight, and colorSwitchThumbNormal. -->
 

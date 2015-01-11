@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.migueljteixeira.clipmobile.R;
 
@@ -25,6 +26,14 @@ public class BaseActivity extends ActionBarActivity {
         mToolbar.setTitleTextAppearance(this, R.style.Toolbar);
 
         setSupportActionBar(mToolbar);
+    }
+
+    protected void setActionBarShadow() {
+        findViewById(R.id.toolbar_shadow).setVisibility(View.VISIBLE);
+    }
+
+    protected void hideActionBarShadow() {
+        findViewById(R.id.toolbar_shadow).setVisibility(View.GONE);
     }
 
     protected void cancelTasks(AsyncTask mTask) {

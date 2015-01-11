@@ -133,13 +133,13 @@ public class ClipSettings {
         edit(context).putString(STUDENT_NUMBERID_SELECTED, numberId).commit();
     }
 
-    /*public static String getStudentYearSemesterIdSelected(Context context) {
+    public static String getStudentYearSemesterIdSelected(Context context) {
         return get(context).getString(STUDENT_YEARSEMESTER_ID_SELECTED, null);
     }
 
     public static void saveStudentYearSemesterIdSelected(Context context, String studentYearSemesterId) {
         edit(context).putString(STUDENT_YEARSEMESTER_ID_SELECTED, studentYearSemesterId).commit();
-    }*/
+    }
 
     public static String getStudentIdSelected(Context context) {
         return get(context).getString(STUDENT_ID_SELECTED, null);

@@ -158,6 +158,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
             ClipSettings.saveYearSelected(getActivity(), yearSelected);
             ClipSettings.saveStudentIdSelected(getActivity(), students.get(groupPosition).getId());
             ClipSettings.saveStudentNumberId(getActivity(), students.get(groupPosition).getNumberId());
+            ClipSettings.saveStudentYearSemesterIdSelected(getActivity(), students.get(groupPosition)
+                    .getYears().get(childPosition).getId());
 
             // Lets go to NavDrawerActivity
             Intent intent = new Intent(getActivity(), NavDrawerActivity.class);

@@ -29,7 +29,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class NavDrawerActivity extends BaseActivity implements AdapterView.OnItemClickListener,
         UpdateStudentPageTask.OnTaskFinishedListener {
 
-    private static final String CURRENT_ACTIVITY_TITLE_TAG = "activity_title";
+    private static final String CURRENT_FRAGMENT_TITLE_TAG = "current_fragment_title";
+    private static final String CURRENT_FRAGMENT_POSITION_TAG = "current_fragment_position";
+
     private static final int MENU_ITEM_SCHEDULE_POSITION = 2;
     private static final int MENU_ITEM_CALENDAR_POSITION = 3;
     private static final int MENU_ITEM_CLASSES_POSITION = 4;
@@ -52,12 +54,19 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         setupNavDrawer();
 
         // Set toolbar title
-        if(savedInstanceState == null)
+        if(savedInstanceState == null) {
             setTitle(R.string.drawer_schedule);
-        else {
-            String title = savedInstanceState.getString(CURRENT_ACTIVITY_TITLE_TAG);
-            if (title != null)
+            hideActionBarShadow();
+        } else {
+            String title = savedInstanceState.getString(CURRENT_FRAGMENT_TITLE_TAG);
+            if (title != null) {
                 setTitle(title);
+
+                int position = savedInstanceState.getInt(CURRENT_FRAGMENT_POSITION_TAG);
+                if(position == MENU_ITEM_SCHEDULE_POSITION ||
+                        position == MENU_ITEM_CALENDAR_POSITION)
+                    hideActionBarShadow();
+            }
         }
 
         FragmentManager fm = getSupportFragmentManager();
@@ -72,7 +81,8 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(CURRENT_ACTIVITY_TITLE_TAG, getTitle().toString());
+        outState.putString(CURRENT_FRAGMENT_TITLE_TAG, getTitle().toString());
+        outState.putInt(CURRENT_FRAGMENT_POSITION_TAG, mDrawerList.getCheckedItemPosition());
     }
 
     public void setupNavDrawer() {
@@ -238,22 +248,26 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         switch(position) {
             case MENU_ITEM_SCHEDULE_POSITION:
                 setTitle(R.string.drawer_schedule);
+                hideActionBarShadow();
                 fragment = new ScheduleViewPager();
                 break;
 
             case MENU_ITEM_CALENDAR_POSITION:
                 setTitle(R.string.drawer_calendar);
+                hideActionBarShadow();
                 fragment = new CalendarViewPager();
                 break;
 
             case MENU_ITEM_CLASSES_POSITION:
                 setTitle(R.string.drawer_classes);
+                setActionBarShadow();
                 fragment = new ClassesFragment();
                 ((ClassesFragment) fragment).init(this);
                 break;
 
             case MENU_ITEM_INFO_CONTACTS_POSITION:
                 setTitle(R.string.drawer_info_contacts);
+                setActionBarShadow();
                 fragment = new InfoContactsFragment();
                 break;
         }

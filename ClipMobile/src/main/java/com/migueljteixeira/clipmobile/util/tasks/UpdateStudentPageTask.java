@@ -33,10 +33,11 @@ public class UpdateStudentPageTask extends AsyncTask<Void, Void, Student> {
     protected Student doInBackground(Void... params) {
         String studentId = ClipSettings.getStudentIdSelected(mContext);
         String studentNumberId = ClipSettings.getStudentNumberidSelected(mContext);
+        String studentYearSemesterId = ClipSettings.getStudentYearSemesterIdSelected(mContext);
 
         try {
             // Update students info
-            return StudentTools.updateStudentPage(mContext, studentId, studentNumberId);
+            return StudentTools.updateStudentPage(mContext, studentId, studentNumberId, studentYearSemesterId);
         } catch (ServerUnavailableException e) {
             return null;
         }

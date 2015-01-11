@@ -102,7 +102,8 @@ public class StudentTools {
         return user;
     }
 
-    public static Student updateStudentPage(Context mContext, String studentId, String studentNumberId)
+    public static Student updateStudentPage(Context mContext, String studentId, String studentNumberId,
+                                            String studentYearSemesterId)
             throws ServerUnavailableException {
 
         System.out.println("request!");
@@ -113,7 +114,7 @@ public class StudentTools {
         System.out.println("deleting!");
 
         // Delete students info
-        DBUtils.deleteStudentsInfo(mContext);
+        DBUtils.deleteStudentsInfo(mContext, studentYearSemesterId);
 
         System.out.println("inserting!");
 

@@ -160,10 +160,14 @@ public class DBUtils {
                 new String[] { String.valueOf(userId) });
     }
 
-    public static void deleteStudentsInfo(Context mContext) {
+    public static void deleteStudentsInfo(Context mContext, String studentYearSemesterId) {
 
         // Delete Students Info
-        mContext.getContentResolver().delete(ClipMobileContract.StudentsYearSemester.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(ClipMobileContract.StudentsYearSemester.CONTENT_URI, null, null
+                /*ClipMobileContract.StudentsYearSemester._ID + "=?",
+                new String[] { studentYearSemesterId }*/);
+
+        // TODO: what to do?
     }
 
     /*

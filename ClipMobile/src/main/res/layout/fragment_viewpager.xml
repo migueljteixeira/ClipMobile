@@ -5,29 +5,40 @@
 
     <include layout="@layout/progress_spinner" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/main_view"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.astuetz.PagerSlidingTabStrip
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/tabs"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="@dimen/tabs_text_size"
-            android:background="@color/main_color"
-            android:textColor="@android:color/white"
-            app:pstsIndicatorColor="@android:color/white"
-            app:pstsShouldExpand="true"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.astuetz.PagerSlidingTabStrip
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textSize="@dimen/tabs_text_size"
+                android:background="@color/main_color"
+                android:textColor="@android:color/white"
+                app:pstsIndicatorColor="@android:color/white"
+                app:pstsShouldExpand="true"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:foreground="?android:windowContentOverlay" />
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
-            android:layout_below="@+id/tabs" />
+            android:layout_height="wrap_content" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>

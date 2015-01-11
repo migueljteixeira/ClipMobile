@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/toolbar"
-    android:layout_height="@dimen/toolbar_height"
-    android:minHeight="@dimen/toolbar_height"
     android:layout_width="match_parent"
-    android:background="?attr/colorPrimary" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="?attr/colorPrimary"
+        android:minHeight="@dimen/toolbar_height" />
+
+    <FrameLayout
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:foreground="?android:windowContentOverlay" />
+</LinearLayout>
