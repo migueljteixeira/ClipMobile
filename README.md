@@ -1,4 +1,4 @@
-![](https://drive.google.com/uc?id=0B1tnx50O2XkNRGRKeF8tTHU1T2c)
+[![](https://drive.google.com/uc?id=0B1tnx50O2XkNRGRKeF8tTHU1T2c)](https://play.google.com/store/apps/details?id=com.migueljteixeira.clipmobile)
 
 [![](https://drive.google.com/uc?id=0B1tnx50O2XkNY08tYmxJUVdGakE)](https://play.google.com/store/apps/details?id=com.migueljteixeira.clipmobile)
 
