@@ -22,20 +22,20 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
-
-    private ListView listView;
+    private ListView mListView;
     private GetStudentClassesTask mTask;
-    private NavDrawerActivity activity;
+    //private NavDrawerActivity activity;
+    private ClassListViewAdapter adapter;
 
-    public void init(NavDrawerActivity activity) {
+    /*public void init(NavDrawerActivity activity) {
         this.activity = activity;
-    }
+    }*/
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);
         ButterKnife.inject(this, view);
 
-        listView = (ListView) view.findViewById(R.id.list_view);
+        mListView = (ListView) view.findViewById(R.id.list_view);
 
         // Show progress spinner
         showProgressSpinner(true);
@@ -57,18 +57,8 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
         // Server is unavailable right now
         if(result == null) return;
 
-        int semester = ClipSettings.getSemesterSelected(getActivity());
-        final ClassListViewAdapter adapter = new ClassListViewAdapter(getActivity());
-
-        if (result.getClasses() != null && result.getClasses().get(semester) != null) {
-            List<StudentClass> classes = result.getClasses().get(semester);
-
-            for (StudentClass c : classes)
-                adapter.add(new ListViewItem(c.getId(), c.getName(), c.getNumber()));
-        }
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setAdapter(getAdapterItems(result));
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListViewItem item = (ListViewItem) adapter.getItem(position);
@@ -77,10 +67,10 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
                 ClipSettings.saveStudentClassSelected(getActivity(), item.number);
                 ClipSettings.saveStudentClassIdSelected(getActivity(), item.id);
 
-                FragmentManager fm = activity.getSupportFragmentManager();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
                 Fragment fragment = new ClassesDocsFragment();
 
-                // Replace fragment and close drawer
+                // Replace current fragment by ClassesDocsFragment
                 fm.beginTransaction().replace(R.id.content_frame, fragment,
                         ClassesDocsFragment.FRAGMENT_TAG).commit();
             }
@@ -95,8 +85,21 @@ public class ClassesFragment extends BaseFragment implements GetStudentClassesTa
         cancelTasks(mTask);
     }
 
-    public class ListViewItem {
+    private ClassListViewAdapter getAdapterItems(Student result) {
+        adapter = new ClassListViewAdapter(getActivity());
 
+        int semester = ClipSettings.getSemesterSelected(getActivity());
+        if (result.getClasses() == null || result.getClasses().get(semester) == null)
+            return adapter;
+
+        List<StudentClass> classes = result.getClasses().get(semester);
+        for (StudentClass c : classes)
+            adapter.add(new ListViewItem(c.getId(), c.getName(), c.getNumber()));
+
+        return adapter;
+    }
+
+    public static class ListViewItem {
         public String id, name, number;
 
         public ListViewItem(String id, String name, String number) {

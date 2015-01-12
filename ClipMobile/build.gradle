@@ -25,7 +25,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
 
-        versionCode = 14
+        versionCode = 15
         versionName = '1.0'
 
         manifestPlaceholders = [ crashlyticsApiKey: "${rootProject.property("CRASHLYTICS_KEY")}".toString() ]

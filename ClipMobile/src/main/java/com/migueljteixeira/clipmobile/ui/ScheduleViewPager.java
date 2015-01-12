@@ -13,7 +13,6 @@ import com.migueljteixeira.clipmobile.util.tasks.GetStudentScheduleTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class ScheduleViewPager extends BaseViewPager implements GetStudentScheduleTask.OnTaskFinishedListener {
-
     private GetStudentScheduleTask mTask;
 
     @Override

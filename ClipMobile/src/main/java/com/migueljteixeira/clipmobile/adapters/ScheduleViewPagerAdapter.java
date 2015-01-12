@@ -12,11 +12,9 @@ import com.migueljteixeira.clipmobile.ui.ScheduleFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
     public static final String SCHEDULE_CLASSES_TAG = "schedule_classes_tag";
-
     private final String[] tabNames;
     private Student student;
 
@@ -25,7 +23,6 @@ public class ScheduleViewPagerAdapter extends FragmentPagerAdapter {
         this.tabNames = tabNames;
         this.student = student;
     }
-
 
     @Override
     public CharSequence getPageTitle(int position) {

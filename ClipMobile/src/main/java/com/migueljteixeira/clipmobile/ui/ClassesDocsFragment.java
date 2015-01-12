@@ -19,16 +19,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class ClassesDocsFragment extends BaseFragment implements GetStudentClassesDocsTask.OnTaskFinishedListener {
-    public static final String FRAGMENT_TAG = "Classes_docs_tag";
-
+    public static final String FRAGMENT_TAG = "classes_docs_tag";
     private int lastExpandedGroupPosition;
+    private ExpandableListView mListView;
     private StudentClassesDocsAdapter mListAdapter;
     private List<StudentClassDoc> classDocs;
-    @InjectView(R.id.list_view) ExpandableListView mListView;
-
     private GetStudentClassesDocsTask mDocsTask;
 
     @Override
@@ -44,6 +41,8 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
         View view = inflater.inflate(R.layout.fragment_student_classes_docs, container, false);
         ButterKnife.inject(this, view);
 
+        mListView = (ExpandableListView) view.findViewById(R.id.list_view);
+
         return view;
     }
 
@@ -57,8 +56,8 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
         mListView.setOnGroupClickListener(onGroupClickListener);
         mListView.setOnChildClickListener(onChildClickListener);
 
-        // unfinished task around?
-        if ( mDocsTask != null && mDocsTask.getStatus() != AsyncTask.Status.FINISHED )
+        // Unfinished task around?
+        if (mDocsTask != null && mDocsTask.getStatus() != AsyncTask.Status.FINISHED)
             showProgressSpinnerOnly(true);
 
         /*// The view has been loaded already
@@ -77,7 +76,6 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
                 mListView.collapseGroup(groupPosition);
 
             else {
-                // show Progress Bar
                 showProgressSpinnerOnly(true);
 
                 mDocsTask = new GetStudentClassesDocsTask(getActivity(), ClassesDocsFragment.this);
@@ -95,12 +93,9 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
 
         showProgressSpinnerOnly(false);
 
-        /*List<StudentClassDoc> docs = result.getClassesDocs();
-        for(StudentClassDoc d : docs)
-                System.out.println("-> " + d.getName() + " , " + d.getSize());*/
-
         // Server is unavailable right now
-        if(result == null || result.getClassesDocs().size() == 0) return;
+        if(result == null || result.getClassesDocs().size() == 0)
+            return;
 
         // Collapse last expanded group
         if(lastExpandedGroupPosition != -1)
@@ -108,7 +103,7 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
 
         lastExpandedGroupPosition = groupPosition;
 
-        // Set new data and notifyDataSetChanged
+        // Set new data and notify adapter
         classDocs.clear();
         classDocs.addAll(result.getClassesDocs());
         mListAdapter.notifyDataSetChanged();
@@ -122,8 +117,7 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             String name = classDocs.get(childPosition).getName();
-            String url = "https://clip.unl.pt" + classDocs.get(childPosition).getUrl();
-
+            String url = classDocs.get(childPosition).getUrl();
             System.out.println("-> uurl " + url);
 
             // Download document

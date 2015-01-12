@@ -14,7 +14,8 @@ public class InfoContactsFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.list_view, container, false);
+
         ListView listView = (ListView) view.findViewById(R.id.list_view);
 
         InfoContactsListViewAdapter adapter = new InfoContactsListViewAdapter(getActivity());
@@ -23,7 +24,7 @@ public class InfoContactsFragment extends BaseFragment {
         // Set 'internal contacts' title
         adapter.add(new ContactTitle(resources.getString(R.string.info_contacts_internal_title)));
 
-        // Add internal contacts
+        // Add 'internal contacts'
         String[] contacts = resources.getStringArray(R.array.info_contacts_internal);
         for(int i=0; i<contacts.length; i+=3)
             adapter.add(new ContactInternal(contacts[i], contacts[i+1], contacts[i+2]));
@@ -31,7 +32,7 @@ public class InfoContactsFragment extends BaseFragment {
         // Set 'external contacts' title
         adapter.add(new ContactTitle(resources.getString(R.string.info_contacts_external_title)));
 
-        // Add external contacts
+        // Add 'external contacts'
         contacts = resources.getStringArray(R.array.info_contacts_external);
         for(int i=0; i<contacts.length; i+=2)
             adapter.add(new ContactExternal(contacts[i], contacts[i+1]));
@@ -40,8 +41,7 @@ public class InfoContactsFragment extends BaseFragment {
         return view;
     }
 
-    public class ContactTitle {
-
+    public static class ContactTitle {
         public String name;
 
         public ContactTitle(String name) {
@@ -49,8 +49,7 @@ public class InfoContactsFragment extends BaseFragment {
         }
     }
 
-    public class ContactExternal extends ContactTitle {
-
+    public static class ContactExternal extends ContactTitle {
         public String phone;
 
         public ContactExternal(String name, String phone) {
@@ -59,8 +58,7 @@ public class InfoContactsFragment extends BaseFragment {
         }
     }
 
-    public class ContactInternal extends ContactExternal {
-
+    public static class ContactInternal extends ContactExternal {
         public String schedule;
 
         public ContactInternal(String name, String phone, String schedule) {

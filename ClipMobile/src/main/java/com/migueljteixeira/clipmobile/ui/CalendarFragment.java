@@ -17,13 +17,12 @@ import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CalendarFragment extends Fragment implements CalendarPickerView.OnDateSelectedListener {
-
+    public static final String APPOINTMENT_TAG = "appointment_tag";
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");;
     private List<StudentCalendar> calendar;
 
@@ -36,32 +35,16 @@ public class CalendarFragment extends Fragment implements CalendarPickerView.OnD
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
-        Calendar nextYear = Calendar.getInstance();
-        nextYear.add(Calendar.YEAR, 1);
-
         CalendarPickerView calendar = (CalendarPickerView) view.findViewById(R.id.calendar_view);
 
-        // set calendar background color
+        // Set calendar background color
         Resources resources = getActivity().getResources();
         calendar.setBackgroundColor(resources.getColor(R.color.main_background_color));
 
-        List<Date> dates = new LinkedList<Date>();
-
-        if(this.calendar != null) {
-            for (StudentCalendar appointment : this.calendar) {
-                try {
-                    Date date = format.parse(appointment.getDate());
-                    dates.add(date);
-                } catch (ParseException e) {
-                    System.out.println("AHHH ParseException!");
-                }
-            }
-        }
-
+        // Set calendar start/end date and highlight dates
         calendar.init(ClipSettings.getSemesterStartDate(getActivity()),
                 ClipSettings.getSemesterEndDate(getActivity()))
-                .withHighlightedDates(dates);
+                .withHighlightedDates(getDatesToHighlight());
 
         calendar.setOnDateSelectedListener(this);
 
@@ -70,28 +53,47 @@ public class CalendarFragment extends Fragment implements CalendarPickerView.OnD
 
     @Override
     public void onDateSelected(Date date) {
-        if(this.calendar != null) {
+        if(this.calendar == null)
+            return;
 
-            Date cellDate;
-            for (StudentCalendar appointment : this.calendar) {
-                try {
-                    cellDate = format.parse(appointment.getDate());
+        for (StudentCalendar appointment : this.calendar) {
+            try {
+                Date appointmentDate = format.parse(appointment.getDate());
 
-                    if(cellDate.equals(date)) {
-                        // Create an instance of the dialog fragment and show it
-                        DialogFragment dialog = new CalendarDialogFragment(appointment);
-                        dialog.show(getFragmentManager(), "CalendarDialogFragment");
-                    }
+                if(appointmentDate.equals(date)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(APPOINTMENT_TAG, appointment);
 
-                } catch (ParseException e) {
-                    System.out.println("AHHH ParseException!");
+                    // Create an instance of the dialog fragment and show it
+                    DialogFragment dialog = new CalendarDialogFragment();
+                    dialog.setArguments(bundle);
+                    dialog.show(getFragmentManager(), "CalendarDialogFragment");
                 }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void onDateUnselected(Date date) {
-        //
+    public void onDateUnselected(Date date) {}
+
+    private List<Date> getDatesToHighlight() {
+        List<Date> dates = new LinkedList<Date>();
+
+        if(calendar == null)
+            return dates;
+
+        for (StudentCalendar appointment : calendar) {
+            try {
+                Date date = format.parse(appointment.getDate());
+                dates.add(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return dates;
     }
 }

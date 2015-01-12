@@ -15,7 +15,6 @@ import java.util.List;
 
 public class CalendarViewPagerAdapter extends FragmentPagerAdapter {
     public static final String CALENDAR_TAG = "calendar_tag";
-
     private final String[] tabNames;
     private Student student;
 
@@ -24,7 +23,6 @@ public class CalendarViewPagerAdapter extends FragmentPagerAdapter {
         this.tabNames = tabNames;
         this.student = student;
     }
-
 
     @Override
     public CharSequence getPageTitle(int position) {

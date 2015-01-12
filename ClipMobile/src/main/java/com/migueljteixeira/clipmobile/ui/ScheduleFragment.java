@@ -26,7 +26,7 @@ public class ScheduleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.list_view, container, false);
         ListView listView = (ListView) view.findViewById(R.id.list_view);
 
         ScheduleListViewAdapter adapter = new ScheduleListViewAdapter(getActivity());
@@ -44,13 +44,12 @@ public class ScheduleFragment extends Fragment {
         return view;
     }
 
-    public class ListViewItemEmpty {
+    public static class ListViewItemEmpty {
 
         public ListViewItemEmpty() {}
     }
 
-    public class ListViewItem {
-
+    public static class ListViewItem {
         public String name, type, hour_start, hour_end, room;
 
         public ListViewItem(String name, String type, String hour_start, String hour_end, String room) {

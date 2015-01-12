@@ -19,8 +19,10 @@ public class ConnectClipActivity extends BaseActivity {
         setContentView(R.layout.activity_singlepane);
         super.onCreate(savedInstanceState);
 
-        // Crash system reporting
-        Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG) {
+            // Crash system reporting
+            Fabric.with(this, new Crashlytics());
+        }
 
         // If the user has already login, start the StudentNumbersActivity instead
         if( ClipSettings.isUserLoggedIn(this) ) {

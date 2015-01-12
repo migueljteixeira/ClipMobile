@@ -12,8 +12,7 @@ import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-public class CalendarViewPager extends BaseViewPager  implements GetStudentCalendarTask.OnTaskFinishedListener {
-
+public class CalendarViewPager extends BaseViewPager implements GetStudentCalendarTask.OnTaskFinishedListener {
     private GetStudentCalendarTask mTask;
 
     @Override

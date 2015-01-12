@@ -13,7 +13,6 @@ import com.migueljteixeira.clipmobile.entities.StudentClassDoc;
 import java.util.List;
 
 public class StudentClassesDocsAdapter extends BaseExpandableListAdapter {
-
     private final String[] categories;
     private final Context mContext;
     private final List<StudentClassDoc> classDocs;
@@ -106,8 +105,7 @@ public class StudentClassesDocsAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    static class ViewHolder {
-
+    private static class ViewHolder {
         TextView name;
     }
 }

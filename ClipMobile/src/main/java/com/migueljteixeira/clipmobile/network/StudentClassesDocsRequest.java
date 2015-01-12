@@ -21,6 +21,8 @@ public class StudentClassesDocsRequest extends Request {
     private static final String STUDENT_CLASS_DOCS_3 = "&aluno=";
     private static final String STUDENT_CLASS_DOCS_4 = "&institui%E7%E3o=97747&unidade_curricular=";
     private static final String STUDENT_CLASS_DOCS_5 = "&tipo_de_documento_de_unidade=";
+    private static final String STUDENT_CLASS_DOCS_DOWNLOAD = "https://clip.unl.pt";
+
 
     public static Student getClassesDocs(Context mContext, String studentNumberId,
                                        String year, int semester, String course,
@@ -65,7 +67,8 @@ public class StudentClassesDocsRequest extends Request {
     public static void downloadDoc(Context mContext, String name, String url) {
         String cookie = ClipSettings.getCookie(mContext);
 
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        DownloadManager.Request request = new DownloadManager.Request(
+                Uri.parse(STUDENT_CLASS_DOCS_DOWNLOAD + url));
         request.addRequestHeader("Cookie", COOKIE_NAME + "=" + cookie);
         request.setTitle(name);
 

@@ -262,7 +262,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 setTitle(R.string.drawer_classes);
                 setActionBarShadow();
                 fragment = new ClassesFragment();
-                ((ClassesFragment) fragment).init(this);
+                //((ClassesFragment) fragment).init(this);
                 break;
 
             case MENU_ITEM_INFO_CONTACTS_POSITION:
