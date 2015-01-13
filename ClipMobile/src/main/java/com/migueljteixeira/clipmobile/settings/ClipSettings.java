@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class ClipSettings {
-
     private final static String COOKIE_NAME = "com.migueljteixeira.clipmobile.cookie";
     private final static String LOGIN_TIME = "com.migueljteixeira.clipmobile.loggedInTime";
 
@@ -34,7 +33,6 @@ public class ClipSettings {
     private static SharedPreferences.Editor edit(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).edit();
     }
-
 
     public static String getCookie(Context context) {
         return get(context).getString(COOKIE_NAME, null);

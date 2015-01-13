@@ -10,7 +10,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class StudentClassesRequest extends Request {
-
     private static final String STUDENT_CLASSES_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo?aluno=";
     private static final String STUDENT_CLASSES_2 = "&institui%E7%E3o=97747&ano_lectivo=";
 

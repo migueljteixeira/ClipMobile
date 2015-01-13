@@ -12,9 +12,8 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 
 public abstract class Request {
-
-    protected static final String COOKIE_NAME = "JServSessionIdroot1112";
     private static final String INITIAL_REQUEST = "https://clip.unl.pt/utente/eu";
+    protected static final String COOKIE_NAME = "JServSessionIdroot1112";
 
     protected static Document initialRequest(Context context, String username, String password)
             throws ServerUnavailableException {
@@ -90,9 +89,7 @@ public abstract class Request {
                 response = connection.execute();
             }
 
-            System.out.println("!!!!!!!!! response : " + response.parse().body());
             return response.parse();
-
         } catch (IOException e) {
             throw new ServerUnavailableException();
         }

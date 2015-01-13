@@ -7,68 +7,8 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <!-- Widget styles -->
-    <!--<style name="AutoCompleteTextViewClipMobile" parent="android:Widget.Holo.Light.AutoCompleteTextView">-->
-        <!--<item name="android:dropDownSelector">@drawable/clipmobile_list_selector_holo_light</item>-->
-        <!--<item name="android:background">@drawable/clipmobile_edit_text_holo_light</item>-->
-    <!--</style>-->
-
-    <!--<style name="ButtonClipMobile" parent="android:Widget.Holo.Light.Button">-->
-        <!--<item name="android:background">@drawable/clipmobile_btn_default_holo_light</item>-->
-    <!--</style>-->
-
-    <!--<style name="ImageButtonClipMobile" parent="android:Widget.Holo.Light.ImageButton">-->
-        <!--<item name="android:background">@drawable/clipmobile_btn_default_holo_light</item>-->
-    <!--</style>-->
-
-    <!--<style name="TextAppearance" parent="@android:style/TextAppearance">-->
-        <!--<item name="android:textSize">@dimen/default_text_size</item>-->
-        <!--<item name="android:textStyle">normal</item>-->
-    <!--</style>-->
-
-    <!--<style name="TextAppearance.ActionBar" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">-->
-        <!--<item name="android:textSize">@dimen/actionbar_title_text_size</item>-->
-        <!--<item name="android:textColor">@android:color/white</item>-->
-    <!--</style>-->
-
-    <!--<!- Action Bar styles -->
-    <!--<style name="ActionBar.Solid.Clipmobile" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">-->
-        <!--<item name="android:background">@drawable/ab_solid_clipmobile</item>-->
-        <!--<item name="android:backgroundStacked">@drawable/ab_stacked_solid_clipmobile</item>-->
-        <!--<item name="android:backgroundSplit">@drawable/ab_bottom_solid_clipmobile</item>-->
-        <!--<item name="android:progressBarStyle">@style/ProgressBar.Clipmobile</item>-->
-        <!--<item name="android:titleTextStyle">@style/TextAppearance.ActionBar</item>-->
-    <!--</style>-->
-
-    <!--<style name="PopupMenu.Clipmobile" parent="@android:style/Widget.Holo.Light.ListPopupWindow">-->
-        <!--<item name="android:popupBackground">@drawable/menu_dropdown_panel_clipmobile</item>-->
-    <!--</style>-->
-
-    <!--<style name="DropDownListView.Clipmobile" parent="@android:style/Widget.Holo.Light.ListView.DropDown">-->
-        <!--<item name="android:listSelector">@drawable/selectable_background_clipmobile</item>-->
-    <!--</style>-->
-
-    <!--<style name="ActionBarTabStyle.Clipmobile" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">-->
-        <!--<item name="android:background">@drawable/tab_indicator_ab_clipmobile</item>-->
-    <!--</style>-->
-
-    <!--<style name="DropDownNav.Clipmobile" parent="@android:style/Widget.Holo.Light.Spinner">-->
-        <!--<item name="android:background">@drawable/spinner_background_ab_clipmobile</item>-->
-        <!--<item name="android:popupBackground">@drawable/menu_dropdown_panel_clipmobile</item>-->
-        <!--<item name="android:dropDownSelector">@drawable/selectable_background_clipmobile</item>-->
-    <!--</style>-->
-
-    <!--<style name="ProgressBar.Clipmobile" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">-->
-        <!--<item name="android:progressDrawable">@drawable/progress_horizontal_clipmobile</item>-->
-    <!--</style>-->
-
-    <!--<style name="ActionButton.CloseMode.Clipmobile" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">-->
-        <!--<item name="android:background">@drawable/btn_cab_done_clipmobile</item>-->
-    <!--</style>-->
-
-
     <style name="TextAppearance.FontCondensedBold" parent="android:TextAppearance">
-        <!-- Custom Attr-->
+        <!-- Custom Attr -->
         <item name="fontPath">RobotoCondensed-Bold.ttf</item>
     </style>
 

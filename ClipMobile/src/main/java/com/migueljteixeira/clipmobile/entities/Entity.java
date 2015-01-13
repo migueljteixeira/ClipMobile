@@ -1,7 +1,6 @@
 package com.migueljteixeira.clipmobile.entities;
 
 public abstract class Entity {
-
     private String id;
 
     public String getId() {

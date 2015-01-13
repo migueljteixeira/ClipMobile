@@ -1,7 +1,6 @@
 package com.migueljteixeira.clipmobile.entities;
 
 public class StudentClassDoc extends Entity {
-
     private String name, url, date, size, type;
 
     public String getName() { return name; }

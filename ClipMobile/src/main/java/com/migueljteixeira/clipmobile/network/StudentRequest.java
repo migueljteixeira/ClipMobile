@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class StudentRequest extends Request {
-
     private static final String GET_STUDENTS_NUMBERS = "https://clip.unl.pt/utente/eu";
     private static final String GET_STUDENTS_YEARS = "https://clip.unl.pt/utente/eu/aluno?aluno=";
 

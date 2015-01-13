@@ -28,7 +28,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NavDrawerActivity extends BaseActivity implements AdapterView.OnItemClickListener,
         UpdateStudentPageTask.OnTaskFinishedListener {
-
     private static final String CURRENT_FRAGMENT_TITLE_TAG = "current_fragment_title";
     private static final String CURRENT_FRAGMENT_POSITION_TAG = "current_fragment_position";
 
@@ -262,7 +261,6 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 setTitle(R.string.drawer_classes);
                 setActionBarShadow();
                 fragment = new ClassesFragment();
-                //((ClassesFragment) fragment).init(this);
                 break;
 
             case MENU_ITEM_INFO_CONTACTS_POSITION:

@@ -13,7 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.List;
 
 public class StudentCalendarRequest extends Request {
-
     private static final String STUDENT_CALENDAR_EXAM_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/calend%E1rio?ano_lectivo=";
     private static final String STUDENT_CALENDAR_EXAM_2 = "&aluno=";
     private static final String STUDENT_CALENDAR_EXAM_3 = "&institui%E7%E3o=97747&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";

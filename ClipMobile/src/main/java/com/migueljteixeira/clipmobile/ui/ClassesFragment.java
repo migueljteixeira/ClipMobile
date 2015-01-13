@@ -24,12 +24,7 @@ import butterknife.ButterKnife;
 public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
     private ListView mListView;
     private GetStudentClassesTask mTask;
-    //private NavDrawerActivity activity;
     private ClassListViewAdapter adapter;
-
-    /*public void init(NavDrawerActivity activity) {
-        this.activity = activity;
-    }*/
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);

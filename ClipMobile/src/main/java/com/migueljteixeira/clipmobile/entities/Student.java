@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Student extends Entity {
-
     private String numberId; // number on URL
     private String number;   // real student number
     private List<StudentYearSemester> years;

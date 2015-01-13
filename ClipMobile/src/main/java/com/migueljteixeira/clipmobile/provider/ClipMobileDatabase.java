@@ -17,9 +17,7 @@ import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSe
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
-
     public static final String DATABASE_NAME = "clip_mobile_database";
-
     public static final int DATABASE_VERSION = 1;
 
     private DatabaseUtils.InsertHelper mUsersInserter;
@@ -32,7 +30,6 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
     private DatabaseUtils.InsertHelper mStudentCalendarInserter;
 
     public interface Tables {
-
         String USERS = "users";
         String STUDENTS = "students";
         String STUDENTS_YEAR_SEMESTER = "students_year_semester";

@@ -1,9 +1,7 @@
 package com.migueljteixeira.clipmobile.entities;
 
 public class StudentYearSemester extends Entity {
-
-    private String year;
-    private String semester;
+    private String year, semester;
 
     public StudentYearSemester() {}
 

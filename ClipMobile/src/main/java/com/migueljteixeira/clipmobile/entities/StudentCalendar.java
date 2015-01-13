@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class StudentCalendar extends Entity implements Parcelable {
-
     private String name, date, hour, rooms, number;
 
     public StudentCalendar() {}

@@ -15,7 +15,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class StudentClassesDocsRequest extends Request {
-
     private static final String STUDENT_CLASS_DOCS_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/unidades/unidade_curricular/actividade/documentos?tipo_de_per%EDodo_lectivo=s&ano_lectivo=";
     private static final String STUDENT_CLASS_DOCS_2 = "&per%EDodo_lectivo=";
     private static final String STUDENT_CLASS_DOCS_3 = "&aluno=";

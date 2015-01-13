@@ -55,7 +55,7 @@ public class DrawerAdapter extends ArrayAdapter<Object> {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_title, parent, false);
                 convertView.setOnClickListener(null);
             }
-            else if(getItemViewType(position) == VIEW_TYPE_ITEM) {
+            else {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.drawer_item, parent, false);
             }
 

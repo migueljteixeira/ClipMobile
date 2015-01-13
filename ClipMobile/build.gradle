@@ -54,7 +54,7 @@ dependencies {
     compile 'com.squareup:android-times-square:1.1.1@aar'
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.jpardogo.materialtabstrip:library:1.0.6'
-    compile 'uk.co.chrisjenx:calligraphy:1.1.+'
+    compile 'uk.co.chrisjenx:calligraphy:1.2.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
         transitive = true;

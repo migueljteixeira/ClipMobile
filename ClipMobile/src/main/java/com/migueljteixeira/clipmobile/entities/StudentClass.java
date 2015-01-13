@@ -1,7 +1,6 @@
 package com.migueljteixeira.clipmobile.entities;
 
 public class StudentClass extends Entity {
-
     private String name, teacher_name, teacher_email, number;
     private int semester;
 

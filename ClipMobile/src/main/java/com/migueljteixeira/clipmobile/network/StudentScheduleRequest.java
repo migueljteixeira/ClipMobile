@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 public class StudentScheduleRequest extends Request {
-
     private static final String STUDENT_SCHEDULE_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/hor%E1rio?" +
             "ano_lectivo=";
     private static final String STUDENT_SCHEDULE_2 = "&institui%E7%E3o=97747&aluno=";

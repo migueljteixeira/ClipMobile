@@ -4,13 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class StudentScheduleClass extends Entity implements Parcelable {
-
-    private String name;
-    private String name_min;
-    private String type;
-    private String hour_start;
-    private String hour_end;
-    private String room;
+    private String name, name_min, type, hour_start, hour_end, room;
 
     public StudentScheduleClass() {}
 
