@@ -269,9 +269,6 @@ public class StudentTools {
 
         System.out.println("calendar request done!");
 
-        if(student == null || student.getStudentCalendar() == null)
-            System.out.println("WHAT");
-
         // Insert calendar on database
         DBUtils.insertStudentCalendar(mContext, yearSemesterId, student);
 

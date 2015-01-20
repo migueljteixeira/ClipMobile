@@ -118,7 +118,6 @@ public class ClassesDocsFragment extends BaseFragment implements GetStudentClass
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             String name = classDocs.get(childPosition).getName();
             String url = classDocs.get(childPosition).getUrl();
-            System.out.println("-> uurl " + url);
 
             // Download document
             StudentClassesDocsRequest.downloadDoc(getActivity(), name, url);

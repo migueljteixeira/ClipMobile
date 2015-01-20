@@ -28,8 +28,6 @@ public class StudentScheduleRequest extends Request {
         String url = STUDENT_SCHEDULE_1 + year + STUDENT_SCHEDULE_2 +
                 studentNumberId + STUDENT_SCHEDULE_3 + semester;
 
-        System.out.println("URL -->" + url);
-
         Elements trs = request(mContext, url)
                 .body()
                 .select("tr[valign=center]");
@@ -111,10 +109,6 @@ public class StudentScheduleRequest extends Request {
                 scheduleClass.setHourStart(scheduleClassHourStart);
                 scheduleClass.setHourEnd(scheduleClassHourEnd);
                 scheduleClass.setRoom(scheduleClassRoom);
-
-                System.out.println("SCHEDULE REQUEST!!!  day:" + scheduleDayNumber + " , name:" + scheduleClassName
-                        + ", type:" + scheduleClassType + ", hour:" + scheduleClassHourStart + " , " + scheduleClassHourEnd
-                        + ", room:" + scheduleClassRoom);
 
                 // Add scheduleClass to scheduleDay
                 student.addScheduleClass(scheduleDayNumber, scheduleClass);

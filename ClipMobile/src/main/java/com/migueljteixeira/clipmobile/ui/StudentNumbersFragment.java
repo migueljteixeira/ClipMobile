@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.StudentNumbersAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
@@ -88,7 +89,7 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
         switch (item.getItemId()) {
             case R.id.refresh :
-                System.out.println("refresh!");
+                Crashlytics.log("StudentNumbersFragment - refresh");
 
                 Toast.makeText(getActivity(), getActivity().getString(R.string.refreshing),
                         Toast.LENGTH_LONG).show();
@@ -101,7 +102,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
                return true;
 
             case R.id.logout :
-                System.out.println("logout!");
+                Crashlytics.log("StudentNumbersFragment - logout");
+                
                 // Clear user personal data
                 ClipSettings.logoutUser(getActivity());
 
@@ -114,8 +116,6 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
                 return true;
 
             case R.id.about :
-                System.out.println("about!");
-
                 // Create an instance of the dialog fragment and show it
                 AboutDialogFragment dialog = new AboutDialogFragment();
                 dialog.show(getActivity().getSupportFragmentManager(), "AboutDialogFragment");
@@ -131,7 +131,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
     ExpandableListView.OnGroupClickListener onGroupClickListener = new ExpandableListView.OnGroupClickListener() {
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
+            Crashlytics.log("StudentNumbersFragment - group clicked");            
+            
             if(mListView.isGroupExpanded(groupPosition))
                 mListView.collapseGroup(groupPosition);
 
@@ -150,10 +151,10 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
 
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
+            Crashlytics.log("StudentNumbersFragment - child clicked");
+            
             // Save year, studentId and studentNumberId selected
             String yearSelected = students.get(groupPosition).getYears().get(childPosition).getYear();
-            System.out.println("YEAR SELECTED " + yearSelected);
 
             ClipSettings.saveYearSelected(getActivity(), yearSelected);
             ClipSettings.saveStudentIdSelected(getActivity(), students.get(groupPosition).getId());
@@ -179,6 +180,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
         if(!isAdded())
             return;
 
+        Crashlytics.log("StudentNumbersFragment - onStudentNumbersTaskFinished");
+
         students = result.getStudents();
         showProgressSpinner(false);
 
@@ -192,6 +195,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
     public void onStudentYearsTaskFinished(Student result, int groupPosition) {
         if(!isAdded())
             return;
+
+        Crashlytics.log("StudentNumbersFragment - onStudentYearsTaskFinished");
 
         showProgressSpinnerOnly(false);
 
@@ -212,6 +217,8 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
         if(!isAdded())
             return;
 
+        Crashlytics.log("StudentNumbersFragment - onUpdateTaskFinished");
+
         // Server is unavailable right now
         if(result == null)
             return;
@@ -219,8 +226,6 @@ public class StudentNumbersFragment extends BaseFragment implements GetStudentNu
         // Set new data and notifyDataSetChanged
         students.clear();
         students.addAll(result.getStudents());
-
-        System.out.println("updated!");
         mListAdapter.notifyDataSetChanged();
     }
 

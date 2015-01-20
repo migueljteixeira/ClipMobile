@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -51,18 +53,14 @@ public class ClipSettings {
         long loginTime = get(context).getLong(LOGIN_TIME, -1);
 
         long elapsedTime = currentTime - loginTime;
-
-        System.out.println("!!! login: " + loginTime);
-        System.out.println("!!! currentTime: " + currentTime);
+        Crashlytics.log("ClipSettings - newCookie? - loginTime:" + loginTime);
+        Crashlytics.log("ClipSettings - newCookie? - currentTime:" + currentTime);
 
         int elapsedTimeInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
-        System.out.println("!!! elapsed time: " + elapsedTimeInMinutes);
+        Crashlytics.log("ClipSettings - newCookie? - elapsedTime:" + elapsedTimeInMinutes);
 
         // If the elapsedTime > 50min, we need to request a new cookie from the server
-        if(elapsedTimeInMinutes > 50)
-            return true;
-
-        return false;
+        return elapsedTimeInMinutes > 50;
     }
 
     public static boolean isUserLoggedIn(Context context) {

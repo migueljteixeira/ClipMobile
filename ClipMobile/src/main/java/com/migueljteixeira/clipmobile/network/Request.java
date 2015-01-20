@@ -2,6 +2,7 @@ package com.migueljteixeira.clipmobile.network;
 
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
@@ -12,6 +13,8 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 
 public abstract class Request {
+    private static final String ID = "identificador";
+    private static final String PW = "senha";
     private static final String INITIAL_REQUEST = "https://clip.unl.pt/utente/eu";
     protected static final String COOKIE_NAME = "JServSessionIdroot1112";
 
@@ -20,8 +23,8 @@ public abstract class Request {
 
         try {
             Connection.Response response = Jsoup.connect(INITIAL_REQUEST)
-                    .data("identificador", username)
-                    .data("senha", password)
+                    .data(ID, username)
+                    .data(PW, password)
                     .method(Connection.Method.POST)
                     .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
                     .header("Accept-Encoding", "gzip,deflate,sdch")
@@ -67,11 +70,11 @@ public abstract class Request {
             // If the cookie has expired, we need to request a new one
             Connection.Response response;
             if( ClipSettings.isTimeForANewCookie(context) ) {
-                System.out.println("Requesting new cookie!");
+                Crashlytics.log("Request - Requesting new cookie");
 
                 connection.header("Content-Type", "application/x-www-form-urlencoded");
-                connection.data("identificador", ClipSettings.getLoggedInUserName(context));
-                connection.data("senha", ClipSettings.getLoggedInUserPw(context));
+                connection.data(ID, ClipSettings.getLoggedInUserName(context));
+                connection.data(PW, ClipSettings.getLoggedInUserPw(context));
 
                 // Execute the request
                 response = connection.execute();
@@ -88,6 +91,8 @@ public abstract class Request {
                 // Execute the request
                 response = connection.execute();
             }
+
+            Crashlytics.log("Request - url:" + url);
 
             return response.parse();
         } catch (IOException e) {

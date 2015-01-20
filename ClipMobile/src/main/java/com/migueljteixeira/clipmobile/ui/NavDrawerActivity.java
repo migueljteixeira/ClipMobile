@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.DrawerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
@@ -50,6 +51,8 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_dualpane);
         super.onCreate(savedInstanceState);
 
+        Crashlytics.log("NavDrawerActivity - onCreate");
+
         setupNavDrawer();
 
         // Set toolbar title
@@ -72,7 +75,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
         if (fragment == null) {
             fragment = new ScheduleViewPager();
-            fm.beginTransaction().add(R.id.content_frame, fragment).commit();
+            fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
     }
 
@@ -147,7 +150,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         }
 
         else if(item.getItemId() == R.id.refresh) {
-            System.out.println("refresh!");
+            Crashlytics.log("NavDrawerActivity - refresh");
 
             // Refreshing
             Toast.makeText(this, getString(R.string.refreshing),
@@ -170,8 +173,6 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         }
 
         else if(item.getItemId() == R.id.about) {
-            System.out.println("about!");
-
             // Create an instance of the dialog fragment and show it
             AboutDialogFragment dialog = new AboutDialogFragment();
             dialog.show(getSupportFragmentManager(), "AboutDialogFragment");
@@ -269,6 +270,9 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 fragment = new InfoContactsFragment();
                 break;
         }
+
+        if(isFinishing())
+            return;
 
         // Replace fragment and close drawer
         fm.beginTransaction().replace(R.id.content_frame, fragment).commit();

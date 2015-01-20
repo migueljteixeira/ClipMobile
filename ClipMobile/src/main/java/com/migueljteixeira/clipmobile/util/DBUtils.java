@@ -117,7 +117,7 @@ public class DBUtils {
             String year = studentYears_cursor.getString(2);
 
             StudentYearSemester student_year = new StudentYearSemester();
-            //student_year.setId(id);
+            student_year.setId(id);
             student_year.setYear(year);
 
             student.addYear(student_year);

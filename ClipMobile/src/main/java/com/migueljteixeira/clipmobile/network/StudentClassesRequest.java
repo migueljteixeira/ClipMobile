@@ -18,8 +18,6 @@ public class StudentClassesRequest extends Request {
 
         String url = STUDENT_CLASSES_1 + studentNumberId + STUDENT_CLASSES_2 + year;
 
-        System.out.println("URL -->" + url);
-
         Elements hrefs = request(mContext, url)
                 .body()
                 .select("a[href]");
