@@ -178,9 +178,11 @@ public class ClipSettings {
         int semester = ClipSettings.getSemesterSelected(context);
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        
         if(semester == 1) {
-            calendar.set(Calendar.YEAR, year - 1);
             calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+            calendar.set(Calendar.YEAR, year - 1);
         } else {
             calendar.set(Calendar.MONTH, Calendar.MARCH);
             calendar.set(Calendar.YEAR, year);
@@ -194,6 +196,8 @@ public class ClipSettings {
         int semester = ClipSettings.getSemesterSelected(context);
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        
         if(semester == 1) {
             calendar.set(Calendar.MONTH, Calendar.APRIL);
             calendar.set(Calendar.YEAR, year);

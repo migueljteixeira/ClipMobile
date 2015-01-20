@@ -61,8 +61,12 @@ public class ScheduleListViewAdapter extends ArrayAdapter<Object> {
         viewHolder.name.setText(item.name + " (" + item.type + ")");
         viewHolder.hour_start.setText(item.hour_start);
         viewHolder.hour_end.setText(item.hour_end);
-        viewHolder.room.setText(item.room);
-
+        
+        if(item.room == null)
+            viewHolder.room.setText(" - ");
+        else
+            viewHolder.room.setText(item.room);
+        
         return convertView;
     }
 

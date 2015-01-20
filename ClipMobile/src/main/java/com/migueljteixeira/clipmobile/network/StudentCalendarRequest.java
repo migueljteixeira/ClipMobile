@@ -61,9 +61,15 @@ public class StudentCalendarRequest extends Request {
 
         // There is no calendar available!
         if(body.childNodeSize() == 0)
-            return ;
+            return;
 
-        Elements tests = body.select("form[method=post]").get(2).select("tr");
+        Elements tests = body.select("form[method=post]");
+
+        // There is no calendar available!
+        if(tests.size() == 1)
+            return;
+        
+        tests = tests.get(2).select("tr");
 
         for(Element test : tests) {
             if(!test.hasAttr("bgcolor")) continue;

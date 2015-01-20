@@ -54,7 +54,10 @@ public class StudentScheduleRequest extends Request {
                 scheduleClassType += href[8].substring(href[8].length()-1);
                 String scheduleClassName = td.attr("title");
                 String scheduleClassNameMin = child.get(0).toString();
-                String scheduleClassRoom = child.get(4).toString();
+                
+                String scheduleClassRoom = null;
+                if(child.size() > 4)
+                    scheduleClassRoom = child.get(4).toString();
 
                 String scheduleClassDuration = td.attr("rowspan");
 
