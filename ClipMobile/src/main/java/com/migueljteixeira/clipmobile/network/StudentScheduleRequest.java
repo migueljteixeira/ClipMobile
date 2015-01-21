@@ -1,6 +1,7 @@
 package com.migueljteixeira.clipmobile.network;
 
 import android.content.Context;
+import android.text.Html;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
@@ -59,7 +60,7 @@ public class StudentScheduleRequest extends Request {
                 
                 String scheduleClassRoom = null;
                 if(child.size() > 4)
-                    scheduleClassRoom = child.get(4).toString();
+                    scheduleClassRoom = Html.fromHtml(child.get(4).toString()).toString();
 
                 String scheduleClassDuration = td.attr("rowspan");
 
