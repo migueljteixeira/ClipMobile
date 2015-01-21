@@ -129,10 +129,10 @@ public class DBUtils {
 
     public static void insertStudentYears(Context mContext, String studentId, Student student) {
 
-        // For every year, lets add the 2 semesters already
+        // For every year, lets add the 2 semesters (and the trimester) already
         for(StudentYearSemester year : student.getYears()) {
 
-            for(int semester=1; semester<=2; semester++) {
+            for(int semester=1; semester<=3; semester++) {
                 ContentValues values = new ContentValues();
                 values.put(ClipMobileContract.Students.REF_STUDENTS_ID, studentId);
                 values.put(ClipMobileContract.StudentsYearSemester.YEAR, year.getYear());
@@ -348,8 +348,8 @@ public class DBUtils {
         System.out.println("yearSemesterId !!!-> " + yearSemesterId);
         System.out.println("classes size -> " + classes.size());
 
-        // For two semesters
-        for (int semester = 1; semester <= 2; semester++) {
+        // For two semesters (and one trimester)
+        for (int semester = 1; semester <= 3; semester++) {
             List<StudentClass> studentClass = classes.get(semester);
 
             // we don't have classes in this semester, yet

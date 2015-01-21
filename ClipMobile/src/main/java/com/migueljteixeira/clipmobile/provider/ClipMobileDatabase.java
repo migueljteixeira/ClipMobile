@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleClassesColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.ScheduleDaysColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentCalendarColumns;
@@ -15,10 +16,11 @@ import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClasses
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemesterColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
+import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "clip_mobile_database";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     private DatabaseUtils.InsertHelper mUsersInserter;
     private DatabaseUtils.InsertHelper mStudentsInserter;
@@ -258,16 +260,35 @@ public class ClipMobileDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Crashlytics.log("ClipMobileDatabse - onUpgrade from " + oldVersion + " to " + newVersion);
+        
+        switch(oldVersion) {
+            case 1:
+                upgradeToSecond(db);
+        }
+        
+    }
 
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENTS);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENTS_YEAR_SEMESTER);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_DAYS);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_CLASSES);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES_DOCS);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CALENDAR);
+    private void upgradeToSecond(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENTS_YEAR_SEMESTER);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_DAYS);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.SCHEDULE_CLASSES);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CLASSES_DOCS);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.STUDENT_CALENDAR);
+            
+            db.execSQL(CREATE_STUDENTS_YEAR_SEMESTER_TABLE);
+            db.execSQL(CREATE_SCHEDULE_DAYS_TABLE);
+            db.execSQL(CREATE_SCHEDULE_CLASSES_TABLE);
+            db.execSQL(CREATE_STUDENT_CLASSES_TABLE);
+            db.execSQL(CREATE_STUDENT_CLASSES_DOCS_TABLE);
+            db.execSQL(CREATE_STUDENT_CALENDAR_TABLE);
 
-        onCreate(db);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 }

@@ -40,11 +40,6 @@ public class GetStudentScheduleTask extends AsyncTask<Void, Void, Student> {
         //String yearSemesterId = ClipSettings.getStudentYearSemesterIdSelected(mContext);
         String studentNumberId = ClipSettings.getStudentNumberidSelected(mContext);
 
-        System.out.println("DOINBACKGROUND -> studentID" + studentId + ", year:" + year
-                + ", yearFommatted:" + yearFormatted + ", semester:" + semester
-                + ", studentNumberID:" + studentNumberId);
-
-
         // Get student schedule
         try {
             return StudentTools.getStudentSchedule(mContext, studentId, year, yearFormatted, semester,

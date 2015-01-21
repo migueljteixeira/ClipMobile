@@ -16,17 +16,22 @@ public class StudentCalendarRequest extends Request {
     private static final String STUDENT_CALENDAR_EXAM_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/calend%E1rio?ano_lectivo=";
     private static final String STUDENT_CALENDAR_EXAM_2 = "&aluno=";
     private static final String STUDENT_CALENDAR_EXAM_3 = "&institui%E7%E3o=97747&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";
+    private static final String STUDENT_CALENDAR_EXAM_3_TRIMESTER = "&institui%E7%E3o=97747&tipo_de_per%EDodo_lectivo=t&per%EDodo_lectivo=";
 
     private static final String STUDENT_CALENDAR_TEST_1 = "https://clip.unl.pt/utente/eu/aluno/acto_curricular/inscri%E7%E3o/testes_de_avalia%E7%E3o?institui%E7%E3o=97747&aluno=";
     private static final String STUDENT_CALENDAR_TEST_2 = "&ano_lectivo=";
     private static final String STUDENT_CALENDAR_TEST_3 = "&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";
+    private static final String STUDENT_CALENDAR_TEST_3_TRIMESTER = "&tipo_de_per%EDodo_lectivo=t&per%EDodo_lectivo=";
 
     public static void getExamCalendar(Context mContext, Student student, String studentNumberId,
                                           String year, int semester)
             throws ServerUnavailableException {
 
-        String url = STUDENT_CALENDAR_EXAM_1 + year + STUDENT_CALENDAR_EXAM_2 + studentNumberId +
-                STUDENT_CALENDAR_EXAM_3 + semester;
+        String url = STUDENT_CALENDAR_EXAM_1 + year + STUDENT_CALENDAR_EXAM_2 + studentNumberId;
+        if(semester == 3) // Trimester
+            url += STUDENT_CALENDAR_EXAM_3_TRIMESTER + (semester-1);
+        else
+            url += STUDENT_CALENDAR_EXAM_3 + semester;
 
         Elements exams = request(mContext, url)
                 .body()
@@ -53,9 +58,12 @@ public class StudentCalendarRequest extends Request {
                                           String year, int semester)
             throws ServerUnavailableException {
 
-        String url = STUDENT_CALENDAR_TEST_1 + studentNumberId + STUDENT_CALENDAR_TEST_2 + year +
-                STUDENT_CALENDAR_TEST_3 + semester;
-
+        String url = STUDENT_CALENDAR_TEST_1 + studentNumberId + STUDENT_CALENDAR_TEST_2 + year;
+        if(semester == 3) // Trimester
+            url += STUDENT_CALENDAR_TEST_3_TRIMESTER + (semester-1);
+        else
+            url += STUDENT_CALENDAR_TEST_3 + semester;
+        
         Element body = request(mContext, url)
                 .body();
 

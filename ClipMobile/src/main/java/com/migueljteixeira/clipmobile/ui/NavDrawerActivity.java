@@ -132,8 +132,10 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         if(semester == 1)
             menu.findItem(R.id.semester1).setChecked(true);
-        else
+        else if(semester == 2)
             menu.findItem(R.id.semester2).setChecked(true);
+        else
+            menu.findItem(R.id.trimester2).setChecked(true);
 
         return true;
     }
@@ -178,14 +180,17 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
             dialog.show(getSupportFragmentManager(), "AboutDialogFragment");
         }
 
-        else if(!item.isChecked() && (item.getItemId() == R.id.semester1 || item.getItemId() == R.id.semester2)) {
+        else if(!item.isChecked() && (item.getItemId() == R.id.semester1 || item.getItemId() == R.id.semester2)
+                || item.getItemId() == R.id.trimester2) {
             // Check item
             item.setChecked(true);
 
             if(item.getItemId() == R.id.semester1)
                 ClipSettings.saveSemesterSelected(this, 1);
-            else
+            else if(item.getItemId() == R.id.semester2)
                 ClipSettings.saveSemesterSelected(this, 2);
+            else
+                ClipSettings.saveSemesterSelected(this, 3);
 
             // Refresh current view
             mDrawerList.performItemClick(mDrawerList.getChildAt(mDrawerList.getCheckedItemPosition()),

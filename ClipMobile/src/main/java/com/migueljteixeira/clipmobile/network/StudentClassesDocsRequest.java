@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 
 public class StudentClassesDocsRequest extends Request {
     private static final String STUDENT_CLASS_DOCS_1 = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/unidades/unidade_curricular/actividade/documentos?tipo_de_per%EDodo_lectivo=s&ano_lectivo=";
+    private static final String STUDENT_CLASS_DOCS_1_TRIMESTER = "https://clip.unl.pt/utente/eu/aluno/ano_lectivo/unidades/unidade_curricular/actividade/documentos?tipo_de_per%EDodo_lectivo=t&ano_lectivo=";
     private static final String STUDENT_CLASS_DOCS_2 = "&per%EDodo_lectivo=";
     private static final String STUDENT_CLASS_DOCS_3 = "&aluno=";
     private static final String STUDENT_CLASS_DOCS_4 = "&institui%E7%E3o=97747&unidade_curricular=";
@@ -27,9 +28,15 @@ public class StudentClassesDocsRequest extends Request {
                                        String year, int semester, String course,
                                        String docType) throws ServerUnavailableException {
 
-        String url = STUDENT_CLASS_DOCS_1 + year +
-                STUDENT_CLASS_DOCS_2 + semester +
-                STUDENT_CLASS_DOCS_3 + studentNumberId +
+        String url;
+        if(semester == 3) // Trimester
+            url = STUDENT_CLASS_DOCS_1_TRIMESTER + year + 
+                    STUDENT_CLASS_DOCS_2 + (semester-1);
+        else
+            url = STUDENT_CLASS_DOCS_1 + year +
+                    STUDENT_CLASS_DOCS_2 + semester;
+            
+        url +=  STUDENT_CLASS_DOCS_3 + studentNumberId +
                 STUDENT_CLASS_DOCS_4 + course +
                 STUDENT_CLASS_DOCS_5 + docType;
 

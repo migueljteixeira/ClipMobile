@@ -21,12 +21,16 @@ public class StudentScheduleRequest extends Request {
             "ano_lectivo=";
     private static final String STUDENT_SCHEDULE_2 = "&institui%E7%E3o=97747&aluno=";
     private static final String STUDENT_SCHEDULE_3 = "&tipo_de_per%EDodo_lectivo=s&per%EDodo_lectivo=";
+    private static final String STUDENT_SCHEDULE_3_TRIMESTER = "&tipo_de_per%EDodo_lectivo=t&per%EDodo_lectivo=";
 
     public static Student getSchedule(Context mContext, String studentNumberId, String year, int semester)
             throws ServerUnavailableException {
 
-        String url = STUDENT_SCHEDULE_1 + year + STUDENT_SCHEDULE_2 +
-                studentNumberId + STUDENT_SCHEDULE_3 + semester;
+        String url = STUDENT_SCHEDULE_1 + year + STUDENT_SCHEDULE_2 + studentNumberId;
+        if(semester == 3) // Trimester
+            url += STUDENT_SCHEDULE_3_TRIMESTER + (semester-1);
+        else
+            url += STUDENT_SCHEDULE_3 + semester;
 
         Elements trs = request(mContext, url)
                 .body()

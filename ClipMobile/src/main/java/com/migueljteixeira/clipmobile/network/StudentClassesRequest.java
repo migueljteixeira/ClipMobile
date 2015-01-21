@@ -46,6 +46,26 @@ public class StudentClassesRequest extends Request {
 
                 student.addStudentClass(semester_final, cl);
             }
+
+            else if(linkHref.matches("/utente/eu/aluno/ano_lectivo/unidades[?](.)*&tipo_de_per%EDodo_lectivo=t&(.)*")) {
+                String[] class_url = linkHref.split("&");
+
+                //String semester = class_url[class_url.length - 1];
+                String classID  = class_url[class_url.length - 3];
+
+                String className = href.text();
+                //int semester_final = Integer.valueOf(semester.substring(semester.length() - 1));
+                String classID_final  = classID.substring(8);
+
+                //System.out.println("-> CLASS!" + className + ", " + semester_final + ", " + classID_final);
+
+                StudentClass cl = new StudentClass();
+                cl.setName(className);
+                cl.setSemester(3);
+                cl.setNumber(classID_final);
+
+                student.addStudentClass(3, cl);
+            }
         }
 
         return student;

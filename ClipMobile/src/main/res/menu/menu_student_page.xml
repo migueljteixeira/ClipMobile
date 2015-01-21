@@ -29,6 +29,12 @@
                     android:orderInCategory="2"
                     com.migueljteixeira.clipmobile:showAsAction="never"
                     android:title="@string/menu_semester_2" />
+
+                <item
+                    android:id="@+id/trimester2"
+                    android:orderInCategory="3"
+                    com.migueljteixeira.clipmobile:showAsAction="never"
+                    android:title="@string/menu_trimester_2" />
             </group>
         </menu>
     </item>
