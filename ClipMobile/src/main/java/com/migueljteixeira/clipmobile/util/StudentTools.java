@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.User;
-import com.migueljteixeira.clipmobile.enums.NetworkResult;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.network.StudentCalendarRequest;
@@ -17,12 +16,12 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class StudentTools {
 
-    public static int signIn(Context mContext, String username, String password)
+    public static Result signIn(Context mContext, String username, String password)
             throws ServerUnavailableException {
 
         // Check for connectivity
         if (! AndroidUtils.isNetworkConnected(mContext))
-            return NetworkResult.OFFLINE;
+            return Result.OFFLINE;
 
         // Sign in the user, and returns Students available
         User user = StudentRequest.signIn(mContext, username, password);
