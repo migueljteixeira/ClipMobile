@@ -10,13 +10,13 @@
         com.migueljteixeira.clipmobile:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/select_semester"
         android:icon="@drawable/ic_action_go_to_today"
         android:orderInCategory="2"
         com.migueljteixeira.clipmobile:showAsAction="ifRoom"
         android:title="@string/menu_select_semester">
         <menu>
-            <group android:checkableBehavior="single">
+            <group
+                android:checkableBehavior="single">
                 <item
                     android:id="@+id/semester1"
                     android:checked="true"

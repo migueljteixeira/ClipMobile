@@ -113,6 +113,16 @@ public class ClipSettings {
         edit(context).putString(YEAR_SELECTED, yearSelected).commit();
     }
 
+    public static int getCurrentSemester() {
+        Calendar calendar = Calendar.getInstance();
+
+        int month = calendar.get(Calendar.MONTH);
+        if(month >= 2 && month <= 7) //  March <= month <= September
+            return 2;
+
+        return 1;
+    }
+
     public static int getSemesterSelected(Context context) {
         return get(context).getInt(SEMESTER_SELECTED, 1);
     }
@@ -159,16 +169,6 @@ public class ClipSettings {
 
     public static void saveStudentClassSelected(Context context, String classNumber) {
         edit(context).putString(STUDENT_CLASS_SELECTED, classNumber).commit();
-    }
-
-    public static int getCurrentSemester() {
-        Calendar calendar = Calendar.getInstance();
-
-        int month = calendar.get(Calendar.MONTH);
-        if(month >= 2 && month <= 7) //  March <= month <= September
-            return 2;
-
-        return 1;
     }
 
     public static Date getSemesterStartDate(Context context) {

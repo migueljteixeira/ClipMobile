@@ -133,7 +133,7 @@ public class StudentNumbersFragment extends BaseFragment
     ExpandableListView.OnGroupClickListener onGroupClickListener = new ExpandableListView.OnGroupClickListener() {
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-            Crashlytics.log("StudentNumbersFragment - group clicked");            
+            Crashlytics.log("StudentNumbersFragment - group clicked");
             
             if(mListView.isGroupExpanded(groupPosition))
                 mListView.collapseGroup(groupPosition);
@@ -154,6 +154,12 @@ public class StudentNumbersFragment extends BaseFragment
         @Override
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             Crashlytics.log("StudentNumbersFragment - child clicked");
+            
+            // If the updateTask is running, do not allow child click
+            if( mUpdateTask != null && mUpdateTask.getStatus() != AsyncTask.Status.FINISHED ) {
+                System.out.println("UPDATE TASK IS RUNNING!");
+                return true;
+            }
             
             // Save year, studentId and studentNumberId selected
             String yearSelected = students.get(groupPosition).getYears().get(childPosition).getYear();

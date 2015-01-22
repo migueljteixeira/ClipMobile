@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.crashlytics.android.Crashlytics;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.StudentClass;
@@ -188,14 +189,14 @@ public class DBUtils {
         if(studentYearSemester_cursor.getCount() == 0) {
             studentYearSemester_cursor.close();
 
-            System.out.println("WHHHHHHHHHHHHHHHHHHHAT?!?!?!?!?");
+            Crashlytics.log("getYearSemesterId - COUNT==0");
 
             return null;
         }
 
         studentYearSemester_cursor.moveToFirst();
         String yearSemesterId = studentYearSemester_cursor.getString(0);
-        System.out.println("--> yearSemesterId: " + yearSemesterId);
+
         studentYearSemester_cursor.close();
 
         return yearSemesterId;
