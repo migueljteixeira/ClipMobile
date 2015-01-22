@@ -29,8 +29,10 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class StudentNumbersFragment extends BaseFragment implements GetStudentNumbersTask.OnTaskFinishedListener,
-        GetStudentYearsTask.OnTaskFinishedListener, UpdateStudentNumbersTask.OnTaskFinishedListener {
+public class StudentNumbersFragment extends BaseFragment
+        implements GetStudentNumbersTask.OnTaskFinishedListener,
+            GetStudentYearsTask.OnTaskFinishedListener,
+            UpdateStudentNumbersTask.OnUpdateTaskFinishedListener<User> {
 
     private StudentNumbersAdapter mListAdapter;
     private List<Student> students;

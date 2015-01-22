@@ -1,31 +1,18 @@
 package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
-import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
-public class UpdateStudentPageTask extends AsyncTask<Void, Void, Student> {
+public class UpdateStudentPageTask extends BaseTask<Void, Void, Student> {
+    
+    private OnUpdateTaskFinishedListener<Student> mListener;
 
-    public interface OnTaskFinishedListener {
-
-        /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
-         */
-        public void onUpdateTaskFinished(Student result);
-
-    }
-
-    private Context mContext;
-    private OnTaskFinishedListener mListener;
-
-    public UpdateStudentPageTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context;
+    public UpdateStudentPageTask(Context context, OnUpdateTaskFinishedListener<Student> listener) {
+        super(context);
         mListener = listener;
     }
 
@@ -46,12 +33,6 @@ public class UpdateStudentPageTask extends AsyncTask<Void, Void, Student> {
     @Override
     protected void onPostExecute(Student result) {
         super.onPostExecute(result);
-
-        if(result == null) {
-            // Server is unavailable right now
-            Toast.makeText(mContext, mContext.getString(R.string.connection_failed),
-                    Toast.LENGTH_SHORT).show();
-        }
 
         if (mListener != null)
             mListener.onUpdateTaskFinished(result);

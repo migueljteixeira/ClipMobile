@@ -1,7 +1,6 @@
 package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.migueljteixeira.clipmobile.R;
@@ -10,22 +9,12 @@ import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
-public class ConnectClipTask extends AsyncTask<String, Void, Integer> {
+public class ConnectClipTask extends BaseTask<String, Void, Integer> {
+    
+    private OnTaskFinishedListener<Integer> mListener;
 
-    public interface OnTaskFinishedListener {
-
-        /**
-         * Returns one of {@link com.migueljteixeira.clipmobile.enums.NetworkResult}.
-         */
-        public void onTaskFinished(int result);
-
-    }
-
-    private Context mContext;
-    private OnTaskFinishedListener mListener;
-
-    public ConnectClipTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context;
+    public ConnectClipTask(Context context, OnTaskFinishedListener<Integer> listener) {
+        super(context);
         mListener = listener;
     }
 

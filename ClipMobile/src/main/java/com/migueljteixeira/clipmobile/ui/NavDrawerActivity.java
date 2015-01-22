@@ -28,7 +28,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NavDrawerActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-        UpdateStudentPageTask.OnTaskFinishedListener {
+        UpdateStudentPageTask.OnUpdateTaskFinishedListener<Student> {
+    
     private static final String CURRENT_FRAGMENT_TITLE_TAG = "current_fragment_title";
     private static final String CURRENT_FRAGMENT_POSITION_TAG = "current_fragment_position";
 

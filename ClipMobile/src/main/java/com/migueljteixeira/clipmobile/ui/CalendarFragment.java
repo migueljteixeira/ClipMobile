@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CalendarFragment extends Fragment implements CalendarPickerView.OnDateSelectedListener {
+    
     public static final String APPOINTMENT_TAG = "appointment_tag";
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");;
     private List<StudentCalendar> calendar;

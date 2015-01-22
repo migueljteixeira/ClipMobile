@@ -15,6 +15,7 @@ import com.migueljteixeira.clipmobile.entities.StudentScheduleClass;
 import java.util.List;
 
 public class ScheduleFragment extends Fragment {
+    
     private List<StudentScheduleClass> classes;
 
     @Override

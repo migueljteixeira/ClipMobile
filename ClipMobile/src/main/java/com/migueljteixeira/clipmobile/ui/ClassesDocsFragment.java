@@ -20,7 +20,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class ClassesDocsFragment extends BaseFragment implements GetStudentClassesDocsTask.OnTaskFinishedListener {
+public class ClassesDocsFragment extends BaseFragment
+        implements GetStudentClassesDocsTask.OnTaskFinishedListener {
+    
     public static final String FRAGMENT_TAG = "classes_docs_tag";
     private int lastExpandedGroupPosition;
     private ExpandableListView mListView;

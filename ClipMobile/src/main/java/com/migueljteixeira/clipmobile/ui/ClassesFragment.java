@@ -21,7 +21,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class ClassesFragment extends BaseFragment implements GetStudentClassesTask.OnTaskFinishedListener {
+public class ClassesFragment extends BaseFragment
+        implements GetStudentClassesTask.OnTaskFinishedListener<Student> {
+    
     private ListView mListView;
     private GetStudentClassesTask mTask;
     private ClassListViewAdapter adapter;

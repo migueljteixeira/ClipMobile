@@ -1,28 +1,22 @@
 package com.migueljteixeira.clipmobile.util.tasks;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
-public class GetStudentNumbersTask extends AsyncTask<Void, Void, User> {
+public class GetStudentNumbersTask extends BaseTask<Void, Void, User> {
 
     public interface OnTaskFinishedListener {
 
-        /**
-         * Returns a {@link com.migueljteixeira.clipmobile.entities.User}.
-         */
         public void onStudentNumbersTaskFinished(User result);
-
     }
 
-    private Context mContext;
     private OnTaskFinishedListener mListener;
 
     public GetStudentNumbersTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context;
+        super(context);
         mListener = listener;
     }
 

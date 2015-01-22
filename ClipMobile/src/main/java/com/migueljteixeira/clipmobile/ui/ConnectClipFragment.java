@@ -19,7 +19,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ConnectClipFragment extends BaseFragment implements ConnectClipTask.OnTaskFinishedListener {
+public class ConnectClipFragment extends BaseFragment
+        implements ConnectClipTask.OnTaskFinishedListener<Integer> {
 
     @InjectView(R.id.username) EditText mUsername;
     @InjectView(R.id.password) EditText mPassword;
@@ -85,7 +86,7 @@ public class ConnectClipFragment extends BaseFragment implements ConnectClipTask
     }
 
     @Override
-    public void onTaskFinished(int result) {
+    public void onTaskFinished(Integer result) {
         if(!isAdded())
             return;
 
