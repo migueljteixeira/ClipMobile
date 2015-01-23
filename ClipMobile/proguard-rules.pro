@@ -11,6 +11,9 @@
     @butterknife.* <methods>;
 }
 
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
 # Crashlytics
 -keep class com.crashlytics.** { *; }
 -keepattributes SourceFile,LineNumberTable

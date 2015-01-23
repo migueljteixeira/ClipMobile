@@ -36,7 +36,8 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     private static final int MENU_ITEM_SCHEDULE_POSITION = 2;
     private static final int MENU_ITEM_CALENDAR_POSITION = 3;
     private static final int MENU_ITEM_CLASSES_POSITION = 4;
-    private static final int MENU_ITEM_INFO_CONTACTS_POSITION = 7;
+    private static final int MENU_ITEM_INFO_MAP_POSITION = 7;
+    private static final int MENU_ITEM_INFO_CONTACTS_POSITION = 8;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -100,6 +101,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_classes), 1));
         drawerAdapter.add(new DrawerTitle(getString(R.string.drawer_info_title)));
         drawerAdapter.add(new DrawerDivider());
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_map), 1));
         drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_contacts), 1));
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -268,6 +270,12 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
                 setTitle(R.string.drawer_classes);
                 setActionBarShadow();
                 fragment = new ClassesFragment();
+                break;
+
+            case MENU_ITEM_INFO_MAP_POSITION:
+                setTitle(R.string.drawer_info_map);
+                setActionBarShadow();
+                fragment = new InfoMapFragment();
                 break;
 
             case MENU_ITEM_INFO_CONTACTS_POSITION:

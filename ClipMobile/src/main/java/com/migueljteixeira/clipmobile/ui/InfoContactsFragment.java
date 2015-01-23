@@ -10,13 +10,17 @@ import android.widget.ListView;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.InfoContactsListViewAdapter;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class InfoContactsFragment extends BaseFragment {
+
+    @InjectView(R.id.list_view) ListView mListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_view, container, false);
-
-        ListView listView = (ListView) view.findViewById(R.id.list_view);
+        ButterKnife.inject(this, view);
 
         InfoContactsListViewAdapter adapter = new InfoContactsListViewAdapter(getActivity());
         Resources resources = getResources();
@@ -37,7 +41,7 @@ public class InfoContactsFragment extends BaseFragment {
         for(int i=0; i<contacts.length; i+=2)
             adapter.add(new ContactExternal(contacts[i], contacts[i+1]));
 
-        listView.setAdapter(adapter);
+        mListView.setAdapter(adapter);
         return view;
     }
 

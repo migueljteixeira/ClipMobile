@@ -33,8 +33,9 @@
     <string name="drawer_schedule">Horário</string>
     <string name="drawer_calendar">Calendário</string>
     <string name="drawer_classes">Cadeiras</string>
+    
     <string name="drawer_info_title">FACULDADE</string>
-
+    <string name="drawer_info_map">Mapa</string>
     <string name="drawer_info_contacts">Contactos</string>
 
 

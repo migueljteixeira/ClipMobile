@@ -11,11 +11,12 @@ import com.migueljteixeira.clipmobile.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
 
 public class BaseFragment extends Fragment {
 
-    @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
-    @InjectView(R.id.main_view) CardView mMainView;
+    @Optional @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
+    @Optional @InjectView(R.id.main_view) CardView mMainView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
