@@ -3,11 +3,15 @@
     <!-- Text Size -->
     <dimen name="default_text_size">18sp</dimen>
     <dimen name="tabs_text_size">14sp</dimen>
-    <dimen name="drawer_title_text_size">17sp</dimen>
+    <dimen name="drawer_text_size">16sp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_title_size">21sp</dimen>
+
+    <!-- Drawer -->
+    <dimen name="drawer_item_height">48dp</dimen>
+    <dimen name="drawer_divider_height">8dp</dimen>
 
     <!-- ConnectClip Activity -->
     <dimen name="fragment_login_card_width">300dp</dimen>

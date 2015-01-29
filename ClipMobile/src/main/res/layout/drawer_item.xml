@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/clipmobile_list_selector_holo_light"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="@dimen/drawer_item_height"
+    android:layout_width="fill_parent"
+    android:paddingLeft="16dp"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:textColor="@android:color/black"
-    android:textSize="@dimen/default_text_size" />
+    android:background="@drawable/clipmobile_list_selector_holo_light">
+    
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"/>
+    
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="32dp"
+        android:textAppearance="@style/TextAppearance.FontMedium"
+        android:textColor="@color/drawer_item_color"
+        android:textSize="@dimen/drawer_text_size"/>
+
+</LinearLayout>

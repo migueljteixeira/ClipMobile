@@ -2,11 +2,9 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/drawer_item_height"
     android:gravity="center_vertical"
-    android:paddingBottom="5dp"
     android:paddingLeft="16dp"
-    android:paddingTop="10dp"
-    android:textAppearance="@style/TextAppearance.FontCondensedBold"
-    android:textColor="@android:color/secondary_text_light"
-    android:textSize="@dimen/drawer_title_text_size" />
+    android:textAppearance="@style/TextAppearance.FontMedium"
+    android:textColor="@color/drawer_title_color"
+    android:textSize="@dimen/drawer_text_size" />

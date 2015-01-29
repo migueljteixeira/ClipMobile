@@ -7,12 +7,12 @@
         android:icon="@drawable/ic_menu_refresh"
         android:orderInCategory="1"
         android:title="@string/menu_refresh"
-        com.migueljteixeira.clipmobile:showAsAction="ifRoom"/>
+        com.migueljteixeira.clipmobile:showAsAction="always"/>
 
     <item
         android:icon="@drawable/ic_action_go_to_today"
         android:orderInCategory="2"
-        com.migueljteixeira.clipmobile:showAsAction="ifRoom"
+        com.migueljteixeira.clipmobile:showAsAction="always"
         android:title="@string/menu_select_semester">
         <menu>
             <group

@@ -25,6 +25,9 @@ public class InfoMapFragment extends BaseFragment {
         ButterKnife.inject(this, view);
 
         showProgressSpinnerOnly(true);
+
+        mAttacher = new PhotoViewAttacher(mImageView);
+        mAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
         
         Picasso.with(getActivity())
                 .load(R.drawable.map_campus)
@@ -39,9 +42,6 @@ public class InfoMapFragment extends BaseFragment {
                         //
                     }
                 });
-
-        mAttacher = new PhotoViewAttacher(mImageView);
-        mAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
         
         return view;
     }

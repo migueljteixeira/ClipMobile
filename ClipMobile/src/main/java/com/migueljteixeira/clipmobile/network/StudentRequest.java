@@ -86,7 +86,10 @@ public class StudentRequest extends Request {
                 student.setNumber(student_number);
 
                 Crashlytics.log("StudentRequest - getStudentsNumbers - numberID:" + student_numberID);
+                System.out.println("StudentRequest - getStudentsNumbers - numberID:" + student_numberID);
+                
                 Crashlytics.log("StudentRequest - getStudentsNumbers - number:" + student_number);
+                System.out.println("StudentRequest - getStudentsNumbers - number:" + student_number);
 
                 user.addStudent(student);
             }

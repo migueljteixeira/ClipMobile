@@ -58,9 +58,11 @@ public class ClipSettings {
 
         int elapsedTimeInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
         Crashlytics.log("ClipSettings - newCookie? - elapsedTime:" + elapsedTimeInMinutes);
+        
+        System.out.println("ClipSettings - newCookie? - elapsedTime:" + elapsedTimeInMinutes);
 
-        // If the elapsedTime > 50min, we need to request a new cookie from the server
-        return elapsedTimeInMinutes > 50;
+        // If the elapsedTime >= 50min, we need to request a new cookie from the server
+        return elapsedTimeInMinutes >= 50;
     }
 
     public static boolean isUserLoggedIn(Context context) {

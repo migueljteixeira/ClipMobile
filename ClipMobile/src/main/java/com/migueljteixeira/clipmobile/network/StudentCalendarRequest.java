@@ -40,9 +40,9 @@ public class StudentCalendarRequest extends Request {
         for(Element exam : exams) {
             String name = exam.child(0).text();
             Elements recurso = exam.child(2).select("tr");
-            
+
             if(recurso.first() == null) continue;
-            
+
             String date = recurso.first().child(0).text();
             //String url = recurso.first().child(1) //.get(1).child(0).attr("href");
             String hour = recurso.get(1).child(0).child(0).text();

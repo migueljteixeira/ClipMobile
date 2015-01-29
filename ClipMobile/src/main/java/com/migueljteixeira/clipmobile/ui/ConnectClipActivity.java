@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.migueljteixeira.clipmobile.BuildConfig;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 

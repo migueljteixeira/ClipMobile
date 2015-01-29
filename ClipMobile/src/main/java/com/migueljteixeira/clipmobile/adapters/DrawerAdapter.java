@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.migueljteixeira.clipmobile.R;
@@ -51,17 +52,19 @@ public class DrawerAdapter extends ArrayAdapter<Object> {
         }
 
         if(convertView == null) {
+            viewHolder = new ViewHolder();
+            
             if(getItemViewType(position) == VIEW_TYPE_TITLE) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_title, parent, false);
                 convertView.setOnClickListener(null);
             }
             else {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.drawer_item, parent, false);
+                viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
             }
-
-            viewHolder = new ViewHolder();
+            
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-
+            
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -70,12 +73,16 @@ public class DrawerAdapter extends ArrayAdapter<Object> {
         DrawerItem item = (DrawerItem) getItem(position);
         viewHolder.name.setText(item.mTitle);
 
+        if(getItemViewType(position) == VIEW_TYPE_ITEM)
+            viewHolder.icon.setImageResource(item.mIconRes);
+
         return convertView;
     }
 
     static class ViewHolder {
 
         TextView name;
+        ImageView icon;
     }
 
 }

@@ -25,7 +25,7 @@ public class GetStudentYearsTask extends BaseTask<Object, Void, Student> {
     protected Student doInBackground(Object... params) {
         Student student = (Student) params[0];
         groupPosition = (Integer) params[1];
-
+        
         try {
             // Get students years
             return StudentTools.getStudentsYears(mContext, student.getId(), student.getNumberId());

@@ -7,9 +7,9 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="TextAppearance.FontCondensedBold" parent="android:TextAppearance">
+    <style name="TextAppearance.FontMedium" parent="android:TextAppearance">
         <!-- Custom Attr -->
-        <item name="fontPath">RobotoCondensed-Bold.ttf</item>
+        <item name="fontPath">Roboto-Medium.ttf</item>
     </style>
 
     <style name="TextAppearance.FontBold" parent="android:TextAppearance">

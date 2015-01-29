@@ -134,12 +134,21 @@ public class StudentNumbersFragment extends BaseFragment
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
             Crashlytics.log("StudentNumbersFragment - group clicked");
+
+            // If the yearsTask is running, do not allow group click
+            if( mYearsTask != null && mYearsTask.getStatus() != AsyncTask.Status.FINISHED ) {
+                System.out.println("YEARS TASK IS ALREADY RUNNING!");
+                return true;
+            }
             
             if(mListView.isGroupExpanded(groupPosition))
                 mListView.collapseGroup(groupPosition);
 
             else {
                 showProgressSpinnerOnly(true);
+
+                System.out.println("GETSTUDENTS YEARS TASK student.getId() " + students.get(groupPosition).getId() +
+                        ", student.getNumberId() " + students.get(groupPosition).getNumberId());
 
                 mYearsTask = new GetStudentYearsTask(getActivity(), StudentNumbersFragment.this);
                 AndroidUtils.executeOnPool(mYearsTask, students.get(groupPosition), groupPosition);

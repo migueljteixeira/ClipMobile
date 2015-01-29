@@ -20,6 +20,8 @@ public class UpdateStudentNumbersTask extends BaseTask<Void, Void, User> {
     protected User doInBackground(Void... params) {
         long userId = ClipSettings.getLoggedInUserId(mContext);
 
+        System.out.println("UPDATE STUDENT NUMBERS TASK userId:: " + userId);
+
         try {
             // Update students numbers and years
             return StudentTools.updateStudentNumbersAndYears(mContext, userId);

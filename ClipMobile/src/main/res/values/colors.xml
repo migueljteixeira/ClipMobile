@@ -4,8 +4,12 @@
     <!--<color name="actionbar_color">#109f5b</color>-->
     <color name="main_color">#13b263</color>
     <color name="main_color_dark">#0f8e4f</color>
-
     <color name="main_background_color">#f3f3f4</color>
+
+    <color name="drawer_background_color">#ffffff</color>
+    <color name="drawer_title_color">#8A000000</color>
+    <color name="drawer_item_color">#DE000000</color>
+
 
     <integer-array name="spinner_colors">
         <item>@color/spinner_color_1</item>

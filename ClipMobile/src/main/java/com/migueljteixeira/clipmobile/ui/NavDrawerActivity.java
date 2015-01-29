@@ -76,7 +76,9 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
         if (fragment == null) {
             fragment = new ScheduleViewPager();
-            fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            fm.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
         }
     }
 
@@ -95,13 +97,13 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
         DrawerAdapter drawerAdapter = new DrawerAdapter(this);
         drawerAdapter.add(new DrawerTitle( ClipSettings.getYearSelected(this) ));
         drawerAdapter.add(new DrawerDivider());
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_schedule), 1));
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_calendar), 1));
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_classes), 1));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_schedule), R.drawable.ic_books));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_calendar), R.drawable.ic_calendar));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_classes), R.drawable.ic_folders));
         drawerAdapter.add(new DrawerTitle(getString(R.string.drawer_info_title)));
         drawerAdapter.add(new DrawerDivider());
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_map), 1));
-        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_contacts), 1));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_map), R.drawable.ic_map));
+        drawerAdapter.add(new DrawerItem(getString(R.string.drawer_info_contacts), R.drawable.ic_phone));
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(drawerAdapter);
@@ -288,7 +290,9 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
             return;
 
         // Replace fragment and close drawer
-        fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fm.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commitAllowingStateLoss();
 
         // If the device is bigger than 7', don't close the drawer
         if(! getResources().getBoolean(R.bool.drawer_opened))

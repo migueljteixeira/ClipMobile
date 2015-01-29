@@ -9,6 +9,8 @@ import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -54,7 +56,6 @@ public abstract class Request {
     }
 
     protected static Document request(Context context, String url) throws ServerUnavailableException {
-        String cookie = ClipSettings.getCookie(context);
 
         try {
             Connection connection = Jsoup.connect(url)
@@ -69,36 +70,70 @@ public abstract class Request {
 
             // If the cookie has expired, we need to request a new one
             Connection.Response response;
-            if( ClipSettings.isTimeForANewCookie(context) ) {
-                Crashlytics.log("Request - Requesting new cookie");
+            if( ClipSettings.isTimeForANewCookie(context) )
+                initialRequest(context, ClipSettings.getLoggedInUserName(context),
+                        ClipSettings.getLoggedInUserPw(context));
+            
+            response = sendRequestWithCookie(context, connection);
 
-                connection.header("Content-Type", "application/x-www-form-urlencoded");
-                connection.data(ID, ClipSettings.getLoggedInUserName(context));
-                connection.data(PW, ClipSettings.getLoggedInUserPw(context));
-
-                // Execute the request
-                response = connection.execute();
-
-                // Save cookie
-                ClipSettings.saveCookie(context, response.cookie(COOKIE_NAME));
-
-                // Save login time
-                ClipSettings.saveLoginTime(context);
-            }
-            else {
-                connection.header("Cookie", COOKIE_NAME + "=" + cookie);
-
-                // Execute the request
-                response = connection.execute();
-            }
-
-            Crashlytics.log("Request - url:" + url);
+            //System.out.println("Request - url:" + url);
+            
+            //System.out.println("Request - page:" + response.parse());
 
             return response.parse();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ServerUnavailableException();
         }
 
+    }
+    
+    /*private static Connection.Response sendRequestWithUserData(Context context, Connection connection) throws IOException {
+        Crashlytics.log("Request - Requesting new cookie");
+        System.out.println("Request - Requesting new cookie");
+        
+        Connection.Response response;
+
+        connection.header("Content-Type", "application/x-www-form-urlencoded");
+        connection.data(ID, ClipSettings.getLoggedInUserName(context));
+        connection.data(PW, ClipSettings.getLoggedInUserPw(context));
+
+        // Execute the request
+        response = connection.execute();
+
+        // Save cookie
+        ClipSettings.saveCookie(context, response.cookie(COOKIE_NAME));
+
+        // Save login time
+        ClipSettings.saveLoginTime(context);
+        
+        return response;
+    }*/
+
+    private static Connection.Response sendRequestWithCookie(Context context, Connection connection) throws IOException, ServerUnavailableException {
+        Connection.Response response;
+        
+        connection.header("Cookie", COOKIE_NAME + "=" + ClipSettings.getCookie(context));
+
+        // Execute the request
+        response = connection.execute();
+
+        // If clip website returns, for some reason, the login page,
+        // send request with user data instead
+        Elements inputs = response.parse()
+                .body().getElementsByTag("input");
+        
+        for(Element input : inputs)
+            if(input.attr("name").equals(ID) || input.attr("name").equals(PW)) {
+                Crashlytics.log("Request - Requesting with user data");
+                System.out.println("Request - Requesting with user data");
+
+                initialRequest(context, ClipSettings.getLoggedInUserName(context),
+                        ClipSettings.getLoggedInUserPw(context));
+                
+                return sendRequestWithCookie(context, connection);
+            }
+        
+        return response;
     }
 
 }

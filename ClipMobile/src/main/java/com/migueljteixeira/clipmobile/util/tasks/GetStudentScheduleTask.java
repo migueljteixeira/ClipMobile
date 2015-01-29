@@ -28,6 +28,11 @@ public class GetStudentScheduleTask extends BaseTask<Void, Void, Student> {
 
         // Get student schedule
         try {
+            System.out.println("studentId ->" + studentId);
+            System.out.println("year ->" + year);
+            System.out.println("yearFormatted ->" + yearFormatted);
+            System.out.println("semester ->" + semester);
+
             return StudentTools.getStudentSchedule(mContext, studentId, year, yearFormatted, semester,
                     studentNumberId);
         } catch (ServerUnavailableException e) {
