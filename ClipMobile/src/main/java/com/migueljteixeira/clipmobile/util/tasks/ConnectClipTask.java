@@ -9,7 +9,7 @@ import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
 public class ConnectClipTask extends BaseTask<String, Void, Result> {
-    
+
     private OnTaskFinishedListener<Result> mListener;
 
     public ConnectClipTask(Context context, OnTaskFinishedListener<Result> listener) {

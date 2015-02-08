@@ -18,7 +18,7 @@ public class StudentRequest extends Request {
     public static User signIn(Context context, String username, String password)
             throws ServerUnavailableException {
 
-        Elements links = initialRequest(context, username, password)
+        Elements links = requestNewCookie(context, username, password)
                 .body()
                 .select("a[href]");
 

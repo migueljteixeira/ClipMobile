@@ -11,7 +11,9 @@
 
     <!-- Drawer -->
     <dimen name="drawer_item_height">48dp</dimen>
-    <dimen name="drawer_divider_height">8dp</dimen>
+    <dimen name="drawer_divider_height">2dp</dimen>
+    <dimen name="drawer_width">260dp</dimen>
+    <dimen name="drawer_item_padding">20dp</dimen>
 
     <!-- ConnectClip Activity -->
     <dimen name="fragment_login_card_width">300dp</dimen>

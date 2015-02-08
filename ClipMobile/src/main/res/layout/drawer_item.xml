@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="@dimen/drawer_item_height"
     android:layout_width="fill_parent"
-    android:paddingLeft="16dp"
+    android:paddingLeft="@dimen/drawer_item_padding"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:background="@drawable/clipmobile_list_selector_holo_light">
@@ -16,7 +16,7 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="32dp"
+        android:paddingLeft="30dp"
         android:textAppearance="@style/TextAppearance.FontMedium"
         android:textColor="@color/drawer_item_color"
         android:textSize="@dimen/drawer_text_size"/>

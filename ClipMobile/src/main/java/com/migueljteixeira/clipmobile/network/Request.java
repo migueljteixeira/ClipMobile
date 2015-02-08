@@ -20,7 +20,7 @@ public abstract class Request {
     private static final String INITIAL_REQUEST = "https://clip.unl.pt/utente/eu";
     protected static final String COOKIE_NAME = "JServSessionIdroot1112";
 
-    protected static Document initialRequest(Context context, String username, String password)
+    protected static Document requestNewCookie(Context context, String username, String password)
             throws ServerUnavailableException {
 
         try {
@@ -71,14 +71,12 @@ public abstract class Request {
             // If the cookie has expired, we need to request a new one
             Connection.Response response;
             if( ClipSettings.isTimeForANewCookie(context) )
-                initialRequest(context, ClipSettings.getLoggedInUserName(context),
+                requestNewCookie(context, ClipSettings.getLoggedInUserName(context),
                         ClipSettings.getLoggedInUserPw(context));
             
             response = sendRequestWithCookie(context, connection);
 
             //System.out.println("Request - url:" + url);
-            
-            //System.out.println("Request - page:" + response.parse());
 
             return response.parse();
         } catch (Exception e) {
@@ -86,39 +84,16 @@ public abstract class Request {
         }
 
     }
-    
-    /*private static Connection.Response sendRequestWithUserData(Context context, Connection connection) throws IOException {
-        Crashlytics.log("Request - Requesting new cookie");
-        System.out.println("Request - Requesting new cookie");
-        
-        Connection.Response response;
-
-        connection.header("Content-Type", "application/x-www-form-urlencoded");
-        connection.data(ID, ClipSettings.getLoggedInUserName(context));
-        connection.data(PW, ClipSettings.getLoggedInUserPw(context));
-
-        // Execute the request
-        response = connection.execute();
-
-        // Save cookie
-        ClipSettings.saveCookie(context, response.cookie(COOKIE_NAME));
-
-        // Save login time
-        ClipSettings.saveLoginTime(context);
-        
-        return response;
-    }*/
 
     private static Connection.Response sendRequestWithCookie(Context context, Connection connection) throws IOException, ServerUnavailableException {
-        Connection.Response response;
-        
         connection.header("Cookie", COOKIE_NAME + "=" + ClipSettings.getCookie(context));
 
         // Execute the request
+        Connection.Response response;
         response = connection.execute();
 
-        // If clip website returns, for some reason, the login page,
-        // send request with user data instead
+        // If clip website returns, for some reason,
+        // the login page, request new cookie
         Elements inputs = response.parse()
                 .body().getElementsByTag("input");
         
@@ -127,7 +102,7 @@ public abstract class Request {
                 Crashlytics.log("Request - Requesting with user data");
                 System.out.println("Request - Requesting with user data");
 
-                initialRequest(context, ClipSettings.getLoggedInUserName(context),
+                requestNewCookie(context, ClipSettings.getLoggedInUserName(context),
                         ClipSettings.getLoggedInUserPw(context));
                 
                 return sendRequestWithCookie(context, connection);

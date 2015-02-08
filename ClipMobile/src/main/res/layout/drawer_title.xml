@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_item_height"
     android:gravity="center_vertical"
-    android:paddingLeft="16dp"
+    android:paddingLeft="@dimen/drawer_item_padding"
     android:textAppearance="@style/TextAppearance.FontMedium"
     android:textColor="@color/drawer_title_color"
+    android:text="asdfask"
     android:textSize="@dimen/drawer_text_size" />
