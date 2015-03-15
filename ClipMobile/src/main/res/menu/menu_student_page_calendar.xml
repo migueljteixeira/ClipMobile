@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:com.migueljteixeira.clipmobile="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_menu_refresh"
+        android:orderInCategory="1"
+        android:title="@string/menu_refresh"
+        com.migueljteixeira.clipmobile:showAsAction="always"/>
+
+    <item
+        android:icon="@drawable/ic_action_go_to_today"
+        android:orderInCategory="2"
+        com.migueljteixeira.clipmobile:showAsAction="always"
+        android:title="@string/menu_select_semester">
+        <menu>
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/semester1"
+                    android:checked="true"
+                    android:orderInCategory="1"
+                    com.migueljteixeira.clipmobile:showAsAction="never"
+                    android:title="@string/menu_semester_1" />
+
+                <item
+                    android:id="@+id/semester2"
+                    android:orderInCategory="2"
+                    com.migueljteixeira.clipmobile:showAsAction="never"
+                    android:title="@string/menu_semester_2" />
+
+                <item
+                    android:id="@+id/trimester2"
+                    android:orderInCategory="3"
+                    com.migueljteixeira.clipmobile:showAsAction="never"
+                    android:title="@string/menu_trimester_2" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:icon="@drawable/ic_action_overflow"
+        android:orderInCategory="3"
+        android:title="@string/menu_overflow"
+        com.migueljteixeira.clipmobile:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/export_calendar"
+                android:orderInCategory="1"
+                android:title="@string/menu_export_calendar"
+                com.migueljteixeira.clipmobile:showAsAction="never" />
+
+            <item
+                android:id="@+id/logout"
+                android:orderInCategory="2"
+                android:title="@string/menu_logout"
+                com.migueljteixeira.clipmobile:showAsAction="never" />
+
+            <item
+                android:id="@+id/about"
+                android:orderInCategory="3"
+                android:title="@string/menu_about"
+                com.migueljteixeira.clipmobile:showAsAction="never" />
+        </menu>
+    </item>
+
+</menu>

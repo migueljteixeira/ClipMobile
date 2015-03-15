@@ -22,7 +22,7 @@
                 android:layout_height="48dp"
                 android:textSize="@dimen/tabs_text_size"
                 android:background="@color/main_color"
-                android:textColor="@android:color/white"
+                android:textColorPrimary="@android:color/white"
                 app:pstsIndicatorColor="@android:color/white"
                 app:pstsShouldExpand="true"/>
 

@@ -3,6 +3,7 @@ package com.migueljteixeira.clipmobile.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -21,8 +22,15 @@ import com.migueljteixeira.clipmobile.adapters.DrawerAdapter;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
 import com.migueljteixeira.clipmobile.ui.dialogs.AboutDialogFragment;
+import com.migueljteixeira.clipmobile.ui.dialogs.ExportCalendarDialogFragment;
+import com.migueljteixeira.clipmobile.util.StudentTools;
 import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentPageTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -125,7 +133,11 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_student_page, menu);
+
+        if(mDrawerList.getCheckedItemPosition() == MENU_ITEM_CALENDAR_POSITION)
+            inflater.inflate(R.menu.menu_student_page_calendar, menu);
+        else
+            inflater.inflate(R.menu.menu_student_page, menu);
 
         return true;
     }
@@ -167,6 +179,30 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
             AndroidUtils.executeOnPool(mUpdateTask);
         }
 
+        else if(item.getItemId() == R.id.export_calendar) {
+            Map<Long, String> calendarsNames = StudentTools.confirmExportCalendar(this);
+
+            long[] ids = new long[calendarsNames.size()];
+            String[] names = new String[calendarsNames.size()];
+
+            int count = 0;
+            for (Map.Entry<Long, String> calendarItem : calendarsNames.entrySet()) {
+                ids[count] = calendarItem.getKey();
+                names[count] = calendarItem.getValue();
+
+                count++;
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putLongArray(ExportCalendarDialogFragment.CALENDAR_ID, ids);
+            bundle.putStringArray(ExportCalendarDialogFragment.CALENDAR_NAME, names);
+
+            // Create an instance of the dialog fragment and show it
+            DialogFragment dialog = new ExportCalendarDialogFragment();
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "ExportCalendarDialogFragment");
+        }
+
         else if(item.getItemId() == R.id.logout) {
             // Clear user personal data
             ClipSettings.logoutUser(this);
@@ -180,7 +216,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         else if(item.getItemId() == R.id.about) {
             // Create an instance of the dialog fragment and show it
-            AboutDialogFragment dialog = new AboutDialogFragment();
+            DialogFragment dialog = new AboutDialogFragment();
             dialog.show(getSupportFragmentManager(), "AboutDialogFragment");
         }
 
@@ -214,8 +250,8 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         // If the device is bigger than 7', keep the drawer opened
         if(getResources().getBoolean(R.bool.drawer_opened)) {
-            mDrawerLayout.openDrawer(GravityCompat.START);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            //mDrawerLayout.openDrawer(GravityCompat.START);
+            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
         }
         else {
             mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -253,6 +289,8 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.content_frame);
+
+        invalidateOptionsMenu();
 
         switch(position) {
             case MENU_ITEM_SCHEDULE_POSITION:

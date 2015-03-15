@@ -1,8 +1,18 @@
 package com.migueljteixeira.clipmobile.util;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.CalendarContract;
+import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
+import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
+import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.User;
 import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.exceptions.ServerUnavailableException;
@@ -12,7 +22,17 @@ import com.migueljteixeira.clipmobile.network.StudentClassesRequest;
 import com.migueljteixeira.clipmobile.network.StudentRequest;
 import com.migueljteixeira.clipmobile.network.StudentScheduleRequest;
 import com.migueljteixeira.clipmobile.settings.ClipSettings;
+import com.migueljteixeira.clipmobile.util.tasks.BaseTask;
+import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class StudentTools {
 
@@ -274,6 +294,160 @@ public class StudentTools {
         System.out.println("calendar inserted!");
 
         return student;
+    }
+
+    public static Map<Long, String> confirmExportCalendar(Context mContext) {
+
+        final String[] EVENT_PROJECTION = new String[] {
+                CalendarContract.Calendars._ID,                           // 0
+                CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
+                CalendarContract.Calendars.OWNER_ACCOUNT,                 // 3
+        };
+
+        // The indices for the projection array above.
+        final int PROJECTION_ID_INDEX = 0;
+        final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
+        final int PROJECTION_DISPLAY_NAME_INDEX = 2;
+        final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
+
+        // Run query
+        ContentResolver cr = mContext.getContentResolver();
+        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+        String selection = "((" + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?))";
+        String[] selectionArgs = new String[] {"com.google"};
+
+        // Submit the query and get a Cursor object back.
+        Cursor cursor = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
+
+        Map<Long, String> calendars_names = new HashMap<Long, String>();
+        while(cursor.moveToNext()) {
+            long calID = 0;
+            String displayName = null;
+            String accountName = null;
+            String ownerName = null;
+
+            // Get the field values
+            calID = cursor.getLong(PROJECTION_ID_INDEX);
+            displayName = cursor.getString(PROJECTION_DISPLAY_NAME_INDEX);
+            accountName = cursor.getString(PROJECTION_ACCOUNT_NAME_INDEX);
+            ownerName = cursor.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
+
+            if(displayName.equalsIgnoreCase(accountName) &&
+               accountName.equalsIgnoreCase(ownerName)) {
+                System.out.println("calendar name: " + ownerName);
+
+                calendars_names.put(calID, ownerName);
+            }
+        }
+
+        cursor.close();
+
+        return calendars_names;
+    }
+
+    public static void exportCalendar(final Context mContext, final long calendarId) {
+        System.out.println("CALEDNAR NAME-> ´" + calendarId);
+
+        GetStudentCalendarTask mTask = new GetStudentCalendarTask(mContext, new BaseTask.OnTaskFinishedListener<Student>() {
+            @Override
+            public void onTaskFinished(Student result) {
+
+                Map<Boolean, List<StudentCalendar>> calendar = result.getStudentCalendar();
+
+                for(Map.Entry<Boolean, List<StudentCalendar>> event : calendar.entrySet()) {
+                    boolean isExam = event.getKey();
+                    List<StudentCalendar> calendarEvent = event.getValue();
+
+                    for(StudentCalendar e : calendarEvent) {
+                        String name = e.getName();
+                        String date = e.getDate();
+                        String hour = e.getHour();
+
+                        insertEvent(mContext, calendarId, isExam, name, date, hour);
+                    }
+                }
+
+                Toast.makeText(mContext, "Calendário exportado com sucesso!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        AndroidUtils.executeOnPool(mTask);
+
+    }
+
+    private static void insertEvent(Context mContext, long calendarId, boolean isExam,
+                                    String name, String date, String hour) {
+        String title = "[TESTE] ";
+        if (isExam) {
+            title = "[EXAME] ";
+
+            hour = hour.split("-")[0];
+        }
+
+        System.out.println("-> hour::: " + hour);
+
+        // Title
+        title += name;
+
+        // Date
+        int year = Integer.parseInt(date.split("-")[0]);
+        int month = Integer.parseInt(date.split("-")[1]) - 1;
+        int day = Integer.parseInt(date.split("-")[2]);
+
+        // Hour
+        String[] h = hour.split(":");
+        int begin_hour = Integer.parseInt(h[0]);
+
+        int begin_minutes;
+        if(isExam)
+            begin_minutes = Integer.parseInt(h[1].substring(0, h.length));
+        else
+            begin_minutes = Integer.parseInt(h[1]);
+
+        int end_hour = begin_hour + 2;
+        int end_minutes = begin_minutes;
+
+        System.out.println("----------");
+
+        System.out.println(title + ", " + year + ", " + month + " | " + day + " | "
+                + begin_hour + " | " + begin_minutes);
+
+        System.out.println("----------");
+
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.clear();
+        beginTime.set(year, month, day, begin_hour, begin_minutes);
+        Calendar endTime = Calendar.getInstance();
+        endTime.clear();
+        endTime.set(year, month, day, end_hour, end_minutes);
+
+        String[] projection = new String[]{
+                CalendarContract.Instances._ID,
+                CalendarContract.Instances.BEGIN,
+                CalendarContract.Instances.END,
+                CalendarContract.Instances.EVENT_ID};
+        Cursor cursor = CalendarContract.Instances.query(mContext.getContentResolver(),
+                projection, beginTime.getTimeInMillis(), endTime.getTimeInMillis());
+        if (cursor.getCount() > 0) {
+            System.out.println("CONFLICT");
+            return;
+        }
+
+        /*Calendar beginTime = Calendar.getInstance();
+        beginTime.set(year, month, day, begin_hour, begin_minutes);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(year, month, day, end_hour, end_minutes);*/
+
+        ContentResolver cr = mContext.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
+        values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
+        values.put(CalendarContract.Events.TITLE, title);
+        //values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
+        values.put(CalendarContract.Events.CALENDAR_ID, calendarId);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Lisbon");
+        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
     }
 
 }

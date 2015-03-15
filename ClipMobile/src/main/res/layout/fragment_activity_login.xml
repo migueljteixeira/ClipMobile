@@ -50,6 +50,7 @@
                 android:layout_marginTop="40dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
+                android:textAllCaps="false"
                 android:text="@string/action_login"
                 android:textSize="@dimen/default_text_size" />
 

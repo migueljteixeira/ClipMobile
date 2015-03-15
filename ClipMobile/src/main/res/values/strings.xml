@@ -10,6 +10,7 @@
     <string name="menu_refresh">Actualizar</string>
     <string name="menu_about">Sobre</string>
     <string name="menu_logout">Mudar de Conta</string>
+    <string name="menu_export_calendar">Exportar Calendário</string>
     <string name="menu_select_semester">Seleccionar semestre</string>
     <string name="menu_semester_1">1º Semestre</string>
     <string name="menu_semester_2">2º Semestre</string>

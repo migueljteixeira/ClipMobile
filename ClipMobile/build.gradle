@@ -23,7 +23,7 @@ android {
     defaultConfig {
         applicationId "com.migueljteixeira.clipmobile"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
 
         versionCode = 26
         versionName = '1.0.5'
@@ -43,22 +43,22 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:cardview-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:support-v13:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:cardview-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
 
     compile project(':libraries:androidutils')
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.0.2'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup:android-times-square:1.5.0@aar'
     compile 'org.jsoup:jsoup:1.8.1'
-    compile 'com.jpardogo.materialtabstrip:library:1.0.8'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
     compile 'uk.co.chrisjenx:calligraphy:1.2.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.squareup.picasso:picasso:2.5.0'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true;
     }
 }
