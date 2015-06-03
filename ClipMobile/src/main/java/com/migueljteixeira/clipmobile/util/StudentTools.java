@@ -335,7 +335,6 @@ public class StudentTools {
 
             if(displayName.equalsIgnoreCase(accountName) &&
                accountName.equalsIgnoreCase(ownerName)) {
-                System.out.println("calendar name: " + ownerName);
 
                 calendars_names.put(calID, ownerName);
             }
@@ -347,7 +346,6 @@ public class StudentTools {
     }
 
     public static void exportCalendar(final Context mContext, final long calendarId) {
-        System.out.println("CALEDNAR NAME-> ´" + calendarId);
 
         GetStudentCalendarTask mTask = new GetStudentCalendarTask(mContext, new BaseTask.OnTaskFinishedListener<Student>() {
             @Override
@@ -385,8 +383,6 @@ public class StudentTools {
             hour = hour.split("-")[0];
         }
 
-        System.out.println("-> hour::: " + hour);
-
         // Title
         title += name;
 
@@ -408,13 +404,6 @@ public class StudentTools {
         int end_hour = begin_hour + 2;
         int end_minutes = begin_minutes;
 
-        System.out.println("----------");
-
-        System.out.println(title + ", " + year + ", " + month + " | " + day + " | "
-                + begin_hour + " | " + begin_minutes);
-
-        System.out.println("----------");
-
         Calendar beginTime = Calendar.getInstance();
         beginTime.clear();
         beginTime.set(year, month, day, begin_hour, begin_minutes);
@@ -429,25 +418,21 @@ public class StudentTools {
                 CalendarContract.Instances.EVENT_ID};
         Cursor cursor = CalendarContract.Instances.query(mContext.getContentResolver(),
                 projection, beginTime.getTimeInMillis(), endTime.getTimeInMillis());
+
         if (cursor.getCount() > 0) {
-            System.out.println("CONFLICT");
+            // Conflict!
             return;
         }
-
-        /*Calendar beginTime = Calendar.getInstance();
-        beginTime.set(year, month, day, begin_hour, begin_minutes);
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(year, month, day, end_hour, end_minutes);*/
 
         ContentResolver cr = mContext.getContentResolver();
         ContentValues values = new ContentValues();
         values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
         values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
         values.put(CalendarContract.Events.TITLE, title);
-        //values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
         values.put(CalendarContract.Events.CALENDAR_ID, calendarId);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Lisbon");
-        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+        cr.insert(CalendarContract.Events.CONTENT_URI, values);
     }
 
 }

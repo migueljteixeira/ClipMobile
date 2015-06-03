@@ -18,6 +18,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class ConnectClipFragment extends BaseFragment
         implements ConnectClipTask.OnTaskFinishedListener<Result> {
@@ -69,11 +70,10 @@ public class ConnectClipFragment extends BaseFragment
                     mFocusView = mPassword;
                 }
 
-                if(mFocusView != null) {
+                if (mFocusView != null) {
                     // Focus the first form field with an error.
                     mFocusView.requestFocus();
-                }
-                else {
+                } else {
                     showProgressSpinner(true);
 
                     // Start AsyncTask

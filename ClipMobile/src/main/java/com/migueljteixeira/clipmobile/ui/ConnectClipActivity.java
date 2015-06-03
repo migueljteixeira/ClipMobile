@@ -15,8 +15,10 @@ public class ConnectClipActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_singlepane);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_singlepane);
+
+        setupActionBar();
 
         // Crash system reporting
         Fabric.with(this, new Crashlytics());

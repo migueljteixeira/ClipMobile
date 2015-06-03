@@ -6,18 +6,9 @@
     <!-- ClipMobile default theme. -->
     <style name="Theme.ClipMobile" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/main_color</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/main_color_dark</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated,
-        which is used to tint widgets -->
         <item name="colorAccent">@color/main_color</item>
-
-        <!-- toolbar shadow -->
-        <item name="android:windowContentOverlay">@drawable/toolbar_shadow</item>
 
     </style>
 

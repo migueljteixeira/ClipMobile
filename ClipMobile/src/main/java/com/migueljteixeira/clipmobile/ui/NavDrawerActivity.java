@@ -57,8 +57,10 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_dualpane);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dualpane);
+
+        setupActionBar();
 
         Crashlytics.log("NavDrawerActivity - onCreate");
 

@@ -42,11 +42,6 @@
             android:label="@string/app_name" >
         </activity>
 
-        <activity
-            android:name=".ui.ClassesDocsActivity"
-            android:label="@string/app_name" >
-        </activity>
-
         <meta-data android:name="com.crashlytics.ApiKey" android:value="${crashlyticsApiKey}"/>
 
     </application>

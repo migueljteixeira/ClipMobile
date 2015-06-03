@@ -11,8 +11,10 @@ public class StudentNumbersActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_singlepane);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_singlepane);
+
+        setupActionBar();
 
         Crashlytics.log("StudentNumbersActivity - onCreate");
 
