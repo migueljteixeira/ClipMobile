@@ -30,7 +30,7 @@ public class ClassesFragment extends BaseFragment
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classes, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         mListView = (ListView) view.findViewById(R.id.list_view);
 

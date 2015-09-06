@@ -7,7 +7,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,10 +26,7 @@ import com.migueljteixeira.clipmobile.util.StudentTools;
 import com.migueljteixeira.clipmobile.util.tasks.UpdateStudentPageTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -52,7 +48,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
@@ -336,7 +332,7 @@ public class NavDrawerActivity extends BaseActivity implements AdapterView.OnIte
 
         // If the device is bigger than 7', don't close the drawer
         if(! getResources().getBoolean(R.bool.drawer_opened))
-            mDrawerLayout.closeDrawer(Gravity.START);
+            mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
     @Override

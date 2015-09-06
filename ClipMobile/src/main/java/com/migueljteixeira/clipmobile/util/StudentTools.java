@@ -3,14 +3,11 @@ package com.migueljteixeira.clipmobile.util;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.entities.Student;
 import com.migueljteixeira.clipmobile.entities.StudentCalendar;
 import com.migueljteixeira.clipmobile.entities.User;
@@ -26,13 +23,10 @@ import com.migueljteixeira.clipmobile.util.tasks.BaseTask;
 import com.migueljteixeira.clipmobile.util.tasks.GetStudentCalendarTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class StudentTools {
 

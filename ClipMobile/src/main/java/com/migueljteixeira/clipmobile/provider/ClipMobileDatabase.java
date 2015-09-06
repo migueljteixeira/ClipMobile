@@ -16,7 +16,6 @@ import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentClasses
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.StudentsYearSemesterColumns;
 import com.migueljteixeira.clipmobile.provider.ClipMobileContract.UsersColumns;
-import com.migueljteixeira.clipmobile.settings.ClipSettings;
 
 public class ClipMobileDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "clip_mobile_database";

@@ -10,17 +10,17 @@ import android.widget.ListView;
 import com.migueljteixeira.clipmobile.R;
 import com.migueljteixeira.clipmobile.adapters.InfoContactsListViewAdapter;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class InfoContactsFragment extends BaseFragment {
 
-    @InjectView(R.id.list_view) ListView mListView;
+    @Bind(R.id.list_view) ListView mListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_view, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         InfoContactsListViewAdapter adapter = new InfoContactsListViewAdapter(getActivity());
         Resources resources = getResources();

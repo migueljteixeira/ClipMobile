@@ -15,7 +15,10 @@ public class ClipMobileApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CalligraphyConfig.initDefault("Roboto-Regular.ttf", R.attr.fontPath);
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("Roboto-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
 
         // Set provider authority
         CONTENT_AUTHORITY = getString(R.string.provider_authority);

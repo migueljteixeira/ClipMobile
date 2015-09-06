@@ -10,19 +10,19 @@ import com.migueljteixeira.clipmobile.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class InfoMapFragment extends BaseFragment {
 
-    @InjectView(R.id.map) ImageView mImageView;
+    @Bind(R.id.map) ImageView mImageView;
     private PhotoViewAttacher mAttacher;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         showProgressSpinnerOnly(true);
 

@@ -11,13 +11,13 @@ import android.widget.FrameLayout;
 
 import com.migueljteixeira.clipmobile.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class BaseViewPager extends Fragment {
 
-    @InjectView(R.id.progress_spinner) FrameLayout mProgressSpinner;
-    @InjectView(R.id.view_pager) ViewPager mViewPager;
+    @Bind(R.id.progress_spinner) FrameLayout mProgressSpinner;
+    @Bind(R.id.view_pager) ViewPager mViewPager;
     protected View view;
 
     @Override
@@ -31,7 +31,7 @@ public class BaseViewPager extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         // Show progress spinner
         showProgressSpinnerOnly(true);
@@ -50,7 +50,7 @@ public class BaseViewPager extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
 
     }
 

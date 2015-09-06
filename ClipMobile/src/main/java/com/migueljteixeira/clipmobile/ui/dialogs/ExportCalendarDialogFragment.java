@@ -9,8 +9,6 @@ import android.support.v4.app.DialogFragment;
 
 import com.migueljteixeira.clipmobile.util.StudentTools;
 
-import java.util.ArrayList;
-
 public class ExportCalendarDialogFragment extends DialogFragment {
     public static final String CALENDAR_ID = "calendar_id";
     public static final String CALENDAR_NAME = "calendar_name";

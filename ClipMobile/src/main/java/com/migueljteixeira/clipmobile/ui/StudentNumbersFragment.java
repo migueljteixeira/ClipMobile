@@ -26,8 +26,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class StudentNumbersFragment extends BaseFragment
         implements GetStudentNumbersTask.OnTaskFinishedListener,
@@ -36,7 +36,7 @@ public class StudentNumbersFragment extends BaseFragment
 
     private StudentNumbersAdapter mListAdapter;
     private List<Student> students;
-    @InjectView(R.id.list_view) ExpandableListView mListView;
+    @Bind(R.id.list_view) ExpandableListView mListView;
 
     private GetStudentYearsTask mYearsTask;
     private UpdateStudentNumbersTask mUpdateTask;
@@ -52,7 +52,7 @@ public class StudentNumbersFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_numbers, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         return view;
     }

@@ -16,23 +16,22 @@ import com.migueljteixeira.clipmobile.enums.Result;
 import com.migueljteixeira.clipmobile.util.tasks.ConnectClipTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class ConnectClipFragment extends BaseFragment
         implements ConnectClipTask.OnTaskFinishedListener<Result> {
 
-    @InjectView(R.id.username) EditText mUsername;
-    @InjectView(R.id.password) EditText mPassword;
-    @InjectView(R.id.log_in_button) Button mLogInButton;
+    @Bind(R.id.username) EditText mUsername;
+    @Bind(R.id.password) EditText mPassword;
+    @Bind(R.id.log_in_button) Button mLogInButton;
 
     private ConnectClipTask mTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity_login, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         return view;
     }
